@@ -1,16 +1,5 @@
 # vitium_app
 
-A new Flutter project.
+## Vitium
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Vitium es una empresa creada en marzo del 2022 por estudiantes de la licenciatura de gestión y dirección de negocios de la Universidad Veracruzana. Su principal producto es una aplicación para teléfonos inteligentes diseñada para identificar aquellas empresas que ofrecen vacantes para personas con discapacidad en diferentes sedes donde estas personas pueden acceder a un empleo remunerado.
