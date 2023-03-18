@@ -15,6 +15,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<ContentConfig> listContentConfig = [];
   Color activeColor = const Color(0xff0BEEF9);
   Color inactiveColor = const Color(0xff03838b);
+  Color backgroundColor = const Color(0xffFFFFFF);
   double sizeIndicator = 20;
 
   @override
@@ -50,31 +51,33 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           padding: const EdgeInsets.all(20),
           child: Image.asset("assets/splash_1.png"),
         ),
-        backgroundNetworkImage: "https://picsum.photos/600/900",
-        backgroundFilterOpacity: 0.5,
-        backgroundFilterColor: Colors.redAccent,
         onCenterItemPress: () {},
+        backgroundColor: backgroundColor,
       ),
     );
     listContentConfig.add(
-      const ContentConfig(
+      ContentConfig(
         title: "CITY",
-        styleTitle: TextStyle(
+        styleTitle: const TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
+        centerWidget: Container(
+          padding: const EdgeInsets.all(20),
+          child: Image.asset("assets/splash_1.png"),
+        ),
         description:
             "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: TextStyle(
+        styleDescription: const TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        colorBegin: Color(0xff89D4CF),
-        colorEnd: Color(0xff734AE8),
+        colorBegin: const Color(0xff89D4CF),
+        colorEnd: const Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
@@ -111,7 +114,10 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   }
 
   Widget renderNextBtn() {
-    return const Text("Siguiente");
+    return const Icon(
+      Icons.skip_next_rounded,
+      size: 25,
+    );
   }
 
   Widget renderDoneBtn() {
@@ -121,14 +127,16 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
     );
   }
 
-  Widget renderSkipBtn() {
-    return const Text("Saltar");
-  }
-
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-      foregroundColor: MaterialStateProperty.all<Color>(Colors.amberAccent),
+      shape: MaterialStateProperty.all<CircleBorder>(
+        const CircleBorder(
+          side: BorderSide(color: Colors.transparent),
+        ),
+      ),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0Xff154B69)),
+      foregroundColor: MaterialStateProperty.all<Color>(backgroundColor),
     );
   }
 
@@ -140,9 +148,11 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
 
-      // Skip button
-      renderSkipBtn: renderSkipBtn(),
-      skipButtonStyle: myButtonStyle(),
+      //Skip
+      isShowSkipBtn: false,
+
+      //Prev
+      isShowPrevBtn: false,
 
       // Next button
       renderNextBtn: renderNextBtn(),
@@ -162,13 +172,13 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           width: sizeIndicator,
           height: 10,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4), color: inactiveColor),
+              borderRadius: BorderRadius.circular(100), color: inactiveColor),
         ),
         activeIndicatorWidget: Container(
           width: sizeIndicator,
           height: 10,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4), color: activeColor),
+              borderRadius: BorderRadius.circular(100), color: activeColor),
         ),
         spaceBetweenIndicator: 10,
         typeIndicatorAnimation: TypeIndicatorAnimation.sliding,

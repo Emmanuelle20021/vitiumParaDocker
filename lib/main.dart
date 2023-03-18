@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vitium_app/Pantallas/IntroScreenCustomConfig.dart';
-import 'package:vitium_app/Pantallas/IntroScreenCustomayout.dart';
-//import 'package:vitium_app/Componentes/componentes.dart';
-//import 'package:vitium_app/Pantallas/bienvenida_1.dart';
-import 'Pantallas/IntroScreenDefault.dart';
-//import 'package:vitium_app/Pantallas/splash.dart';
+import 'package:vitium_app/Pantallas/intro_screen_custom_config.dart';
 
 void main() {
   runApp(const MyApp());
