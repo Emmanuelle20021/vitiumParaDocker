@@ -35,7 +35,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         textAlignDescription: TextAlign.left,
         styleDescription: GoogleFonts.dmSans(
           color: Colors.black,
-          fontSize: 14.0,
+          fontSize: 15.0,
         ),
         centerWidget: Container(
             padding: const EdgeInsets.all(0),
