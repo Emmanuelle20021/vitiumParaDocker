@@ -15,7 +15,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "276710694419-fccnoojbskqsggj2086f119qiqllpbrq.apps.googleusercontent.com",
+          "client_id": "276710694419-aq5gh7cjh0hmr9bnjhm7o7sov32f9a0i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -28,37 +28,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "276710694419-fccnoojbskqsggj2086f119qiqllpbrq.apps.googleusercontent.com",
+              "client_id": "276710694419-aq5gh7cjh0hmr9bnjhm7o7sov32f9a0i.apps.googleusercontent.com",
               "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:276710694419:android:fc64cc054ec8d187a2e9e6",
-        "android_client_info": {
-          "package_name": "com.vitium.vitium_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "276710694419-fccnoojbskqsggj2086f119qiqllpbrq.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi3e1e-uAIL5Ig4iCFPum9FH2Tn5wWhxg"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
+            },
             {
-              "client_id": "276710694419-fccnoojbskqsggj2086f119qiqllpbrq.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "276710694419-vdr8tnir78f1hfvtv79qkro49u39e61n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vitiumApp"
+              }
             }
           ]
         }

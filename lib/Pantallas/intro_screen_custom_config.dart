@@ -35,7 +35,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         textAlignDescription: TextAlign.left,
         styleDescription: GoogleFonts.dmSans(
           color: Colors.black,
-          fontSize: 14.0,
+          fontSize: 20.0,
         ),
         centerWidget: Container(
             padding: const EdgeInsets.all(0),
@@ -100,7 +100,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         textAlignDescription: TextAlign.left,
         styleDescription: GoogleFonts.dmSans(
           color: Colors.black,
-          fontSize: 14.0,
+          fontSize: 20.0,
         ),
         centerWidget: Container(
             padding: const EdgeInsets.all(0),
@@ -162,7 +162,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         textAlignDescription: TextAlign.left,
         styleDescription: GoogleFonts.dmSans(
           color: Colors.black,
-          fontSize: 14.0,
+          fontSize: 20.0,
         ),
         centerWidget: Container(
             padding: const EdgeInsets.all(0),
@@ -259,7 +259,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       backgroundColorAllTabs: Colors.grey,
       //Skip
       isShowSkipBtn: false,
-
+    
       //Prev
       isShowPrevBtn: false,
 
