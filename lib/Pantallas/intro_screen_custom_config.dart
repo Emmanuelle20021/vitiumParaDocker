@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class IntroScreenCustomConfig extends StatefulWidget {
   const IntroScreenCustomConfig({Key? key}) : super(key: key);
@@ -13,8 +14,8 @@ class IntroScreenCustomConfig extends StatefulWidget {
 // ------------------ Custom config ------------------
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<ContentConfig> listContentConfig = [];
-  Color activeColor = const Color(0xff0BEEF9);
-  Color inactiveColor = const Color(0xff03838b);
+  Color activeColor = const Color.fromARGB(255, 23, 159, 166);
+  Color inactiveColor = const Color(0Xff154B69);
   Color backgroundColor = const Color(0xffFFFFFF);
   double sizeIndicator = 20;
 
@@ -24,82 +25,191 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
 
     listContentConfig.add(
       ContentConfig(
-        title:
-            "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
-        maxLineTitle: 2,
-        styleTitle: const TextStyle(
-          color: Colors.white,
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
+        title: "VITIUM",
+        textAlignTitle: TextAlign.right,
+        styleTitle: GoogleFonts.dmSans(
+          color: const Color(0Xff154B69),
+          fontSize: 18,
         ),
-        description:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
-        styleDescription: const TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
-        ),
-        marginDescription: const EdgeInsets.only(
-          left: 20.0,
-          right: 20.0,
-          top: 20.0,
-          bottom: 70.0,
+        description: "Explora en las multiples opciones que tenemos para ti.",
+        textAlignDescription: TextAlign.left,
+        styleDescription: GoogleFonts.dmSans(
+          color: Colors.black,
+          fontSize: 14.0,
         ),
         centerWidget: Container(
-          padding: const EdgeInsets.all(20),
-          child: Image.asset("assets/splash_1.png"),
-        ),
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              children: [
+                Image.asset("assets/splash_1.png"),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.1, 0.1),
+                  child: Text(
+                    "Encuentra tu",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.1, 0.1),
+                  child: Text(
+                    "trabajo ideal",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.amber,
+                      decoration: TextDecoration.underline,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.1, 0.1),
+                  child: Text(
+                    "con nosotros",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                )
+              ],
+            )),
         onCenterItemPress: () {},
         backgroundColor: backgroundColor,
       ),
     );
     listContentConfig.add(
       ContentConfig(
-        title: "CITY",
-        styleTitle: const TextStyle(
-          color: Color(0xff7FFFD4),
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
-        ),
-        centerWidget: Container(
-          padding: const EdgeInsets.all(20),
-          child: Image.asset("assets/splash_1.png"),
+        title: "VITIUM",
+        textAlignTitle: TextAlign.right,
+        styleTitle: GoogleFonts.dmSans(
+          color: const Color(0Xff154B69),
+          fontSize: 18,
         ),
         description:
-            "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: const TextStyle(
-          color: Color(0xff7FFFD4),
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
+            "Somos fieles creyentes del potencial de los individuos, unete con nosotros.",
+        textAlignDescription: TextAlign.left,
+        styleDescription: GoogleFonts.dmSans(
+          color: Colors.black,
+          fontSize: 14.0,
         ),
-        colorBegin: const Color(0xff89D4CF),
-        colorEnd: const Color(0xff734AE8),
-        directionColorBegin: Alignment.topRight,
-        directionColorEnd: Alignment.bottomLeft,
+        centerWidget: Container(
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              children: [
+                Image.asset("assets/splash_2.png"),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.05, 0.05),
+                  child: Text(
+                    "Nada es",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.1, 0.1),
+                  child: Text("impedimento",
+                      style: GoogleFonts.dmSans(
+                        color: Colors.amber,
+                        decoration: TextDecoration.underline,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.04, 0.04),
+                  child: Text(
+                    "aquí",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                )
+              ],
+            )),
+        backgroundColor: backgroundColor,
+        maxLineTextDescription: 3,
       ),
     );
     listContentConfig.add(
-      const ContentConfig(
-        title: "BEACH",
-        styleTitle: TextStyle(
-          color: Color(0xffFFDAB9),
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
+      ContentConfig(
+        title: "VITIUM",
+        textAlignTitle: TextAlign.right,
+        styleTitle: GoogleFonts.dmSans(
+          color: const Color(0Xff154B69),
+          fontSize: 18,
         ),
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: TextStyle(
-          color: Color(0xffFFDAB9),
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
+            "Vuelvete nuestro socio y complementate en tu empresa ideal.",
+        textAlignDescription: TextAlign.left,
+        styleDescription: GoogleFonts.dmSans(
+          color: Colors.black,
+          fontSize: 14.0,
         ),
-        backgroundImage: "images/beach.jpeg",
+        centerWidget: Container(
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              children: [
+                Image.asset("assets/splash_3.png"),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.05, 0.05),
+                  child: Text(
+                    "Se un pilar",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.1, 0.1),
+                  child: Text(
+                    "en tu empresa",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.amber,
+                      decoration: TextDecoration.underline,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(0),
+                  alignment: const FractionalOffset(0.05, 0.05),
+                  child: Text(
+                    "soñada",
+                    style: GoogleFonts.dmSans(
+                      color: Colors.black,
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                )
+              ],
+            )),
+        backgroundColor: backgroundColor,
         maxLineTextDescription: 3,
       ),
     );
@@ -115,7 +225,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
 
   Widget renderNextBtn() {
     return const Icon(
-      Icons.skip_next_rounded,
+      Icons.arrow_forward_rounded,
       size: 25,
     );
   }
@@ -147,7 +257,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       // Content config
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
-
       //Skip
       isShowSkipBtn: false,
 
