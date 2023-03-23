@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vitium_app/Pantallas/inicio_sesion_registro.dart';
 
 class IntroScreenCustomConfig extends StatefulWidget {
   const IntroScreenCustomConfig({Key? key}) : super(key: key);
@@ -216,7 +217,12 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   }
 
   void onDonePress() {
-    log("onDonePress caught");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const InicioSesionRegistro(),
+      ),
+    );
   }
 
   void onNextPress() {
@@ -259,7 +265,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       backgroundColorAllTabs: Colors.grey,
       //Skip
       isShowSkipBtn: false,
-    
+
       //Prev
       isShowPrevBtn: false,
 
@@ -303,8 +309,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       ),
 
       // Scroll behavior
-      isAutoScroll: true,
-      isLoopAutoScroll: true,
       curveScroll: Curves.bounceIn,
     );
   }
