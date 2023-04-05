@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vitium_app/Funcionalidades/busqueda.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -25,7 +26,8 @@ class _HomeUserState extends State<HomeUser> {
                 checkEmailVerification();
               },
               child: const Text("confirmacion"),
-            )
+            ),
+            _buttonBuscarVacantes(),
           ],
         ),
       ),
@@ -59,6 +61,15 @@ class _HomeUserState extends State<HomeUser> {
         }
       },
       child: const Text("Enviar correo"),
+    );
+  }
+
+  Widget _buttonBuscarVacantes() {
+    return ElevatedButton(
+      onPressed: () async {
+        await Busqueda().buscar();
+      },
+      child: const Text("Buscar"),
     );
   }
 }
