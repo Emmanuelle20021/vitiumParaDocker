@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:vitium_app/Pantallas/home_user.dart';
 
 class Usuario {
   String email = "";
@@ -19,5 +20,12 @@ class Usuario {
 
   Future<void> iniciarSesion() async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  Future<void> eliminarCuenta() async {
+    await user?.reauthenticateWithCredential(
+      EmailAuthProvider.credential(email: email, password: password),
+    );
+    await user?.delete();
   }
 }

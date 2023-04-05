@@ -24,7 +24,7 @@ class _HomeUserState extends State<HomeUser> {
               onPressed: () {
                 checkEmailVerification();
               },
-              child: Text("confirmacion"),
+              child: const Text("confirmacion"),
             )
           ],
         ),
