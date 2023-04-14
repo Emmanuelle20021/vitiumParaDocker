@@ -13,13 +13,17 @@ class Usuario {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> registrar() async {
+  Future<void> registrar(ActionCodeSettings acs) async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
   }
 
   Future<void> iniciarSesion() async {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  Future<void> editarCuenta() async {
+    //Override en las clases derivadas
   }
 
   Future<void> eliminarCuenta() async {

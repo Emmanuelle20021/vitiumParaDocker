@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
+import 'package:vitium_app/Funcionalidades/postulante.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -17,6 +18,7 @@ class _HomeUserState extends State<HomeUser> {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("${user?.email}"),
             _buttonLogOut(),
@@ -28,6 +30,7 @@ class _HomeUserState extends State<HomeUser> {
               child: const Text("confirmacion"),
             ),
             _buttonBuscarVacantes(),
+            _buttonEditarCuenta(),
           ],
         ),
       ),
@@ -71,5 +74,14 @@ class _HomeUserState extends State<HomeUser> {
       },
       child: const Text("Buscar"),
     );
+  }
+
+  _buttonEditarCuenta() {
+    return ElevatedButton(
+        onPressed: () async {
+          Postulante usuario = Postulante();
+          usuario.editarCuenta();
+        },
+        child: const Text("Editar"));
   }
 }

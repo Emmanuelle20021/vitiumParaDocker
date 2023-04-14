@@ -1,5 +1,6 @@
 import 'package:vitium_app/Funcionalidades/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:vitium_app/Pantallas/home_user.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -10,8 +11,7 @@ class Postulante extends Usuario {
   String descripcion = "";
 
   @override
-  Future<void> registrar() async {
-    super.registrar();
+  Future<void> editarCuenta() async {
 
     final postulante = <String, String>{
       "nombre": nombre,
@@ -22,7 +22,7 @@ class Postulante extends Usuario {
 
     db
         .collection("postulante")
-        .doc(email)
+        .doc(user?.uid)
         .set(postulante)
         .onError((error, stackTrace) => {});
   }
