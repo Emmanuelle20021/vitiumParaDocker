@@ -13,7 +13,7 @@ class Usuario {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<void> registrar(ActionCodeSettings acs) async {
+  Future<void> registrar() async {
     await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
   }

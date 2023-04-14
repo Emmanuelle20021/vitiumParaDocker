@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     if (isLogin) {
       await usuario.iniciarSesion();
     } else {
-      await usuario.registrar(acs);
+      await usuario.registrar();
     }
   }
 
