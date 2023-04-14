@@ -12,8 +12,6 @@ class LoginEmpresa extends StatefulWidget {
 
 Empresa usuario = Empresa();
 
-final userShow = TextEditingController();
-
 class _LoginEmpresaState extends State<LoginEmpresa> {
   bool isLogin = false;
   final _formKey = GlobalKey<FormState>();

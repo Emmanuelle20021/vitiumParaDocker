@@ -12,8 +12,6 @@ class LoginPage extends StatefulWidget {
 
 Postulante usuario = Postulante();
 
-final userShow = TextEditingController();
-
 class _LoginPageState extends State<LoginPage> {
   bool isLogin = false;
   final _formKey = GlobalKey<FormState>();

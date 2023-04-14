@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Pantallas/home_user.dart';
-import 'package:vitium_app/Pantallas/login_page.dart';
+import 'package:vitium_app/Pantallas/login_empresa.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +20,7 @@ class VitiumApp extends StatelessWidget {
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return const HomeUser();
-          } else {
-            return const LoginPage();
-          }
+          return const HomeUser();
         },
       ),
     );
