@@ -21,8 +21,6 @@ var acs = ActionCodeSettings(
     androidInstallApp: true,
     androidMinimumVersion: '12');
 
-final userShow = TextEditingController();
-
 class _LoginPageState extends State<LoginPage> {
   bool isLogin = false;
   final _formKey = GlobalKey<FormState>();
@@ -42,8 +40,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
-
-    userShow.dispose();
     _emailController.dispose();
     _passwordController.dispose();
   }
