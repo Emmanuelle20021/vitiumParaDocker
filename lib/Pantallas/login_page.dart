@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/Pantallas/home_user.dart';
 
 class LoginPage extends StatefulWidget {
   static String id = "login_page";
