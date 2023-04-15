@@ -11,9 +11,7 @@ class Empresa extends Usuario {
   String puesto = "";
 
   @override
-  Future<void> registrar() async {
-    super.registrar();
-
+  Future<void> editarCuenta() async {
     final empresa = <String, String>{
       "nombre": nombreEmpleado,
       "numeroDeTelefono": numeroDeTelefono,
