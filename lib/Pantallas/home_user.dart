@@ -1,10 +1,9 @@
-// ignore_for_file: avoid_print
-
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
+import 'package:vitium_app/Pantallas/login_page.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -32,9 +31,12 @@ class _HomeUserState extends State<HomeUser> {
               },
               child: const Text("confirmacion"),
             ),
-            _buttonBuscarVacantes(),
+            _buttonBuscarPuesto(),
+            _buttonBuscarEmpresa(),
             _buttonEditarCuenta(),
-            _buttonSubirCV(),
+            _buttonFiltrarSalario(),
+            _buttonFiltrarDiscapacidad(),
+            _buttonPostular(),
           ],
         ),
       ),
@@ -71,12 +73,39 @@ class _HomeUserState extends State<HomeUser> {
     );
   }
 
-  Widget _buttonBuscarVacantes() {
+  Widget _buttonBuscarPuesto() {
     return ElevatedButton(
       onPressed: () async {
-        await Busqueda().buscar();
+        await Busqueda().buscarPuesto("Jefe");
       },
-      child: const Text("Buscar"),
+      child: const Text("Buscar P"),
+    );
+  }
+
+  Widget _buttonBuscarEmpresa() {
+    return ElevatedButton(
+      onPressed: () async {
+        await Busqueda().buscarEmpresa("Tm89STKTUJZmhrNyqloH");
+      },
+      child: const Text("Buscar E"),
+    );
+  }
+
+  Widget _buttonFiltrarSalario() {
+    return ElevatedButton(
+      onPressed: () async {
+        await Busqueda().filtrarSalario(21);
+      },
+      child: const Text("Filtrar salario"),
+    );
+  }
+
+  Widget _buttonFiltrarDiscapacidad() {
+    return ElevatedButton(
+      onPressed: () async {
+        await Busqueda().filtrarDiscapacidad("Motriz");
+      },
+      child: const Text("Filtrar Discapacidad"),
     );
   }
 
@@ -89,21 +118,25 @@ class _HomeUserState extends State<HomeUser> {
         child: const Text("Editar"));
   }
 
-  Widget _buttonSubirCV() {
-    return ElevatedButton(
-      onPressed: () async {
-        final result = await FilePicker.platform.pickFiles();
-        if (result == null) return;
+  void subirCV() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
 
-        final file = result.files.first;
-        openFile(file);
-      },
-      child: const Text("Subir CV"),
-    );
+    final file = result.files.first;
+    openFile(file);
   }
 
   void openFile(PlatformFile file) {
     Postulante usuario = Postulante();
     usuario.subirCV(file.path);
+  }
+
+  _buttonPostular() {
+    return ElevatedButton(
+        onPressed: () async {
+          subirCV();
+          usuario.postular("j7ST7yDHQi7le3hLr0Vw");
+        },
+        child: const Text("postular"));
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:vitium_app/Funcionalidades/postulacion.dart';
@@ -15,6 +13,8 @@ class Postulante extends Usuario {
   String numeroDeTelefono = "";
   String fechaNacimiento = "";
   String descripcion = "";
+  
+  String cv = "";
 
   @override
   Future<void> editarCuenta() async {
@@ -32,6 +32,17 @@ class Postulante extends Usuario {
         .onError((error, stackTrace) => {});
   }
 
+  Future<void> postular(vacante) async {
+    final postulacion = <String, String>{
+      "curriculum": cv,
+    };
+    db
+        .collection("postulaciones")
+        .doc(vacante)
+        .set(postulacion)
+        .onError((error, stackTrace) => {});
+  }
+
   Future<void> subirCV(filePaht) async {
     File file = File(filePaht);
     final storageRef = FirebaseStorage.instance.ref();
@@ -40,6 +51,7 @@ class Postulante extends Usuario {
 
     try {
       await cvRef.putFile(file);
+      cv = await cvRef.getDownloadURL();
     } on FirebaseException catch (e) {
       print("peto $e");
     }

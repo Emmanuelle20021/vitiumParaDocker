@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 
@@ -12,14 +11,6 @@ class LoginPage extends StatefulWidget {
 }
 
 Postulante usuario = Postulante();
-
-var acs = ActionCodeSettings(
-    url: 'https://vitium-sesion.neocities.org',
-    handleCodeInApp: true,
-    iOSBundleId: 'com.example.ios',
-    androidPackageName: 'com.example.android',
-    androidInstallApp: true,
-    androidMinimumVersion: '12');
 
 class _LoginPageState extends State<LoginPage> {
   bool isLogin = false;
@@ -35,13 +26,6 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       await usuario.registrar();
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
   }
 
   @override
