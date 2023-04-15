@@ -1,21 +1,19 @@
 // ignore_for_file: avoid_print
-
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:vitium_app/Funcionalidades/busqueda.dart';
-import 'package:vitium_app/Funcionalidades/postulante.dart';
 
-class HomeUser extends StatefulWidget {
-  const HomeUser({super.key});
+import '../Funcionalidades/empresa.dart';
+
+class HomeEmpresa extends StatefulWidget {
+  const HomeEmpresa({super.key});
 
   @override
-  State<HomeUser> createState() => _HomeUserState();
+  State<HomeEmpresa> createState() => _HomeEmpresaState();
 }
 
 final User? user = FirebaseAuth.instance.currentUser;
 
-class _HomeUserState extends State<HomeUser> {
+class _HomeEmpresaState extends State<HomeEmpresa> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +30,7 @@ class _HomeUserState extends State<HomeUser> {
               },
               child: const Text("confirmacion"),
             ),
-            _buttonBuscarVacantes(),
             _buttonEditarCuenta(),
-            _buttonSubirCV(),
           ],
         ),
       ),
@@ -71,39 +67,12 @@ class _HomeUserState extends State<HomeUser> {
     );
   }
 
-  Widget _buttonBuscarVacantes() {
-    return ElevatedButton(
-      onPressed: () async {
-        await Busqueda().buscar();
-      },
-      child: const Text("Buscar"),
-    );
-  }
-
-  _buttonEditarCuenta() {
+  Widget _buttonEditarCuenta() {
     return ElevatedButton(
         onPressed: () async {
-          Postulante usuario = Postulante();
+          Empresa usuario = Empresa();
           usuario.editarCuenta();
         },
         child: const Text("Editar"));
-  }
-
-  Widget _buttonSubirCV() {
-    return ElevatedButton(
-      onPressed: () async {
-        final result = await FilePicker.platform.pickFiles();
-        if (result == null) return;
-
-        final file = result.files.first;
-        openFile(file);
-      },
-      child: const Text("Subir CV"),
-    );
-  }
-
-  void openFile(PlatformFile file) {
-    Postulante usuario = Postulante();
-    usuario.subirCV(file.path);
   }
 }

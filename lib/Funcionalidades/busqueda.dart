@@ -7,6 +7,7 @@ class Busqueda {
     await db.collectionGroup("vacantes").get().then(
           (QuerySnapshot querySnapshot) => {
             querySnapshot.docs.toList().forEach((element) {
+              // ignore: avoid_print
               print(element.data());
             })
           },
