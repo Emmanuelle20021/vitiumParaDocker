@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:vitium_app/Funcionalidades/postulacion.dart';
 import 'package:vitium_app/Funcionalidades/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:vitium_app/Pantallas/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart' show user;
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 Postulacion postulacion = Postulacion();

@@ -120,19 +120,23 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buttonSend() {
     return StreamBuilder(
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return FloatingActionButton.extended(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        onPressed: () {
-          //print(usuario.toString());
-          handleSubmit();
-        },
-        label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
-        elevation: 10,
-        backgroundColor: Colors.amber,
-      );
+      return _buttonRS();
     });
+  }
+
+  FloatingActionButton _buttonRS() {
+    return FloatingActionButton.extended(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      onPressed: () {
+        //print(usuario.toString());
+        handleSubmit();
+      },
+      label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
+      elevation: 10,
+      backgroundColor: Colors.amber,
+    );
   }
 
   Widget _switchRS() {

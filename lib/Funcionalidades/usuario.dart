@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vitium_app/Pantallas/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 class Usuario {
   String email = "";

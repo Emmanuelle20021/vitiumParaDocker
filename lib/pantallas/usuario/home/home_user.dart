@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/Pantallas/login_page.dart';
+import 'package:vitium_app/pantallas/usuario/home/login/login_page.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});

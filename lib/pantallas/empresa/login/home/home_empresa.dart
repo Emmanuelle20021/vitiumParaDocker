@@ -1,8 +1,7 @@
 // ignore_for_file: avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../Funcionalidades/empresa.dart';
+import '../../../../Funcionalidades/empresa.dart';
 
 class HomeEmpresa extends StatefulWidget {
   const HomeEmpresa({super.key});
