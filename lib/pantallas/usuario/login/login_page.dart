@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 
 class LoginPage extends StatefulWidget {
@@ -26,6 +27,12 @@ class _LoginPageState extends State<LoginPage> {
     } else {
       await usuario.registrar();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
   }
 
   @override

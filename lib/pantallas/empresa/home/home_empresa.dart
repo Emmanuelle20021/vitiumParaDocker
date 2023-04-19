@@ -1,7 +1,8 @@
 // ignore_for_file: avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../../Funcionalidades/empresa.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import '../../../Funcionalidades/empresa.dart';
 
 class HomeEmpresa extends StatefulWidget {
   const HomeEmpresa({super.key});
@@ -13,6 +14,12 @@ class HomeEmpresa extends StatefulWidget {
 final User? user = FirebaseAuth.instance.currentUser;
 
 class _HomeEmpresaState extends State<HomeEmpresa> {
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

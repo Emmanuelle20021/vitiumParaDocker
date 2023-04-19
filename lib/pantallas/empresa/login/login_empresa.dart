@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/empresa.dart';
 
 class LoginEmpresa extends StatefulWidget {
@@ -27,6 +28,12 @@ class _LoginEmpresaState extends State<LoginEmpresa> {
     } else {
       await usuario.registrar();
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
   }
 
   @override

@@ -1,9 +1,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/pantallas/usuario/home/login/login_page.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_page.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -15,6 +16,13 @@ class HomeUser extends StatefulWidget {
 final User? user = FirebaseAuth.instance.currentUser;
 
 class _HomeUserState extends State<HomeUser> {
+
+  @override
+  void initState() {
+    super.initState();
+    FlutterNativeSplash.remove();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +63,9 @@ class _HomeUserState extends State<HomeUser> {
   Future<void> checkEmailVerification() async {
     await user?.reload(); // Recargar la información del usuario
     if (user != null && user!.emailVerified) {
-      print('Tu dirección de correo electrónico ha sido verificada.');
+      debugPrint('Tu dirección de correo electrónico ha sido verificada.');
     } else {
-      print(
+      debugPrint(
           'Tu dirección de correo electrónico no ha sido verificada todavía.');
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/postulacion.dart';
 import 'package:vitium_app/Funcionalidades/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,7 +14,7 @@ class Postulante extends Usuario {
   String numeroDeTelefono = "";
   String fechaNacimiento = "";
   String descripcion = "";
-  
+
   String cv = "";
 
   @override
@@ -53,7 +54,7 @@ class Postulante extends Usuario {
       await cvRef.putFile(file);
       cv = await cvRef.getDownloadURL();
     } on FirebaseException catch (e) {
-      print("peto $e");
+      debugPrint("peto $e");
     }
   }
 }

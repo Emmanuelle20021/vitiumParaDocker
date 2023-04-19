@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Busqueda {
   FirebaseFirestore db = FirebaseFirestore.instance;
@@ -9,7 +10,9 @@ class Busqueda {
             querySnapshot.docs.toList().forEach((element) {
               // ignore: avoid_print
               String field = element.get("puesto");
-              if (field.contains(busqueda)) print(element.data());
+              if (field.contains(busqueda)) {
+                debugPrint(element.data() as String?);
+              }
             })
           },
         );
@@ -21,7 +24,9 @@ class Busqueda {
             querySnapshot.docs.toList().forEach((element) {
               // ignore: avoid_print
               String field = element.id;
-              if (field.contains(busqueda)) print(element.data());
+              if (field.contains(busqueda)) {
+                debugPrint(element.data() as String);
+              }
             })
           },
         );
@@ -33,7 +38,7 @@ class Busqueda {
         .where("salario", isGreaterThanOrEqualTo: salario)
         .get();
     for (var element in vacantesFiltradas.docs) {
-      print(element.data());
+      debugPrint(element.data() as String);
     }
   }
 
@@ -43,7 +48,7 @@ class Busqueda {
         .where("discapacidad", isGreaterThanOrEqualTo: discapacidad)
         .get();
     for (var element in vacantesFiltradas.docs) {
-      print(element.data());
+      debugPrint(element.data() as String);
     }
   }
 }
