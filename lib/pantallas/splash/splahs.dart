@@ -1,0 +1,255 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class SplahsScreens extends StatelessWidget {
+  const SplahsScreens({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
+    return PageView(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.07,
+              vertical: MediaQuery.of(context).size.height * 0.08),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.bottomRight,
+                child: AutoSizeText(
+                  "Vitium",
+                  maxFontSize: 18,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.blueAccent,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              SizedBox.fromSize(
+                size: Size(0, MediaQuery.of(context).size.height * 0.35),
+                child: Image.asset("assets/logo-vitium.png"),
+              ),
+              AutoSizeText.rich(
+                textAlign: TextAlign.justify,
+                maxFontSize: 37,
+                maxLines: 3,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Encuentra tu\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "trabajo ideal\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.orange,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "con nosotros",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                heightFactor: 2,
+                alignment: Alignment.topCenter,
+                child: AutoSizeText(
+                  "Explora las multiples opciones que tenemos para ti",
+                  textAlign: TextAlign.justify,
+                  maxFontSize: 15,
+                  maxLines: 2,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.black, decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.07,
+              vertical: MediaQuery.of(context).size.height * 0.08),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.bottomRight,
+                child: AutoSizeText(
+                  "Vitium",
+                  maxFontSize: 18,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.blueAccent,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              SizedBox.fromSize(
+                size: Size(0, MediaQuery.of(context).size.height * 0.35),
+                child: Image.asset("assets/logo-vitium.png"),
+              ),
+              AutoSizeText.rich(
+                textAlign: TextAlign.justify,
+                maxFontSize: 37,
+                maxLines: 3,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Nada es\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "impedimento\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.orange,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "aqui",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                heightFactor: 2,
+                alignment: Alignment.topCenter,
+                child: AutoSizeText(
+                  "Somos fieles creyentes del potencial de los individuos, unete con nosotros.",
+                  textAlign: TextAlign.justify,
+                  maxFontSize: 15,
+                  maxLines: 2,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.black, decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.07,
+              right: MediaQuery.of(context).size.width * 0.07,
+              top: MediaQuery.of(context).size.height * 0.08,
+              bottom: MediaQuery.of(context).size.height * 0.02),
+          color: Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Align(
+                alignment: Alignment.bottomRight,
+                child: AutoSizeText(
+                  "Vitium",
+                  maxFontSize: 18,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.blueAccent,
+                        decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              SizedBox.fromSize(
+                size: Size(0, MediaQuery.of(context).size.height * 0.35),
+                child: Image.asset("assets/logo-vitium.png"),
+              ),
+              AutoSizeText.rich(
+                textAlign: TextAlign.justify,
+                maxFontSize: 37,
+                maxLines: 3,
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Se un pilar\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "en tu empresa\n",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.orange,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                    TextSpan(
+                      text: "soñada",
+                      style: GoogleFonts.comfortaa(
+                        textStyle: const TextStyle(
+                            color: Colors.black,
+                            decoration: TextDecoration.none),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: AutoSizeText(
+                  "Vuelvete nuestro socio y complementate en tu empresa ideal.",
+                  textAlign: TextAlign.justify,
+                  maxFontSize: 15,
+                  maxLines: 2,
+                  style: GoogleFonts.comfortaa(
+                    textStyle: const TextStyle(
+                        color: Colors.black, decoration: TextDecoration.none),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton.icon(
+                  label: const Text("Finalizar"),
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.check,
+                    color: Colors.blue,
+                    size: MediaQuery.of(context).size.height * 0.04,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}

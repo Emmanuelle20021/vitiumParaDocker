@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:vitium_app/pantallas/splash/splahs.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_page.dart';
 
@@ -37,7 +38,8 @@ class VitiumApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: StreamBuilder<User?>(
+        home:
+            const SplahsScreens() /*StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -47,6 +49,7 @@ class VitiumApp extends StatelessWidget {
           }
         },
       ),
-    );
+    */
+        );
   }
 }
