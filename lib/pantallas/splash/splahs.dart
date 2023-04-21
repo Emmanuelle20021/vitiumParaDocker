@@ -235,17 +235,20 @@ class SplahsScreens extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.centerRight,
                 child: TextButton.icon(
-                  label: const Text("Finalizar"),
+                  style: const ButtonStyle(
+                    splashFactory: NoSplash.splashFactory,
+                  ),
+                  label: const Text(""),
                   onPressed: () {},
                   icon: Icon(
                     Icons.check,
                     color: Colors.blue,
-                    size: MediaQuery.of(context).size.height * 0.04,
+                    size: MediaQuery.of(context).size.height * 0.06,
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
