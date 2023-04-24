@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 
-class LoginPage extends StatefulWidget {
-  static String id = "login_page";
+class LoginUser extends StatefulWidget {
+  static String id = "login_user";
 
-  const LoginPage({super.key});
+  const LoginUser({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginUser> createState() => _LoginUserState();
 }
 
 Postulante usuario = Postulante();
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginUserState extends State<LoginUser> {
   bool isLogin = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -33,6 +33,13 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     FlutterNativeSplash.remove();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override

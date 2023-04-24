@@ -9,33 +9,28 @@ Color gris = const Color(0xff383838);
 Color naranja = const Color(0xffFCA34B);
 Color negro = const Color(0xff000000);
 
-String briefFeli = "https://i.postimg.cc/W1F9SrwV/thumbnail-MALETIN-RANA-1.png";
-String briefTriste =
-    "https://i.postimg.cc/JzfpFnpk/thumbnail-MALETIN-RANA-TROSTEpng.png";
-String briefConfundido =
-    "https://i.postimg.cc/m26XQVMV/thumbnail-MALETIN-RANA.png";
-String briefAsombro =
-    "https://i.postimg.cc/zXf2b4LV/thumbnail-MALETIN-RANA-plain.png";
+String briefFeli = "assets/brief/brief-feliz.png";
+String briefTriste = "assets/brief/brief-triste.png";
+String briefConfundido = "assets/brief/brief-confundido.png";
+String briefAsombro = "assets/brief/brief-sorprendido.png";
 String logoVitium = "assets/vitium/logo-vitium.png";
 
-var tema = ThemeData(
-  iconButtonTheme: IconButtonThemeData(style: buttonStyle),
-);
+var tema = ThemeData();
 
-TextStyle splashNegro = TextStyle(
+TextStyle tituloNegro = TextStyle(
   letterSpacing: 5,
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 40,
-  fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.w900,
   color: negro,
   decoration: TextDecoration.none,
 );
 
-var splashNaranja = TextStyle(
+var tituloResaltado = TextStyle(
   letterSpacing: 5,
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 40,
-  fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.w900,
   color: naranja,
   decoration: TextDecoration.none,
 );

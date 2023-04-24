@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
 class SplahsScreens extends StatelessWidget {
   const SplahsScreens({super.key});
@@ -39,22 +40,7 @@ class SplahsScreens extends StatelessWidget {
                 ),
                 SizedBox.fromSize(
                   size: Size(0, MediaQuery.of(context).size.height * 0.35),
-                  child: Image.network(
-                    briefFeli,
-                    loadingBuilder:
-                        (context, child, ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: azulVitium,
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  (loadingProgress.expectedTotalBytes as num)
-                              : null,
-                        ),
-                      );
-                    },
-                  ),
+                  child: Image.asset(briefFeli),
                 ),
                 AutoSizeText.rich(
                   textAlign: TextAlign.justify,
@@ -64,15 +50,15 @@ class SplahsScreens extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: "Encuentra tu\n",
-                        style: splashNegro,
+                        style: tituloNegro,
                       ),
                       TextSpan(
                         text: "trabajo ideal\n",
-                        style: splashNaranja,
+                        style: tituloResaltado,
                       ),
                       TextSpan(
                         text: "con nosotros",
-                        style: splashNegro,
+                        style: tituloNegro,
                       ),
                     ],
                   ),
@@ -114,7 +100,7 @@ class SplahsScreens extends StatelessWidget {
               ),
               SizedBox.fromSize(
                 size: Size(0, MediaQuery.of(context).size.height * 0.35),
-                child: Image.network(briefFeli),
+                child: Image.asset(briefFeli),
               ),
               AutoSizeText.rich(
                 textAlign: TextAlign.justify,
@@ -124,15 +110,15 @@ class SplahsScreens extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "Nada es\n",
-                      style: splashNegro,
+                      style: tituloNegro,
                     ),
                     TextSpan(
                       text: "impedimento\n",
-                      style: splashNaranja,
+                      style: tituloResaltado,
                     ),
                     TextSpan(
                       text: "aqui",
-                      style: splashNegro,
+                      style: tituloNegro,
                     ),
                   ],
                 ),
@@ -175,7 +161,7 @@ class SplahsScreens extends StatelessWidget {
               ),
               SizedBox.fromSize(
                 size: Size(0, MediaQuery.of(context).size.height * 0.35),
-                child: Image.network(briefFeli),
+                child: Image.asset(briefFeli),
               ),
               AutoSizeText.rich(
                 textAlign: TextAlign.justify,
@@ -183,12 +169,12 @@ class SplahsScreens extends StatelessWidget {
                 maxLines: 3,
                 TextSpan(
                   children: [
-                    TextSpan(text: "Se un pilar\n", style: splashNegro),
+                    TextSpan(text: "Se un pilar\n", style: tituloNegro),
                     TextSpan(
                       text: "en tu empresa\n",
-                      style: splashNaranja,
+                      style: tituloResaltado,
                     ),
-                    TextSpan(text: "soñada", style: splashNegro),
+                    TextSpan(text: "soñada", style: tituloNegro),
                   ],
                 ),
               ),
@@ -242,6 +228,12 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
           zoomControl
             ..reset()
             ..forward();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginUser(),
+            ),
+          );
         },
         icon: Icon(
           Icons.check,

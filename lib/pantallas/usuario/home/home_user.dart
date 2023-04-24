@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_page.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
