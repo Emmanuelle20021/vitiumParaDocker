@@ -40,7 +40,11 @@ class SplahsScreens extends StatelessWidget {
                 ),
                 SizedBox.fromSize(
                   size: Size(0, MediaQuery.of(context).size.height * 0.35),
-                  child: Image.asset(briefFeli),
+                  child: Stack(
+                    children: [
+                      Image.asset(briefFeli),
+                    ],
+                  ),
                 ),
                 AutoSizeText.rich(
                   textAlign: TextAlign.justify,
