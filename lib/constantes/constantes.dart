@@ -79,6 +79,24 @@ const buttonTextStyle = TextStyle(
   color: Colors.pink,
 );
 
+const profile = BottomNavigationBarItem(
+  icon: Icon(Icons.person_2_outlined),
+  activeIcon: Icon(Icons.person),
+  label: 'Perfil',
+);
+
+const appliedJobs = BottomNavigationBarItem(
+  icon: Icon(Icons.work_outline),
+  activeIcon: Icon(Icons.work),
+  label: 'Trabajos',
+);
+
+const home = BottomNavigationBarItem(
+  icon: Icon(Icons.home_outlined),
+  activeIcon: Icon(Icons.home_filled),
+  label: 'Home',
+);
+
 var buttonStyle = ButtonStyle(
   shape:
       MaterialStateProperty.all(BorderRadius.circular(20) as OutlinedBorder?),

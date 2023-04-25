@@ -9,9 +9,9 @@ var tema = ThemeData(
     accentColor: accent,
   ),
   fontFamily: GoogleFonts.comfortaa().fontFamily,
-  navigationRailTheme: NavigationRailThemeData(
-    unselectedIconTheme: IconThemeData(color: tertiary),
-    selectedIconTheme: IconThemeData(color: icon),
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    selectedIconTheme: IconThemeData(color: primary),
+    unselectedIconTheme: IconThemeData(color: icon),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     foregroundColor: background,
