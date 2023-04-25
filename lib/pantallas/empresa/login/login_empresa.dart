@@ -167,7 +167,6 @@ class _LoginEmpresaState extends State<LoginEmpresa> {
         },
         label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
         elevation: 10,
-        backgroundColor: Colors.blueGrey,
       );
     });
   }
