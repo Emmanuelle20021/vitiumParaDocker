@@ -2,12 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Color background = const Color(0xfffdfdfd);
-Color azulVitium = const Color(0xff003399);
-Color azulSecundario = const Color(0xff254AB0);
-Color resaltado = const Color(0xff4274FC);
-Color gris = const Color(0xff383838);
-Color naranja = const Color(0xffFCA34B);
-Color negro = const Color(0xff000000);
+Color accent = const Color(0xff003399);
+Color primary = const Color(0xff254AB0);
+Color secondary = const Color(0xffFCA34B);
+Color tertiary = const Color(0xff4274FC);
+Color icon = const Color(0Xff2274A8);
+Color title = const Color(0xff000000);
+Color text = const Color(0xff383838);
+
+const Map<int, Color> color = {
+  50: Color.fromRGBO(37, 74, 176, .1),
+  100: Color.fromRGBO(37, 74, 176, .2),
+  200: Color.fromRGBO(37, 74, 176, .3),
+  300: Color.fromRGBO(37, 74, 176, .4),
+  400: Color.fromRGBO(37, 74, 176, .5),
+  500: Color.fromRGBO(37, 74, 176, .6),
+  600: Color.fromRGBO(37, 74, 176, .7),
+  700: Color.fromRGBO(37, 74, 176, .8),
+  800: Color.fromRGBO(37, 74, 176, .9),
+  900: Color.fromRGBO(37, 74, 176, 1),
+};
+
+MaterialColor customColor = const MaterialColor(0xff254AB0, color);
 
 String briefFeli = "assets/brief/brief-feliz.png";
 String briefTriste = "assets/brief/brief-triste.png";
@@ -17,54 +33,54 @@ String logoVitium = "assets/vitium/logo-vitium.png";
 
 var tema = ThemeData();
 
-TextStyle tituloNegro = TextStyle(
+TextStyle splashTitle = TextStyle(
   letterSpacing: 5,
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 40,
   fontWeight: FontWeight.w900,
-  color: negro,
+  color: title,
   decoration: TextDecoration.none,
 );
 
-var tituloResaltado = TextStyle(
+var orangeSplash = TextStyle(
   letterSpacing: 5,
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 40,
   fontWeight: FontWeight.w900,
-  color: naranja,
+  color: secondary,
   decoration: TextDecoration.none,
 );
 
-var tituloGris = TextStyle(
+var blueTitle = TextStyle(
+  letterSpacing: 5,
   fontFamily: GoogleFonts.comfortaa().fontFamily,
-  fontSize: 32,
-  fontWeight: FontWeight.bold,
-  color: gris,
+  fontSize: 40,
+  fontWeight: FontWeight.w900,
+  color: accent,
   decoration: TextDecoration.none,
 );
 
-var tituloAzul = TextStyle(
+var grayTitle = TextStyle(
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 32,
   fontWeight: FontWeight.bold,
-  color: azulSecundario,
+  color: text,
+  decoration: TextDecoration.none,
 );
 
 var textStylePopUp = TextStyle(
   fontFamily: GoogleFonts.comfortaa().fontFamily,
   fontSize: 16,
   fontWeight: FontWeight.bold,
-  color: azulVitium,
+  color: accent,
+);
+
+const buttonTextStyle = TextStyle(
+  color: Colors.pink,
 );
 
 var buttonStyle = ButtonStyle(
   shape:
-      MaterialStateProperty.all(BorderRadius.circular(10) as OutlinedBorder?),
-  backgroundColor: MaterialStateProperty.all<Color>(azulVitium),
-  textStyle: MaterialStateProperty.all(
-    TextStyle(
-      fontFamily: GoogleFonts.comfortaa().fontFamily,
-      color: const Color(0x0fffffff),
-    ),
-  ),
+      MaterialStateProperty.all(BorderRadius.circular(20) as OutlinedBorder?),
+  backgroundColor: MaterialStateProperty.all<Color>(accent),
 );

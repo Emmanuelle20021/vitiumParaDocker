@@ -138,18 +138,18 @@ class _LoginUserState extends State<LoginUser> {
     });
   }
 
-  FloatingActionButton _buttonRS() {
-    return FloatingActionButton.extended(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+  _buttonRS() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .7,
+      height: MediaQuery.of(context).size.height * .06,
+      child: FloatingActionButton.extended(
+        onPressed: () {
+          //print(usuario.toString());
+          handleSubmit();
+        },
+        label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
+        elevation: 10,
       ),
-      onPressed: () {
-        //print(usuario.toString());
-        handleSubmit();
-      },
-      label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
-      elevation: 10,
-      backgroundColor: Colors.amber,
     );
   }
 

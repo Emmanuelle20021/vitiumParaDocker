@@ -34,7 +34,7 @@ class SplahsScreens extends StatelessWidget {
                     maxFontSize: 18,
                     style: GoogleFonts.comfortaa(
                       textStyle: TextStyle(
-                          color: azulVitium, decoration: TextDecoration.none),
+                          color: icon, decoration: TextDecoration.none),
                     ),
                   ),
                 ),
@@ -54,15 +54,15 @@ class SplahsScreens extends StatelessWidget {
                     children: [
                       TextSpan(
                         text: "Encuentra tu\n",
-                        style: tituloNegro,
+                        style: splashTitle,
                       ),
                       TextSpan(
                         text: "trabajo ideal\n",
-                        style: tituloResaltado,
+                        style: orangeSplash,
                       ),
                       TextSpan(
                         text: "con nosotros",
-                        style: tituloNegro,
+                        style: splashTitle,
                       ),
                     ],
                   ),
@@ -75,7 +75,7 @@ class SplahsScreens extends StatelessWidget {
                     textAlign: TextAlign.justify,
                     maxFontSize: 15,
                     maxLines: 2,
-                    style: tituloGris,
+                    style: grayTitle,
                   ),
                 ),
               ],
@@ -97,8 +97,8 @@ class SplahsScreens extends StatelessWidget {
                   "Vitium",
                   maxFontSize: 18,
                   style: GoogleFonts.comfortaa(
-                    textStyle: TextStyle(
-                        color: azulVitium, decoration: TextDecoration.none),
+                    textStyle:
+                        TextStyle(color: icon, decoration: TextDecoration.none),
                   ),
                 ),
               ),
@@ -114,15 +114,15 @@ class SplahsScreens extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: "Nada es\n",
-                      style: tituloNegro,
+                      style: splashTitle,
                     ),
                     TextSpan(
                       text: "impedimento\n",
-                      style: tituloResaltado,
+                      style: orangeSplash,
                     ),
                     TextSpan(
                       text: "aqui",
-                      style: tituloNegro,
+                      style: splashTitle,
                     ),
                   ],
                 ),
@@ -135,7 +135,7 @@ class SplahsScreens extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   maxFontSize: 15,
                   maxLines: 2,
-                  style: tituloGris,
+                  style: grayTitle,
                 ),
               ),
             ],
@@ -158,8 +158,8 @@ class SplahsScreens extends StatelessWidget {
                   "Vitium",
                   maxFontSize: 18,
                   style: GoogleFonts.comfortaa(
-                    textStyle: TextStyle(
-                        color: azulVitium, decoration: TextDecoration.none),
+                    textStyle:
+                        TextStyle(color: icon, decoration: TextDecoration.none),
                   ),
                 ),
               ),
@@ -173,12 +173,12 @@ class SplahsScreens extends StatelessWidget {
                 maxLines: 3,
                 TextSpan(
                   children: [
-                    TextSpan(text: "Se un pilar\n", style: tituloNegro),
+                    TextSpan(text: "Se un pilar\n", style: splashTitle),
                     TextSpan(
                       text: "en tu empresa\n",
-                      style: tituloResaltado,
+                      style: orangeSplash,
                     ),
-                    TextSpan(text: "soñada", style: tituloNegro),
+                    TextSpan(text: "soñada", style: splashTitle),
                   ],
                 ),
               ),
@@ -189,7 +189,7 @@ class SplahsScreens extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   maxFontSize: 15,
                   maxLines: 2,
-                  style: tituloGris,
+                  style: grayTitle,
                 ),
               ),
               const Align(
