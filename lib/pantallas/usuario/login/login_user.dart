@@ -103,7 +103,6 @@ class _LoginUserState extends State<LoginUser> {
                         _buttonSend(),
                       ],
                     ),
-
                   ],
                 ),
               ),

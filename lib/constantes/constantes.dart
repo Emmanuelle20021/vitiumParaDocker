@@ -32,6 +32,8 @@ String briefAsombro = "assets/brief/brief-sorprendido.png";
 String logoVitium = "assets/vitium/logo-vitium.png";
 String mancha = "assets/figuras/mancha.png";
 String fondo = "assets/figuras/fondo.png";
+String fondo_2 = "assets/figuras/fondo_2.png";
+String defaultPic = "assets/defaults/usuario.png";
 
 var tema = ThemeData();
 

@@ -96,6 +96,7 @@ flutter:
     - assets/vitium/
     - assets/brief/
     - assets/figuras/
+    - assets/defaults/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
