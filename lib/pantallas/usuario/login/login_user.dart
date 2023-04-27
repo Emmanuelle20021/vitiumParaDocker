@@ -1,6 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
+import 'package:vitium_app/constantes/constantes.dart';
 
 class LoginUser extends StatefulWidget {
   static String id = "login_user";
@@ -14,19 +16,13 @@ class LoginUser extends StatefulWidget {
 Postulante usuario = Postulante();
 
 class _LoginUserState extends State<LoginUser> {
-  bool isLogin = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-
-    if (isLogin) {
-      await usuario.iniciarSesion();
-    } else {
-      await usuario.registrar();
-    }
+    await usuario.iniciarSesion();
   }
 
   @override
@@ -44,30 +40,74 @@ class _LoginUserState extends State<LoginUser> {
 
   @override
   Widget build(BuildContext context) {
+    final ancho = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: _switchRS(),
-                ),
-                _userTextField(),
-                _passwordTextField(),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Stack(
+            children: [
+              SizedBox(
+                width: ancho,
+                child: Image.asset(fondo, fit: BoxFit.cover),
+              ),
+              SingleChildScrollView(
+                child: Column(
                   children: [
-                    _buttonSend(),
+                    Container(
+                      padding: const EdgeInsets.only(top: 35, right: 20),
+                      alignment: Alignment.centerRight,
+                      width: ancho,
+                      child: AutoSizeText(
+                        "Vitium",
+                        maxFontSize: maxFontSizeVitium,
+                        style: vitiumStyle,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 10, left: 10),
+                      alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        "¡Bienvenido de vuelta!",
+                        maxFontSize: maxFontSizeSubTitle,
+                        style: subtituloStyle,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 5, left: 20),
+                      alignment: Alignment.bottomLeft,
+                      child: AutoSizeText(
+                        "Iniciar sesión",
+                        style: tituloStyle,
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: _userTextField(),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(bottom: 20, right: 8, left: 8),
+                      child: _passwordTextField(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buttonSend(),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -144,23 +184,14 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         onPressed: () {
-          //print(usuario.toString());
           handleSubmit();
         },
-        label: Text(isLogin ? "Iniciar Sesión" : "Registrarse"),
+        label: Text(
+          "Iniciar Sesión",
+          style: buttonTextStyle,
+        ),
         elevation: 10,
       ),
-    );
-  }
-
-  Widget _switchRS() {
-    return Switch(
-      value: isLogin,
-      onChanged: (value) {
-        setState(() {
-          isLogin = value;
-        });
-      },
     );
   }
 }
