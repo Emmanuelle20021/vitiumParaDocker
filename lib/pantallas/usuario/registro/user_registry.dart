@@ -107,8 +107,9 @@ class _UserRegistryState extends State<UserRegistry> {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.04,
+          height: MediaQuery.of(context).size.height * 0.05,
           padding: const EdgeInsets.symmetric(horizontal: 20),
+          alignment: Alignment.center,
           child: TextFormField(
             controller: _nameController,
             onChanged: (value) {
@@ -123,8 +124,10 @@ class _UserRegistryState extends State<UserRegistry> {
             },
             keyboardType: TextInputType.name,
             decoration: const InputDecoration(
-              hintText: "Nombre completo",
-              hintStyle: TextStyle(height: BorderSide.strokeAlignOutside),
+              alignLabelWithHint: true,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText: "Pepe pecas",
               labelText: "Nombre completo",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
