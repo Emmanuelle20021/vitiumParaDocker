@@ -30,8 +30,33 @@ String briefTriste = "assets/brief/brief-triste.png";
 String briefConfundido = "assets/brief/brief-confundido.png";
 String briefAsombro = "assets/brief/brief-sorprendido.png";
 String logoVitium = "assets/vitium/logo-vitium.png";
+String mancha = "assets/figuras/mancha.png";
+String fondo = "assets/figuras/fondo.png";
 
 var tema = ThemeData();
+
+double maxFontSizeVitium = 20;
+double maxFontSizeSubTitle = 18;
+double maxFontSizeTitle = 34;
+
+TextStyle vitiumStyle = TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.w900,
+  color: icon,
+);
+
+TextStyle tituloStyle = TextStyle(
+  fontSize: 30,
+  letterSpacing: 1,
+  fontWeight: FontWeight.w900,
+  color: background,
+);
+
+TextStyle subtituloStyle = TextStyle(
+  fontSize: 16,
+  color: background,
+  decoration: TextDecoration.none,
+);
 
 TextStyle splashTitle = TextStyle(
   letterSpacing: 5,
@@ -39,7 +64,6 @@ TextStyle splashTitle = TextStyle(
   fontSize: 40,
   fontWeight: FontWeight.w900,
   color: title,
-  decoration: TextDecoration.none,
 );
 
 var orangeSplash = TextStyle(
@@ -48,7 +72,6 @@ var orangeSplash = TextStyle(
   fontSize: 40,
   fontWeight: FontWeight.w900,
   color: secondary,
-  decoration: TextDecoration.none,
 );
 
 var blueTitle = TextStyle(
@@ -57,7 +80,6 @@ var blueTitle = TextStyle(
   fontSize: 40,
   fontWeight: FontWeight.w900,
   color: accent,
-  decoration: TextDecoration.none,
 );
 
 var grayTitle = TextStyle(
@@ -65,7 +87,6 @@ var grayTitle = TextStyle(
   fontSize: 32,
   fontWeight: FontWeight.bold,
   color: text,
-  decoration: TextDecoration.none,
 );
 
 var textStylePopUp = TextStyle(
@@ -75,8 +96,8 @@ var textStylePopUp = TextStyle(
   color: accent,
 );
 
-const buttonTextStyle = TextStyle(
-  color: Colors.pink,
+var buttonTextStyle = TextStyle(
+  color: background,
 );
 
 const profile = BottomNavigationBarItem(

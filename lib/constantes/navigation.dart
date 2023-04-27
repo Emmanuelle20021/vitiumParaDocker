@@ -49,18 +49,18 @@ class _BarraState extends State<Barra> {
   }
 }
 
-var perfil = BottomNavigationBarItem(
+var perfil = const BottomNavigationBarItem(
   icon: Icon(Icons.person_2_outlined),
   activeIcon: Icon(Icons.person),
   label: 'Perfil',
 );
-var trabajo = BottomNavigationBarItem(
+var trabajo = const BottomNavigationBarItem(
   icon: Icon(Icons.work_outline),
   activeIcon: Icon(Icons.work),
   label: 'Trabajos',
 );
 
-var menu = BottomNavigationBarItem(
+var menu = const BottomNavigationBarItem(
   icon: Icon(Icons.home_outlined),
   activeIcon: Icon(Icons.home_filled),
   label: 'Home',
