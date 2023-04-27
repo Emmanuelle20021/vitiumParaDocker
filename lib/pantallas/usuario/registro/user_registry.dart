@@ -37,6 +37,7 @@ class _UserRegistryState extends State<UserRegistry> {
   Widget build(BuildContext context) {
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
+    final tam = largo * .20;
     return SafeArea(
         child: Scaffold(
       body: Center(
@@ -44,8 +45,37 @@ class _UserRegistryState extends State<UserRegistry> {
           children: [
             SizedBox(
               width: ancho,
-              child: Image.asset(fondo_2,
-                  alignment: Alignment.topCenter, fit: BoxFit.cover),
+              height: largo * .3,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: tertiary,
+                      borderRadius: const BorderRadiusDirectional.vertical(
+                        bottom: Radius.elliptical(180, 70),
+                      ),
+                    ),
+                    height: largo * .20,
+                  ),
+                  Positioned(
+                    left: ancho * 0.30,
+                    top: largo * 0.10,
+                    child: Container(
+                      height: tam,
+                      width: tam,
+                      decoration: BoxDecoration(
+                        color: background,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        color: accent,
+                        Icons.account_circle,
+                        size: tam,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Column(
               children: [
