@@ -96,7 +96,11 @@ var textStylePopUp = TextStyle(
   color: accent,
 );
 
+var textButtonStyle =
+    TextStyle(color: accent, decoration: TextDecoration.underline);
+
 var buttonTextStyle = TextStyle(
+  fontSize: 14,
   color: background,
 );
 

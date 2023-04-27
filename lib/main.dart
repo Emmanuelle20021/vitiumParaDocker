@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/tema.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,7 @@ class VitiumApp extends StatelessWidget {
     return MaterialApp(
       theme: tema,
       debugShowCheckedModeBanner: false,
-      home: const LoginUser(),
+      home: const RegistroUsuario(),
     );
   }
 }
