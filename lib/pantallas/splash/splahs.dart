@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 class SplahsScreens extends StatelessWidget {

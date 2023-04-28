@@ -244,7 +244,7 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: TextButton(
         onPressed: () {},
-        child: Text(
+        child: const Text(
           "¿Olvidaste tu contraseña?",
           //style: textButtonStyle,
         ),
