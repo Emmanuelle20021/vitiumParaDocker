@@ -39,6 +39,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
 
   @override
   void dispose() {
+    _confirmPasswordController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -122,8 +123,9 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
                                   dashColor: primary,
                                   direction: Axis.horizontal,
                                 ),
-                                const Text(
+                                Text(
                                   " ó ",
+                                  style: TextStyle(color: primary),
                                 ),
                                 DottedLine(
                                   lineLength: ancho * 0.4,
