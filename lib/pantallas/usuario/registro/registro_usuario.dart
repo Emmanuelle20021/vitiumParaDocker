@@ -1,27 +1,32 @@
+// ignore: avoid_web_libraries_in_flutter
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/funcionalidades/postulante.dart';
 
-class LoginUser extends StatefulWidget {
-  const LoginUser({super.key});
+class RegistroUsuario extends StatefulWidget {
+  const RegistroUsuario({super.key});
 
   @override
-  State<LoginUser> createState() => _LoginUserState();
+  State<RegistroUsuario> createState() => _RegistroUsuarioState();
 }
 
 Postulante usuario = Postulante();
 
-class _LoginUserState extends State<LoginUser> {
+class _RegistroUsuarioState extends State<RegistroUsuario> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await usuario.iniciarSesion();
+    await usuario.registrar();
   }
 
   @override
@@ -32,6 +37,7 @@ class _LoginUserState extends State<LoginUser> {
 
   @override
   void dispose() {
+    _confirmPasswordController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -68,7 +74,7 @@ class _LoginUserState extends State<LoginUser> {
                     padding: const EdgeInsets.only(bottom: 10, left: 10),
                     alignment: Alignment.centerLeft,
                     child: AutoSizeText(
-                      "¡Bienvenido de vuelta!",
+                      "¡Unete a nosotros!",
                       maxFontSize: maxFontSizeSubTitle,
                       style: subtituloStyle,
                     ),
@@ -77,7 +83,7 @@ class _LoginUserState extends State<LoginUser> {
                     padding: EdgeInsets.only(bottom: alto * 0.15, left: 20),
                     alignment: Alignment.bottomLeft,
                     child: AutoSizeText(
-                      "Iniciar sesión",
+                      "Registrate",
                       style: tituloStyle,
                     ),
                   ),
@@ -94,22 +100,24 @@ class _LoginUserState extends State<LoginUser> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                bottom: 20, right: 8, left: 8),
+                                bottom: 8, right: 8, left: 8),
                             child: _passwordTextField(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 15, right: 8, left: 8),
+                            child: _confirmPasswordTextField(),
                           ),
                           Center(
                             child: _buttonSend(),
                           ),
-                          Center(
-                            child: _lostPassword(),
-                          ),
                           Padding(
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(8),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Hero(
-                                  tag: 'U',
+                                  tag: 'dotted1',
                                   child: DottedLine(
                                     lineLength: ancho * 0.4,
                                     dashColor: primary,
@@ -129,13 +137,13 @@ class _LoginUserState extends State<LoginUser> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: _registroButton(),
+                            padding: const EdgeInsets.all(8),
+                            child: _loginButton(),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(9),
-                            child: _reclutadorButton(),
-                          )
+                            child: _empresaButton(),
+                          ),
                         ],
                       ),
                     ),
@@ -177,6 +185,37 @@ class _LoginUserState extends State<LoginUser> {
     );
   }
 
+  Widget _confirmPasswordTextField() {
+    return StreamBuilder(
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: TextFormField(
+            controller: _confirmPasswordController,
+            onChanged: (value) {
+              usuario.password = value;
+            },
+            validator: (value) {
+              if (value == null ||
+                  value.isEmpty ||
+                  value != _passwordController.value) {
+                return "Las contraseñas no coiciden";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.emailAddress,
+            obscureText: true,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.lock),
+              hintText: "contraseña",
+              labelText: "Contraseña",
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _passwordTextField() {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -206,12 +245,12 @@ class _LoginUserState extends State<LoginUser> {
     );
   }
 
-  _reclutadorButton() {
+  _empresaButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
-        heroTag: 'Reclutador',
+        heroTag: 'reclutador',
         onPressed: () {},
         label: Text(
           "Soy reclutador",
@@ -222,32 +261,18 @@ class _LoginUserState extends State<LoginUser> {
     );
   }
 
-  _registroButton() {
+  _loginButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
-        heroTag: 'Registro',
+        heroTag: 'login',
         onPressed: () {},
         label: Text(
-          "¿Aún no tienes cuenta?",
+          "¿Ya tienes cuenta?",
           style: buttonTextStyle,
         ),
         elevation: 10,
-      ),
-    );
-  }
-
-  _lostPassword() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * .7,
-      height: MediaQuery.of(context).size.height * .06,
-      child: TextButton(
-        onPressed: () {},
-        child: Text(
-          "¿Olvidaste tu contraseña?",
-          //style: textButtonStyle,
-        ),
       ),
     );
   }
@@ -269,7 +294,7 @@ class _LoginUserState extends State<LoginUser> {
           handleSubmit();
         },
         label: Text(
-          "Iniciar Sesión",
+          "Registrarse",
           style: buttonTextStyle,
         ),
         elevation: 10,

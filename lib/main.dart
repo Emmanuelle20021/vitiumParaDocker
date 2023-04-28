@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/tema.dart';
+import 'package:vitium_app/pantallas/splash/splahs.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 import 'package:vitium_app/pantallas/usuario/registro/user_registry.dart';
 
@@ -28,7 +29,7 @@ class VitiumApp extends StatelessWidget {
     return MaterialApp(
       theme: tema,
       debugShowCheckedModeBanner: false,
-      home: const UserRegistry(),
+      home: const SplahsScreens(),
     );
   }
 }

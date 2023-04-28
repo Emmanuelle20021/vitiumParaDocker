@@ -51,6 +51,8 @@ dependencies:
   device_preview: ^1.1.0
   flutter_native_splash: ^2.2.19
   animate_do: ^3.0.2
+  calendar_date_picker2: ^0.5.2
+  dotted_line: ^3.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

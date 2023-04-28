@@ -1,3 +1,4 @@
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
@@ -127,7 +128,7 @@ class _UserRegistryState extends State<UserRegistry> {
               alignLabelWithHint: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "Pepe pecas",
+              hintText: "Bief Case",
               labelText: "Nombre completo",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -140,4 +141,20 @@ class _UserRegistryState extends State<UserRegistry> {
       },
     );
   }
+
+  /*Widget _buildBirthday() {
+    final config = CalendarDatePicker2Config(
+      selectedDayHighlightColor: accent,
+      weekdayLabels: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+      disabledDayTextStyle: const TextStyle(color: text),
+    );
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(height: 10,),
+        CalendarDatePicker2(config: 
+        ,)
+      ],
+    )
+  }*/
 }
