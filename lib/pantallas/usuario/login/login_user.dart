@@ -5,10 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 
-
 class LoginUser extends StatefulWidget {
-  static String id = "login_user";
-
   const LoginUser({super.key});
 
   @override
@@ -29,8 +26,8 @@ class _LoginUserState extends State<LoginUser> {
 
   @override
   void initState() {
-    super.initState();
     FlutterNativeSplash.remove();
+    super.initState();
   }
 
   @override
@@ -111,13 +108,17 @@ class _LoginUserState extends State<LoginUser> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                DottedLine(
-                                  lineLength: ancho * 0.4,
-                                  dashColor: primary,
-                                  direction: Axis.horizontal,
+                                Hero(
+                                  tag: 'U',
+                                  child: DottedLine(
+                                    lineLength: ancho * 0.4,
+                                    dashColor: primary,
+                                    direction: Axis.horizontal,
+                                  ),
                                 ),
-                                const Text(
+                                Text(
                                   " ó ",
+                                  style: TextStyle(color: primary),
                                 ),
                                 DottedLine(
                                   lineLength: ancho * 0.4,
@@ -131,7 +132,10 @@ class _LoginUserState extends State<LoginUser> {
                             padding: const EdgeInsets.all(10),
                             child: _registroButton(),
                           ),
-                          _reclutadorButton(),
+                          Padding(
+                            padding: const EdgeInsets.all(9),
+                            child: _reclutadorButton(),
+                          )
                         ],
                       ),
                     ),
@@ -165,7 +169,7 @@ class _LoginUserState extends State<LoginUser> {
             decoration: const InputDecoration(
               icon: Icon(Icons.email),
               hintText: "ejemplo@correo.com",
-              labelText: "Correo electronico",
+              labelText: "Correo electrónico",
             ),
           ),
         );
@@ -202,17 +206,14 @@ class _LoginUserState extends State<LoginUser> {
     );
   }
 
-_reclutadorButton() {
+  _reclutadorButton() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'Reclutador',
+        label: const Text("Soy reclutador"),
         onPressed: () {},
-        label: Text(
-          "Soy reclutador",
-          style: buttonTextStyle,
-        ),
-        elevation: 10,
       ),
     );
   }
@@ -222,6 +223,7 @@ _reclutadorButton() {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'Registro',
         onPressed: () {},
         label: Text(
           "¿Aún no tienes cuenta?",
@@ -238,9 +240,9 @@ _reclutadorButton() {
       height: MediaQuery.of(context).size.height * .06,
       child: TextButton(
         onPressed: () {},
-        child: Text(
+        child: const Text(
           "¿Olvidaste tu contraseña?",
-          style: textButtonStyle,
+          //style: textButtonStyle,
         ),
       ),
     );
@@ -258,6 +260,7 @@ _reclutadorButton() {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'boton',
         onPressed: () {
           handleSubmit();
         },

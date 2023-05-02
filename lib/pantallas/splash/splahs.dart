@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 class SplahsScreens extends StatelessWidget {
   const SplahsScreens({super.key});
@@ -14,15 +14,17 @@ class SplahsScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterNativeSplash.remove();
-    return PageView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
+    return Scaffold(
+      body: PageView(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        children: const [
+          PaginaSplash1(),
+          PaginaSplash2(),
+          PaginaSplash3(),
+        ],
       ),
-      children: const [
-        PaginaSplash1(),
-        PaginaSplash2(),
-        PaginaSplash3(),
-      ],
     );
   }
 }
@@ -285,14 +287,17 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const LoginUser(),
+              builder: (context) => const RegistroUsuario(),
             ),
           );
         },
-        icon: Icon(
-          Icons.check,
-          color: accent,
-          size: MediaQuery.of(context).size.height * 0.06,
+        icon: Hero(
+          tag: "Unique",
+          child: Icon(
+            Icons.check,
+            color: accent,
+            size: MediaQuery.of(context).size.height * 0.06,
+          ),
         ),
       ),
     );

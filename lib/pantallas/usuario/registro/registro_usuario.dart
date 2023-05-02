@@ -9,8 +9,6 @@ import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/funcionalidades/postulante.dart';
 
 class RegistroUsuario extends StatefulWidget {
-  static String id = "registro_usuario";
-
   const RegistroUsuario({super.key});
 
   @override
@@ -33,8 +31,8 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
 
   @override
   void initState() {
-    super.initState();
     FlutterNativeSplash.remove();
+    super.initState();
   }
 
   @override
@@ -118,10 +116,13 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                DottedLine(
-                                  lineLength: ancho * 0.4,
-                                  dashColor: primary,
-                                  direction: Axis.horizontal,
+                                Hero(
+                                  tag: 'dotted1',
+                                  child: DottedLine(
+                                    lineLength: ancho * 0.4,
+                                    dashColor: primary,
+                                    direction: Axis.horizontal,
+                                  ),
                                 ),
                                 Text(
                                   " ó ",
@@ -176,7 +177,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
             decoration: const InputDecoration(
               icon: Icon(Icons.email),
               hintText: "ejemplo@correo.com",
-              labelText: "Correo electronico",
+              labelText: "Correo electrónico",
             ),
           ),
         );
@@ -249,6 +250,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'reclutador',
         onPressed: () {},
         label: Text(
           "Soy reclutador",
@@ -264,6 +266,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'login',
         onPressed: () {},
         label: Text(
           "¿Ya tienes cuenta?",
@@ -286,6 +289,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'boton',
         onPressed: () {
           handleSubmit();
         },
