@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/busqueda.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -143,7 +142,7 @@ class _HomeUserState extends State<HomeUser> {
     return ElevatedButton(
         onPressed: () async {
           subirCV();
-          usuario.postular("j7ST7yDHQi7le3hLr0Vw");
+          //usuario.postular("j7ST7yDHQi7le3hLr0Vw");
         },
         child: const Text("postular"));
   }

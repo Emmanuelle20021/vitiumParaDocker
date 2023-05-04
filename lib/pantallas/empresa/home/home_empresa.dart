@@ -140,73 +140,7 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
             child: Flexible(
               fit: FlexFit.tight,
               flex: 1,
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                padding: const EdgeInsets.all(20),
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemCount: empresas.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    width: ancho * 0.3,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          width: ancho * 0.3,
-                          decoration: BoxDecoration(
-                            color: background,
-                            border: Border.all(color: Colors.black),
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(10),
-                            ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 20,
-                                offset: Offset(8, 7),
-                                blurStyle: BlurStyle.inner,
-                              ),
-                            ],
-                          ),
-                          height: alto * 0.1,
-                          child: Image.asset(
-                            logoVitium,
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: const BorderRadius.vertical(
-                              bottom: Radius.circular(10),
-                            ),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                blurRadius: 20,
-                                offset: Offset(8, 7),
-                                blurStyle: BlurStyle.inner,
-                              ),
-                            ],
-                            color: accent,
-                          ),
-                          height: alto * 0.05,
-                          width: ancho * 0.3,
-                          alignment: Alignment.center,
-                          child: Text(
-                            empresas[index]._nombre,
-                            style: TextStyle(color: background),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              child: compruebaEmpresas(empresas, alto, ancho),
             ),
           ),
           Container(
@@ -235,6 +169,80 @@ class _HomeEmpresaState extends State<HomeEmpresa> {
         ],
       ),
     );
+  }
+}
+
+Widget compruebaEmpresas(empresas, alto, ancho) {
+  if (empresas.length > 0) {
+    return GridView.builder(
+      gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      padding: const EdgeInsets.all(20),
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      itemCount: empresas.length,
+      itemBuilder: (context, index) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          width: ancho * 0.3,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                width: ancho * 0.3,
+                decoration: BoxDecoration(
+                  color: background,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(10),
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 20,
+                      offset: Offset(8, 7),
+                      blurStyle: BlurStyle.inner,
+                    ),
+                  ],
+                ),
+                height: alto * 0.1,
+                child: Image.asset(
+                  logoVitium,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: const BorderRadius.vertical(
+                    bottom: Radius.circular(10),
+                  ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 20,
+                      offset: Offset(8, 7),
+                      blurStyle: BlurStyle.inner,
+                    ),
+                  ],
+                  color: accent,
+                ),
+                height: alto * 0.05,
+                width: ancho * 0.3,
+                alignment: Alignment.center,
+                child: Text(
+                  empresas[index]._nombre,
+                  style: TextStyle(color: background),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  } else {
+    return const Text("No hay empresas para mostrar");
   }
 }
 

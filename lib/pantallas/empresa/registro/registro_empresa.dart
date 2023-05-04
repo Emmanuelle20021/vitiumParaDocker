@@ -6,8 +6,6 @@ import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 
 class RegistroEmpresa extends StatefulWidget {
-  static String id = "registro_empresa";
-
   const RegistroEmpresa({super.key});
 
   @override
@@ -122,10 +120,13 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                DottedLine(
-                                  lineLength: ancho * 0.4,
-                                  dashColor: primary,
-                                  direction: Axis.horizontal,
+                                Hero(
+                                  tag: 'J',
+                                  child: DottedLine(
+                                    lineLength: ancho * 0.4,
+                                    dashColor: primary,
+                                    direction: Axis.horizontal,
+                                  ),
                                 ),
                                 const Text(
                                   " ó ",
@@ -279,7 +280,10 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
-        onPressed: () {},
+        heroTag: 'postulante',
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+        },
         label: Text(
           "Soy postulante",
           style: buttonTextStyle,
@@ -294,7 +298,10 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
-        onPressed: () {},
+        heroTag: 'login',
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+        },
         label: Text(
           "¿Ya tienes cuenta?",
           style: buttonTextStyle,
@@ -316,6 +323,7 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       width: MediaQuery.of(context).size.width * .7,
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
+        heroTag: 'boton',
         onPressed: () {
           handleSubmit();
         },

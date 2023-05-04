@@ -251,7 +251,9 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         heroTag: 'reclutador',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+        },
         label: Text(
           "Soy reclutador",
           style: buttonTextStyle,
@@ -267,7 +269,9 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         heroTag: 'login',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/loginUser");
+        },
         label: Text(
           "¿Ya tienes cuenta?",
           style: buttonTextStyle,

@@ -12,7 +12,7 @@ class LoginUser extends StatefulWidget {
   State<LoginUser> createState() => _LoginUserState();
 }
 
-Postulante usuario = Postulante();
+Postulante _usuario = Postulante();
 
 class _LoginUserState extends State<LoginUser> {
   final _formKey = GlobalKey<FormState>();
@@ -21,7 +21,7 @@ class _LoginUserState extends State<LoginUser> {
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await usuario.iniciarSesion();
+    await _usuario.iniciarSesion();
   }
 
   @override
@@ -157,7 +157,7 @@ class _LoginUserState extends State<LoginUser> {
           child: TextFormField(
             controller: _emailController,
             onChanged: (value) {
-              usuario.email = value;
+              _usuario.email = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -185,7 +185,7 @@ class _LoginUserState extends State<LoginUser> {
           child: TextFormField(
             controller: _passwordController,
             onChanged: (value) {
-              usuario.password = value;
+              _usuario.password = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -213,7 +213,9 @@ class _LoginUserState extends State<LoginUser> {
       child: FloatingActionButton.extended(
         heroTag: 'Reclutador',
         label: const Text("Soy reclutador"),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+        },
       ),
     );
   }
@@ -224,7 +226,9 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         heroTag: 'Registro',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, "/registroUser");
+        },
         label: Text(
           "¿Aún no tienes cuenta?",
           style: buttonTextStyle,
@@ -240,9 +244,9 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: TextButton(
         onPressed: () {},
-        child: const Text(
+        child: Text(
           "¿Olvidaste tu contraseña?",
-          //style: textButtonStyle,
+          style: textButtonStyle,
         ),
       ),
     );
