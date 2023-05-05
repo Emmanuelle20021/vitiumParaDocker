@@ -17,7 +17,7 @@ var _rutas = {
   "/loginEmpresa": (context) => const LoginEmpresa(),
   "/registroUser": (context) => const RegistroUsuario(),
   "/registroEmpresa": (context) => const RegistroEmpresa(),
-  "/homeUser": (context) => const HomeUser(),
+  "/homeUser": (context) => const HomeUsuario(),
   "/homeEmpresa": (context) => const HomeEmpresa(),
   "/sinConexion": (context) => const SinConexion(),
 };
