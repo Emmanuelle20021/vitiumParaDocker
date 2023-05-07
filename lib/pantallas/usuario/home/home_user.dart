@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,14 +13,29 @@ class HomeUsuario extends StatefulWidget {
   State<HomeUsuario> createState() => _HomeUsuarioState();
 }
 
+FirebaseFirestore db = FirebaseFirestore.instance;
+List<FichaEmpresa> empresas = List.empty(growable: true);
+
+rellenarEmpresas() async {
+  empresas = List.empty(growable: true);
+  await db.collectionGroup("Empresa").get().then(
+        (QuerySnapshot querySnapshot) => {
+          querySnapshot.docs.toList().forEach(
+            (element) {
+              FichaEmpresa fichaEmpresa = FichaEmpresa(
+                element.get("Imagen"),
+                element.get("Nombre"),
+              );
+              empresas.add(fichaEmpresa);
+            },
+          ),
+        },
+      );
+}
+
 final User? user = FirebaseAuth.instance.currentUser;
 
 class _HomeUsuarioState extends State<HomeUsuario> {
-  List<FichaEmpresa> empresas = List.generate(
-    10,
-    (index) => FichaEmpresa(briefFeli, 'Vitium'),
-  );
-
   @override
   void initState() {
     super.initState();
@@ -172,6 +188,7 @@ class _HomeUsuarioState extends State<HomeUsuario> {
 }
 
 Widget compruebaEmpresas(empresas, alto, ancho) {
+  rellenarEmpresas();
   if (empresas.length > 0) {
     return GridView.builder(
       gridDelegate:

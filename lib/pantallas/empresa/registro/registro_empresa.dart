@@ -56,102 +56,106 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                 width: ancho,
                 child: Image.asset(fondo, fit: BoxFit.cover),
               ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 35, right: 20),
-                    alignment: Alignment.centerRight,
-                    width: ancho,
-                    child: AutoSizeText(
-                      "Vitium",
-                      maxFontSize: maxFontSizeVitium,
-                      style: vitiumStyle,
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(top: 35, right: 20),
+                      alignment: Alignment.centerRight,
+                      width: ancho,
+                      child: AutoSizeText(
+                        "Vitium",
+                        maxFontSize: maxFontSizeVitium,
+                        style: vitiumStyle,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 10),
-                    alignment: Alignment.centerLeft,
-                    child: AutoSizeText(
-                      "¡Unete a nosotros!",
-                      maxFontSize: maxFontSizeSubTitle,
-                      style: subtituloStyle,
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 10, left: 10),
+                      alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        "¡Unete a nosotros!",
+                        maxFontSize: maxFontSizeSubTitle,
+                        style: subtituloStyle,
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: alto * 0.15, left: 20),
-                    alignment: Alignment.bottomLeft,
-                    child: AutoSizeText(
-                      "Registrate",
-                      style: tituloStyle,
+                    Container(
+                      padding: EdgeInsets.only(bottom: alto * 0.15, left: 20),
+                      alignment: Alignment.bottomLeft,
+                      child: AutoSizeText(
+                        "Registrate",
+                        style: tituloStyle,
+                      ),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Form(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _userTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 8, right: 8, left: 8),
-                            child: _rfcTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 8, right: 8, left: 8),
-                            child: _passwordTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                bottom: 15, right: 8, left: 8),
-                            child: _confirmPasswordTextField(),
-                          ),
-                          Center(
-                            child: _buttonSend(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Hero(
-                                  tag: 'J',
-                                  child: DottedLine(
+                    Container(
+                      alignment: Alignment.center,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _userTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 8, right: 8, left: 8),
+                              child: _rfcTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 8, right: 8, left: 8),
+                              child: _passwordTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 15, right: 8, left: 8),
+                              child: _confirmPasswordTextField(),
+                            ),
+                            Center(
+                              child: _buttonSend(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Hero(
+                                    tag: 'J',
+                                    child: DottedLine(
+                                      lineLength: ancho * 0.4,
+                                      dashColor: primary,
+                                      direction: Axis.horizontal,
+                                    ),
+                                  ),
+                                  const Text(
+                                    " ó ",
+                                  ),
+                                  DottedLine(
                                     lineLength: ancho * 0.4,
                                     dashColor: primary,
                                     direction: Axis.horizontal,
                                   ),
-                                ),
-                                const Text(
-                                  " ó ",
-                                ),
-                                DottedLine(
-                                  lineLength: ancho * 0.4,
-                                  dashColor: primary,
-                                  direction: Axis.horizontal,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: _loginButton(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(9),
-                            child: _postulanteButton(),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: _loginButton(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(9),
+                              child: _postulanteButton(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -282,7 +286,7 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       child: FloatingActionButton.extended(
         heroTag: 'postulante',
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+          Navigator.pushReplacementNamed(context, "/loginUser");
         },
         label: Text(
           "Soy postulante",

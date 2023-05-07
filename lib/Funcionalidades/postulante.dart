@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/Funcionalidades/postulacion.dart';
@@ -16,6 +17,14 @@ class Postulante extends Usuario {
   String descripcion = "";
 
   String cv = "";
+
+  @override
+  Future<void> registrar() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await super.registrar();
+    User? user = auth.currentUser;
+    user?.updatePhotoURL("Postulante");
+  }
 
   @override
   Future<void> editarCuenta() async {

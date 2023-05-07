@@ -1,10 +1,7 @@
-// ignore: avoid_web_libraries_in_flutter
-// ignore_for_file: unrelated_type_equality_checks
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/funcionalidades/postulante.dart';
 
@@ -18,6 +15,7 @@ class RegistroUsuario extends StatefulWidget {
 Postulante usuario = Postulante();
 
 class _RegistroUsuarioState extends State<RegistroUsuario> {
+  late String confirmacion;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -25,13 +23,15 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       TextEditingController();
 
   handleSubmit() async {
-    if (!_formKey.currentState!.validate()) return;
-    await usuario.registrar();
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Si se envio")));
+      await usuario.registrar();
+    }
   }
 
   @override
   void initState() {
-    FlutterNativeSplash.remove();
     super.initState();
   }
 
@@ -90,6 +90,7 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
                   Container(
                     alignment: Alignment.center,
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.max,
@@ -193,12 +194,12 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
           child: TextFormField(
             controller: _confirmPasswordController,
             onChanged: (value) {
-              usuario.password = value;
+              confirmacion = value;
             },
             validator: (value) {
               if (value == null ||
                   value.isEmpty ||
-                  value != _passwordController.value) {
+                  confirmacion != usuario.password) {
                 return "Las contraseñas no coiciden";
               }
               return null;

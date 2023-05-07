@@ -84,6 +84,7 @@ class _LoginEmpresaState extends State<LoginEmpresa> {
                   Container(
                     alignment: Alignment.center,
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.max,

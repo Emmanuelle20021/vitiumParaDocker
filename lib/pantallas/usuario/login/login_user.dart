@@ -21,7 +21,9 @@ class _LoginUserState extends State<LoginUser> {
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await _usuario.iniciarSesion();
+    await _usuario.iniciarSesion().then(
+          (value) => Navigator.pushReplacementNamed(context, '/homeUser'),
+        );
   }
 
   @override
@@ -84,6 +86,7 @@ class _LoginUserState extends State<LoginUser> {
                   Container(
                     alignment: Alignment.center,
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.max,
