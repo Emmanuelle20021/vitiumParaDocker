@@ -246,7 +246,7 @@ class _LoginUserState extends State<LoginUser> {
         onPressed: () {},
         child: Text(
           "¿Olvidaste tu contraseña?",
-          //style: textButtonStyle,
+          style: textButtonStyle,
         ),
       ),
     );

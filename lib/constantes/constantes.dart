@@ -125,3 +125,8 @@ var buttonStyle = ButtonStyle(
       MaterialStateProperty.all(BorderRadius.circular(20) as OutlinedBorder?),
   backgroundColor: MaterialStateProperty.all<Color>(accent),
 );
+
+var textButtonStyle = TextStyle(
+  fontSize: 14,
+  color: background,
+);

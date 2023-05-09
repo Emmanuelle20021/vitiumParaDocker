@@ -13,7 +13,7 @@ class Postulante extends Usuario {
   String nombre = "";
   String numeroDeTelefono = "";
   String fechaNacimiento = "";
-  String descripcion = "";
+  String discapacidad = "";
 
   String cv = "";
 
@@ -23,7 +23,7 @@ class Postulante extends Usuario {
       "nombre": nombre,
       "numeroDeTelefono": numeroDeTelefono,
       "fechaNacimiento": fechaNacimiento,
-      "descripcion": descripcion,
+      "discapacidad": discapacidad,
     };
 
     db

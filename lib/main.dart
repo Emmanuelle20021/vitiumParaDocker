@@ -3,7 +3,9 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:vitium_app/Componentes/calendario.dart';
 import 'package:vitium_app/constantes/tema.dart';
 import 'package:vitium_app/pantallas/splash/splahs.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
@@ -28,8 +30,16 @@ class VitiumApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: tema,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es', 'ES'),
+      ],
       debugShowCheckedModeBanner: false,
-      home: const SplahsScreens(),
+      home: const UserRegistry(),
     );
   }
 }
