@@ -301,7 +301,7 @@ String comprobarUsuario() {
   if (usuario == null) {
     ruta = "/loginUser";
   } else {
-    ruta = "/homeEmpresa";
+    ruta = "/homeUser";
   }
   return ruta;
 }

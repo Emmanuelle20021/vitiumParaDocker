@@ -129,3 +129,12 @@ var buttonStyle = ButtonStyle(
       MaterialStateProperty.all(BorderRadius.circular(20) as OutlinedBorder?),
   backgroundColor: MaterialStateProperty.all<Color>(accent),
 );
+
+const iconos = [
+  Icons.insights,
+  Icons.work_history,
+  Icons.cases_rounded,
+  Icons.trolley,
+  Icons.card_travel,
+  Icons.savings
+];

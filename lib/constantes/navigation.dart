@@ -36,16 +36,12 @@ class _BarraState extends State<Barra> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Prueba'),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+    return BottomNavigationBar(
         items: <BottomNavigationBarItem>[menu, trabajo, perfil],
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      onTap: _onItemTapped,
     );
+
   }
 }
 
