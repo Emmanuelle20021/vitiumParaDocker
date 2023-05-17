@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/splash/splahs.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/home/trabajos_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -226,25 +226,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget compruebaEmpresas(empresas, alto, ancho) => empresas != Null
-      ? GestureDetector(
-          onTap: () {
-            setState(() {
-              Navigator.pushReplacement(
+      ? GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2),
+          padding: const EdgeInsets.all(20),
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemCount: empresas.length,
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
                   context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, __, _) => const SplahsScreens(),
-                  ));
-            });
-          },
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            padding: const EdgeInsets.all(20),
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: empresas.length,
-            itemBuilder: (context, index) {
-              return Container(
+                  MaterialPageRoute(
+                    builder: (context) => TrabajosScreen(
+                      empresas[index].nombre,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 width: ancho * 0.3,
                 child: Column(
@@ -300,9 +301,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         )
       : const Center(
           child: Text("No hay empresas para mostrar"),

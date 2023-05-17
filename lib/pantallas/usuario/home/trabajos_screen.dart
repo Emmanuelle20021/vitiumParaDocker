@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 
+// ignore: must_be_immutable
 class TrabajosScreen extends StatefulWidget {
-  const TrabajosScreen({super.key});
-
+  String busquedaini;
+  TrabajosScreen(this.busquedaini, {super.key});
   @override
   State<TrabajosScreen> createState() => _TrabajosScreenState();
 }
@@ -42,6 +43,7 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
   @override
   void initState() {
     super.initState();
+    busqueda = widget.busquedaini;
     buscarVacante(busqueda);
   }
 
@@ -55,104 +57,113 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
   Widget build(BuildContext context) {
     double ancho = MediaQuery.of(context).size.width;
     double alto = MediaQuery.of(context).size.height;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: alto * 0.05,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Flexible(
-              fit: FlexFit.loose,
-              flex: 2,
-              child: AutoSizeText(
-                'Resultados',
-                maxFontSize: 33,
-                minFontSize: 30,
-                maxLines: 2,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage(logoVitium),
-              backgroundColor: Colors.transparent,
-            ),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
+      floatingActionButton: FloatingActionButton.small(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Icon(Icons.arrow_back),
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: alto * 0.05,
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Flexible(
+              const Flexible(
                 fit: FlexFit.loose,
                 flex: 2,
-                child: TextField(
-                  onSubmitted: (value) {
-                    busqueda = value;
-                    buscarVacante(busqueda);
-                  },
-                  inputFormatters: [
-                    FilteringTextInputFormatter.singleLineFormatter
-                  ],
-                  textCapitalization: TextCapitalization.words,
-                  textAlignVertical: TextAlignVertical.center,
-                  decoration: const InputDecoration(
-                    constraints: BoxConstraints.tightFor(height: 47),
-                    prefixIcon: Icon(Icons.search),
-                    hintText: "Buscar",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                  controller: busquedaController,
+                child: AutoSizeText(
+                  'Resultados',
+                  maxFontSize: 33,
+                  minFontSize: 30,
+                  maxLines: 2,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
+              CircleAvatar(
+                radius: 25,
+                backgroundImage: AssetImage(logoVitium),
+                backgroundColor: Colors.transparent,
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Flexible(
+                  fit: FlexFit.loose,
+                  flex: 2,
+                  child: TextField(
+                    onSubmitted: (value) {
+                      busqueda = value;
+                      buscarVacante(busqueda);
+                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.singleLineFormatter
+                    ],
+                    textCapitalization: TextCapitalization.words,
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: const InputDecoration(
+                      constraints: BoxConstraints.tightFor(height: 47),
+                      prefixIcon: Icon(Icons.search),
+                      hintText: "Buscar",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
                     ),
-                    color: accent,
-                  ),
-                  child: IconButton(
-                    color: background,
-                    splashRadius: 20,
-                    onPressed: () {},
-                    icon: const Icon(Icons.format_list_bulleted_sharp),
+                    controller: busquedaController,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      color: accent,
+                    ),
+                    child: IconButton(
+                      color: background,
+                      splashRadius: 20,
+                      onPressed: () {},
+                      icon: const Icon(Icons.format_list_bulleted_sharp),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                vacante != null
+                    ? "${vacante?.length} Trabajos encontrados"
+                    : '0 Trabajos encontrados',
+                style: TextStyle(fontSize: ancho * .04),
               )
             ],
           ),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              vacante != null
-                  ? "${vacante?.length} Trabajos encontrados"
-                  : '0 Trabajos encontrados',
-              style: TextStyle(fontSize: ancho * .04),
-            )
-          ],
-        ),
-        SizedBox(
-          height: alto * .65,
-          child: listaTrabajos(alto, ancho),
-        ),
-      ],
+          SizedBox(
+            height: alto * .65,
+            child: listaTrabajos(alto, ancho),
+          ),
+        ],
+      ),
     );
   }
 

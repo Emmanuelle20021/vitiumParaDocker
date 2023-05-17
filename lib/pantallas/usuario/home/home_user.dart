@@ -19,7 +19,7 @@ class _HomeUsuarioState extends State<HomeUsuario> {
   var _index = 0;
   var screens = [
     const HomeScreen(),
-    const TrabajosScreen(),
+    TrabajosScreen(""),
     const PerfilScreen(),
   ];
   @override
