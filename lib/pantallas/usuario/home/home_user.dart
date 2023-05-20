@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_screen.dart';
 import 'package:vitium_app/pantallas/usuario/home/perfil_screen.dart';
-import 'package:vitium_app/pantallas/usuario/home/trabajos_screen.dart';
+import 'package:vitium_app/pantallas/usuario/home/postulaciones_screen.dart';
 
 class HomeUsuario extends StatefulWidget {
   const HomeUsuario({super.key});
@@ -19,7 +19,7 @@ class _HomeUsuarioState extends State<HomeUsuario> {
   var _index = 0;
   var screens = [
     const HomeScreen(),
-    TrabajosScreen(""),
+    const Postulaciones(),
     const PerfilScreen(),
   ];
   @override
