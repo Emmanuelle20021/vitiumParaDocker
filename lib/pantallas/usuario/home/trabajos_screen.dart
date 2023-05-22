@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
 
 // ignore: must_be_immutable
 class TrabajosScreen extends StatefulWidget {
@@ -174,7 +175,16 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DetalleVacante(vacante![index].id, false);
+                    },
+                  ),
+                );
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 5),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 import 'package:vitium_app/pantallas/usuario/home/trabajos_screen.dart';
 
@@ -311,7 +312,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget vacanteFicha() => vacante != null
       ? GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return DetalleVacante(vacante!.id, false);
+                },
+              ),
+            );
+          },
           child: Container(
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),

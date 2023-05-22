@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
 User? usuario = FirebaseAuth.instance.currentUser;
 
@@ -281,7 +283,18 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
         ),
         label: const Text(""),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, comprobarUsuario());
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                if (usuario == null) {
+                  return const LoginUser();
+                } else {
+                  return const HomeUsuario();
+                }
+              },
+            ),
+          );
         },
         icon: Hero(
           tag: "Unique",
@@ -296,12 +309,4 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
   }
 }
 
-String comprobarUsuario() {
-  String ruta = "";
-  if (usuario == null) {
-    ruta = "/loginUser";
-  } else {
-    ruta = "/homeUser";
-  }
-  return ruta;
-}
+
