@@ -251,6 +251,51 @@ Widget _disabilityField() {
   );
 }
 
+Widget _() {
+  return StreamBuilder(
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return Container(
+        height: MediaQuery.of(context).size.height * 0.08,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.center,
+        child: DropdownButtonFormField(
+          items: <String>["Auditiva", "Física", "Habla", "Motriz", "Múltiple"]
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            );
+          }).toList(),
+          //controller: _nameController,
+          onChanged: (value) {
+            value;
+            usuario.discapacidad;
+          },
+          validator: (value) {
+            if (value == null) {
+              return "Seleccione una discapacidad";
+            }
+            return null;
+          },
+          //keyboardType: TextInputType.name,
+          decoration: const InputDecoration(
+            alignLabelWithHint: true,
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "Motriz",
+            labelText: "Discapacidad",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
 class BirthdayField extends StatefulWidget {
   const BirthdayField({super.key});
 
