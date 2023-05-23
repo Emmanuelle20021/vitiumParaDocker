@@ -213,7 +213,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: const ButtonStyle(
                       splashFactory: NoSplash.splashFactory,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TrabajosScreen(""),
+                        ),
+                      );
+                    },
                     child: const AutoSizeText("Ver todos"),
                   ),
                 ],

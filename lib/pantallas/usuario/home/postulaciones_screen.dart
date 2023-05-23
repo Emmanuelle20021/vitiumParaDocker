@@ -1,9 +1,9 @@
 import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/detallesVacante/vacante_postulado.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 class Postulaciones extends StatelessWidget {
@@ -121,79 +121,93 @@ class _PostulacionState extends State<Postulacion> {
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(icono,
-                          size: MediaQuery.of(context).size.width * .1,
-                          color: tertiary),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            vacantes?[index].get("Puesto"),
-                            style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width * .04),
-                          ),
-                          Text(
-                            vacantes?[index].get('Empresa'),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 2, vertical: 5),
-                        width: MediaQuery.of(context).size.width * .3,
-                        height: MediaQuery.of(context).size.height * .03,
-                        decoration: BoxDecoration(
-                          color: getColor(postulaciones?[index].get("Estado")),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            return GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => VacantePostulado(
+                    vacantes![index].id,
+                    true,
+                    postulaciones![index].get("Estado"),
+                    postulaciones![index].get("Mensaje"),
+                  ),
+                ),
+              ),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(icono,
+                            size: MediaQuery.of(context).size.width * .1,
+                            color: tertiary),
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.info_outline,
-                              size: 15,
-                              color: background,
+                            Text(
+                              vacantes?[index].get("Puesto"),
+                              style: TextStyle(
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * .04),
                             ),
-                            AutoSizeText(
-                              postulaciones?[index].get("Estado"),
-                              style: TextStyle(color: background),
+                            Text(
+                              vacantes?[index].get('Empresa'),
                             ),
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 2, vertical: 5),
+                          width: MediaQuery.of(context).size.width * .3,
+                          height: MediaQuery.of(context).size.height * .03,
+                          decoration: BoxDecoration(
+                            color:
+                                getColor(postulaciones?[index].get("Estado")),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                size: 15,
+                                color: background,
+                              ),
+                              AutoSizeText(
+                                postulaciones?[index].get("Estado"),
+                                style: TextStyle(color: background),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            "Discapacidad ${vacantes?[index].get("Discapacidad")}",
                           ),
                         ),
-                        child: Text(
-                          "Discapacidad ${vacantes?[index].get("Discapacidad")}",
+                        Text(
+                          vacantes?[index].get("Salario"),
                         ),
-                      ),
-                      Text(
-                        vacantes?[index].get("Salario"),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           },

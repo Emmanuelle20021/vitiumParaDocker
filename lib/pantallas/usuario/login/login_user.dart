@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/login/login_empresa.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
@@ -22,7 +25,12 @@ class _LoginUserState extends State<LoginUser> {
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
     await _usuario.iniciarSesion().then(
-          (value) => Navigator.pushReplacementNamed(context, '/homeUser'),
+          (value) => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeUsuario(),
+            ),
+          ),
         );
   }
 
@@ -217,7 +225,11 @@ class _LoginUserState extends State<LoginUser> {
         heroTag: 'Reclutador',
         label: const Text("Soy reclutador"),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginEmpresa(),
+              ));
         },
       ),
     );
@@ -230,7 +242,12 @@ class _LoginUserState extends State<LoginUser> {
       child: FloatingActionButton.extended(
         heroTag: 'Registro',
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/registroUser");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const RegistroUsuario(),
+            ),
+          );
         },
         label: Text(
           "¿Aún no tienes cuenta?",

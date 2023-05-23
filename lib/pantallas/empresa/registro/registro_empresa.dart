@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/login/login_empresa.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
 class RegistroEmpresa extends StatefulWidget {
   const RegistroEmpresa({super.key});
@@ -286,7 +288,12 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       child: FloatingActionButton.extended(
         heroTag: 'postulante',
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/loginUser");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginUser(),
+            ),
+          );
         },
         label: Text(
           "Soy postulante",
@@ -304,7 +311,12 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
       child: FloatingActionButton.extended(
         heroTag: 'login',
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/loginEmpresa");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginEmpresa(),
+            ),
+          );
         },
         label: Text(
           "¿Ya tienes cuenta?",
