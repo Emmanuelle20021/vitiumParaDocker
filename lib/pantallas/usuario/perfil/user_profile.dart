@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 import 'package:vitium_app/pantallas/usuario/perfil/edit_profile.dart';
 
@@ -17,6 +19,9 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
+QueryDocumentSnapshot<Object>? usuarioBD;
+FirebaseFirestore db = FirebaseFirestore.instance;
+
 handleSubmit() async {
   if (!_formKey.currentState!.validate()) return;
   await usuario.iniciarSesion();
@@ -26,16 +31,36 @@ Postulante usuario = Postulante();
 final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
+var id = user!.uid;
 
 class _UserProfileState extends State<UserProfile> {
+  buscarUsuario(idUsuario) async {
+    hayCambio = false;
+    usuarioBD = null;
+    QueryDocumentSnapshot<Object>? usuarios;
+    await db.collectionGroup("Perfil").get().then(
+          (value) => {
+            value.docs.toList().forEach((element) {
+              if (element.id == idUsuario) {
+                usuarios = element;
+              }
+            })
+          },
+        );
+    setState(() {
+      usuarioBD ??= usuarios;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    FlutterNativeSplash.remove();
+    buscarUsuario(id);
   }
 
   @override
   Widget build(BuildContext context) {
+    hayCambio ? buscarUsuario(id) : () {};
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
     final tam = largo * .20;
@@ -97,12 +122,14 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   IconButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const EditProfile(),
+                          builder: (context) => EditProfile(
+                            fecha: usuarioBD!.get("FechaNacimiento"),
+                          ),
                         ),
-                      );
+                      ).whenComplete(() => buscarUsuario(id));
                     },
                     icon: const Icon(Icons.edit),
                     color: primary,
@@ -168,14 +195,14 @@ class _UserProfileState extends State<UserProfile> {
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             controller: _nameController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "Bief Case",
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText: usuarioBD == null ? "" : "${usuarioBD!.get("Nombre")}",
               labelText: "Nombre completo",
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -197,14 +224,15 @@ class _UserProfileState extends State<UserProfile> {
           child: TextFormField(
             readOnly: true,
             controller: _phoneController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "9211450967",
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText:
+                  usuarioBD == null ? "" : "${usuarioBD!.get("Telefono")}",
               labelText: "Teléfono",
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -227,13 +255,15 @@ Widget _disabilityField() {
         child: TextFormField(
           readOnly: true,
           controller: _phoneController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Motriz",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText:
+                usuarioBD == null ? "" : "${usuarioBD!.get("Discapacidad")}",
             labelText: "Discapacidad",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -254,12 +284,15 @@ Widget _birthdayField() {
         alignment: Alignment.center,
         child: TextFormField(
           readOnly: true,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText:
+                usuarioBD == null ? "" : "${usuarioBD!.get("FechaNacimiento")}",
             labelText: "Fecha de nacimiento",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -293,6 +326,7 @@ Widget _buttonLogOut() {
                   builder: (context) => const LoginUser(),
                 ),
               );
+              FirebaseAuth.instance.signOut();
             },
             child: const Text(
               'Cerrar Sesión',

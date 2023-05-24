@@ -4,10 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 class EditProfile extends StatefulWidget {
   static String id = "user_registry";
+  final String fecha;
   const EditProfile({
+    required this.fecha,
     super.key,
   });
 
@@ -23,18 +26,9 @@ handleSubmit() async {
 Postulante usuario = Postulante();
 final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
-final TextEditingController _birthController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 
 class _EditProfileState extends State<EditProfile> {
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _birthController.dispose();
-    _phoneController.dispose();
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -97,10 +91,6 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: _birthdayField(),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
                               child: _phoneTextField(),
                             ),
                             Padding(
@@ -109,7 +99,7 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(50.0),
-                              child: _buttonSave(),
+                              child: _buttonSave(widget.fecha),
                             ),
                           ],
                         ),
@@ -137,8 +127,7 @@ class _EditProfileState extends State<EditProfile> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             controller: _nameController,
             onChanged: (value) {
-              value;
-              usuario.nombre;
+              usuario.nombre = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -175,8 +164,7 @@ class _EditProfileState extends State<EditProfile> {
           child: TextFormField(
             controller: _phoneController,
             onChanged: (value) {
-              value;
-              usuario.nombre;
+              usuario.numeroDeTelefono = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -223,8 +211,7 @@ Widget _disabilityField() {
           }).toList(),
           //controller: _nameController,
           onChanged: (value) {
-            value;
-            usuario.discapacidad;
+            usuario.discapacidad = value!;
           },
           validator: (value) {
             if (value == null) {
@@ -250,33 +237,7 @@ Widget _disabilityField() {
   );
 }
 
-Widget _birthdayField() {
-  return StreamBuilder(
-    builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        height: MediaQuery.of(context).size.height * 0.10,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.center,
-        child: TextFormField(
-          readOnly: true,
-          decoration: const InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            labelText: "Fecha de nacimiento",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-Widget _buttonSave() {
+Widget _buttonSave(fecha) {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return SizedBox(
@@ -285,12 +246,14 @@ Widget _buttonSave() {
         child: FloatingActionButton.extended(
           heroTag: 'boton',
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const EditProfile(),
-              ),
+            hayCambio = true;
+            editar(
+              usuario.nombre,
+              usuario.discapacidad,
+              usuario.numeroDeTelefono,
+              fecha,
             );
+            Navigator.pop(context);
           },
           label: Text(
             "Guardar",
@@ -301,4 +264,19 @@ Widget _buttonSave() {
       );
     },
   );
+}
+
+void editar(nombre, discapacidad, telefono, fecha) {
+  final postulante = <String, String>{
+    "Nombre": nombre,
+    "Telefono": telefono,
+    "Discapacidad": discapacidad,
+    "FechaNacimiento": fecha
+  };
+
+  db
+      .collection("Perfil")
+      .doc(user?.uid)
+      .set(postulante)
+      .onError((error, stackTrace) => {});
 }
