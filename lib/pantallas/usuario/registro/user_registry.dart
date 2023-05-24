@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
@@ -15,7 +16,13 @@ class UserRegistry extends StatefulWidget {
   State<UserRegistry> createState() => _UserRegistryState();
 }
 
+handleSubmit() async {
+  if (!_formKey.currentState!.validate()) return;
+  await usuario.iniciarSesion();
+}
+
 Postulante usuario = Postulante();
+final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _birthController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
@@ -42,85 +49,99 @@ class _UserRegistryState extends State<UserRegistry> {
     final tam = largo * .20;
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            SizedBox(
-              width: ancho,
-              height: largo * .3,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: tertiary,
-                      borderRadius: const BorderRadiusDirectional.vertical(
-                        bottom: Radius.elliptical(100, 20),
-                      ),
-                    ),
-                    height: largo * .20,
-                  ),
-                  Positioned(
-                    left: ancho * 0.30,
-                    top: largo * 0.10,
-                    child: Container(
-                      height: tam,
-                      width: tam,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: ancho,
+                height: largo * .3,
+                child: Stack(
+                  children: [
+                    Container(
                       decoration: BoxDecoration(
-                        color: background,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: accent,
+                        color: tertiary,
+                        borderRadius: const BorderRadiusDirectional.vertical(
+                          bottom: Radius.elliptical(100, 20),
                         ),
                       ),
-                      child: Icon(
-                        color: primary,
-                        Icons.person,
-                        size: tam,
+                      height: largo * .20,
+                    ),
+                    Positioned(
+                      left: ancho * 0.30,
+                      top: largo * 0.10,
+                      child: Container(
+                        height: tam,
+                        width: tam,
+                        decoration: BoxDecoration(
+                          color: background,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: accent,
+                          ),
+                        ),
+                        child: Icon(
+                          color: primary,
+                          Icons.person,
+                          size: tam,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    //color: Colors.purple,
+                    height: largo * 0.36,
+                    padding: const EdgeInsets.only(left: 10),
+                    alignment: Alignment.bottomLeft,
+                    child: AutoSizeText(
+                      "Información de usuario",
+                      maxFontSize: maxFontSizeSubTitle,
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.comfortaa().fontFamily,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: accent),
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      Form(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _nameTextField(),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: BirthdayField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _phoneTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _disabilityField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _buttonSend(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 200, left: 10),
-              alignment: Alignment.centerLeft,
-              child: AutoSizeText(
-                "Información de usuario",
-                maxFontSize: maxFontSizeSubTitle,
-                style: blueTitle,
-              ),
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: largo * 0.40,
-                ),
-                Form(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _nameTextField(),
-                        ),
-                        const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: BirthdayField()),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _phoneTextField()),
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _disabilityField())
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     ));
@@ -251,51 +272,28 @@ Widget _disabilityField() {
   );
 }
 
-Widget _() {
+Widget _buttonSend() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
-      return Container(
-        height: MediaQuery.of(context).size.height * 0.08,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        alignment: Alignment.center,
-        child: DropdownButtonFormField(
-          items: <String>["Auditiva", "Física", "Habla", "Motriz", "Múltiple"]
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-              ),
-            );
-          }).toList(),
-          //controller: _nameController,
-          onChanged: (value) {
-            value;
-            usuario.discapacidad;
+      return SizedBox(
+        width: MediaQuery.of(context).size.width * .85,
+        height: MediaQuery.of(context).size.height * .06,
+        child: FloatingActionButton.extended(
+          heroTag: 'boton',
+          onPressed: () {
+            handleSubmit();
           },
-          validator: (value) {
-            if (value == null) {
-              return "Seleccione una discapacidad";
-            }
-            return null;
-          },
-          //keyboardType: TextInputType.name,
-          decoration: const InputDecoration(
-            alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Motriz",
-            labelText: "Discapacidad",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
-            ),
+          label: Text(
+            "Registrame",
+            style: buttonTextStyle,
           ),
+          elevation: 10,
         ),
       );
     },
   );
 }
+
 class BirthdayField extends StatefulWidget {
   const BirthdayField({super.key});
 
