@@ -53,7 +53,9 @@ dependencies:
   flutter_native_splash: ^2.2.19
   animate_do: ^3.0.2
   dotted_line: ^3.1.0
-  intl: ^0.17.0
+  curved_labeled_navigation_bar: ^2.0.2
+  google_nav_bar: ^5.0.6
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

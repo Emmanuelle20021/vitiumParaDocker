@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vitium_app/Funcionalidades/usuario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -9,6 +10,14 @@ class Empresa extends Usuario {
   String empresaAfiliada = "";
   String rfc = "";
   String puesto = "";
+
+  @override
+  Future<void> registrar() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await super.registrar();
+    User? user = auth.currentUser;
+    user?.updatePhotoURL("Empresa");
+  }
 
   @override
   Future<void> editarCuenta() async {

@@ -1,150 +1,73 @@
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:vitium_app/Funcionalidades/busqueda.dart';
-import 'package:vitium_app/Funcionalidades/postulante.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_screen.dart';
+import 'package:vitium_app/pantallas/usuario/home/perfil_screen.dart';
+import 'package:vitium_app/pantallas/usuario/home/postulaciones_screen.dart';
 
-class HomeUser extends StatefulWidget {
-  const HomeUser({super.key});
+class HomeUsuario extends StatefulWidget {
+  const HomeUsuario({super.key});
 
   @override
-  State<HomeUser> createState() => _HomeUserState();
+  State<HomeUsuario> createState() => _HomeUsuarioState();
 }
 
 final User? user = FirebaseAuth.instance.currentUser;
 
-class _HomeUserState extends State<HomeUser> {
-
-  @override
-  void initState() {
-    super.initState();
-    FlutterNativeSplash.remove();
-  }
-
+class _HomeUsuarioState extends State<HomeUsuario> {
+  var _index = 0;
+  var screens = [
+    const HomeScreen(),
+    const Postulaciones(),
+    const PerfilScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("${user?.email}"),
-            _buttonLogOut(),
-            _buttonEnviarEmail(),
-            ElevatedButton(
-              onPressed: () {
-                checkEmailVerification();
-              },
-              child: const Text("confirmacion"),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: GNav(
+          onTabChange: (value) {
+            setState(() {
+              _index = value;
+            });
+          },
+            padding: const EdgeInsets.all(20),
+          activeColor: accent,
+          tabs: const [
+            GButton(
+              text: 'Inicio',
+              icon: Icons.home_filled,
             ),
-            _buttonBuscarPuesto(),
-            _buttonBuscarEmpresa(),
-            _buttonEditarCuenta(),
-            _buttonFiltrarSalario(),
-            _buttonFiltrarDiscapacidad(),
-            _buttonPostular(),
+            GButton(
+              text: 'Trabajos',
+              icon: Icons.work,
+            ),
+            GButton(
+              text: 'Perfil',
+              icon: Icons.person,
+            ),
           ],
+          color: tertiary,
+          gap: 8,
         ),
       ),
+      body: screens[_index],
     );
   }
+}
 
-  Widget _buttonLogOut() {
-    return ElevatedButton(
-      onPressed: () {
-        FirebaseAuth.instance.signOut();
-      },
-      child: const Text("Cerrar Sesión"),
-    );
+class FichaEmpresa {
+  String _img = '';
+  String _nombre = '';
+
+  FichaEmpresa(img, nombre) {
+    _img = img;
+    _nombre = nombre;
   }
 
-  Future<void> checkEmailVerification() async {
-    await user?.reload(); // Recargar la información del usuario
-    if (user != null && user!.emailVerified) {
-      debugPrint('Tu dirección de correo electrónico ha sido verificada.');
-    } else {
-      debugPrint(
-          'Tu dirección de correo electrónico no ha sido verificada todavía.');
-    }
-  }
-
-  Widget _buttonEnviarEmail() {
-    return ElevatedButton(
-      onPressed: () async {
-        if (user != null) {
-          await user?.sendEmailVerification();
-        }
-      },
-      child: const Text("Enviar correo"),
-    );
-  }
-
-  Widget _buttonBuscarPuesto() {
-    return ElevatedButton(
-      onPressed: () async {
-        await Busqueda().buscarPuesto("Jefe");
-      },
-      child: const Text("Buscar P"),
-    );
-  }
-
-  Widget _buttonBuscarEmpresa() {
-    return ElevatedButton(
-      onPressed: () async {
-        await Busqueda().buscarEmpresa("Tm89STKTUJZmhrNyqloH");
-      },
-      child: const Text("Buscar E"),
-    );
-  }
-
-  Widget _buttonFiltrarSalario() {
-    return ElevatedButton(
-      onPressed: () async {
-        await Busqueda().filtrarSalario(21);
-      },
-      child: const Text("Filtrar salario"),
-    );
-  }
-
-  Widget _buttonFiltrarDiscapacidad() {
-    return ElevatedButton(
-      onPressed: () async {
-        await Busqueda().filtrarDiscapacidad("Motriz");
-      },
-      child: const Text("Filtrar Discapacidad"),
-    );
-  }
-
-  _buttonEditarCuenta() {
-    return ElevatedButton(
-        onPressed: () async {
-          Postulante usuario = Postulante();
-          usuario.editarCuenta();
-        },
-        child: const Text("Editar"));
-  }
-
-  void subirCV() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-
-    final file = result.files.first;
-    openFile(file);
-  }
-
-  void openFile(PlatformFile file) {
-    Postulante usuario = Postulante();
-    usuario.subirCV(file.path);
-  }
-
-  _buttonPostular() {
-    return ElevatedButton(
-        onPressed: () async {
-          subirCV();
-          usuario.postular("j7ST7yDHQi7le3hLr0Vw");
-        },
-        child: const Text("postular"));
-  }
+  // getters
+  get img => _img;
+  get nombre => _nombre;
 }

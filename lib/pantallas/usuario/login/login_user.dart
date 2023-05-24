@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/login/login_empresa.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 class LoginUser extends StatefulWidget {
   const LoginUser({super.key});
@@ -12,7 +15,7 @@ class LoginUser extends StatefulWidget {
   State<LoginUser> createState() => _LoginUserState();
 }
 
-Postulante usuario = Postulante();
+Postulante _usuario = Postulante();
 
 class _LoginUserState extends State<LoginUser> {
   final _formKey = GlobalKey<FormState>();
@@ -21,7 +24,14 @@ class _LoginUserState extends State<LoginUser> {
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await usuario.iniciarSesion();
+    await _usuario.iniciarSesion().then(
+          (value) => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeUsuario(),
+            ),
+          ),
+        );
   }
 
   @override
@@ -84,6 +94,7 @@ class _LoginUserState extends State<LoginUser> {
                   Container(
                     alignment: Alignment.center,
                     child: Form(
+                      key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         mainAxisSize: MainAxisSize.max,
@@ -157,7 +168,7 @@ class _LoginUserState extends State<LoginUser> {
           child: TextFormField(
             controller: _emailController,
             onChanged: (value) {
-              usuario.email = value;
+              _usuario.email = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -185,7 +196,7 @@ class _LoginUserState extends State<LoginUser> {
           child: TextFormField(
             controller: _passwordController,
             onChanged: (value) {
-              usuario.password = value;
+              _usuario.password = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -212,12 +223,14 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         heroTag: 'Reclutador',
-        onPressed: () {},
-        label: Text(
-          "Soy reclutador",
-          style: buttonTextStyle,
-        ),
-        elevation: 10,
+        label: const Text("Soy reclutador"),
+        onPressed: () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginEmpresa(),
+              ));
+        },
       ),
     );
   }
@@ -228,7 +241,14 @@ class _LoginUserState extends State<LoginUser> {
       height: MediaQuery.of(context).size.height * .06,
       child: FloatingActionButton.extended(
         heroTag: 'Registro',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const RegistroUsuario(),
+            ),
+          );
+        },
         label: Text(
           "¿Aún no tienes cuenta?",
           style: buttonTextStyle,

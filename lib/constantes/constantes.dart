@@ -98,7 +98,11 @@ var textStylePopUp = TextStyle(
   color: accent,
 );
 
+var textButtonStyle =
+    TextStyle(color: accent, decoration: TextDecoration.underline);
+
 var buttonTextStyle = TextStyle(
+  fontSize: 14,
   color: background,
 );
 
@@ -126,7 +130,11 @@ var buttonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(accent),
 );
 
-var textButtonStyle = TextStyle(
-  fontSize: 14,
-  color: background,
-);
+const iconos = [
+  Icons.insights,
+  Icons.work_history,
+  Icons.cases_rounded,
+  Icons.trolley,
+  Icons.card_travel,
+  Icons.savings
+];

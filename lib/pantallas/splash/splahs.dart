@@ -1,12 +1,14 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:animate_do/animate_do.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+
+User? usuario = FirebaseAuth.instance.currentUser;
 
 class SplahsScreens extends StatelessWidget {
   const SplahsScreens({super.key});
@@ -62,6 +64,7 @@ class PaginaSplash3 extends StatelessWidget {
             SizedBox.fromSize(
               size: Size(0, MediaQuery.of(context).size.height * 0.35),
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   Image.asset(mancha),
                   Image.asset(briefFeli),
@@ -135,6 +138,7 @@ class PaginaSplash2 extends StatelessWidget {
             SizedBox.fromSize(
               size: Size(0, MediaQuery.of(context).size.height * 0.35),
               child: Stack(
+                alignment: Alignment.center,
                 children: [
                   Image.asset(mancha),
                   Image.asset(briefFeli),
@@ -211,7 +215,7 @@ class PaginaSplash1 extends StatelessWidget {
             SizedBox.fromSize(
               size: Size(0, MediaQuery.of(context).size.height * 0.35),
               child: Stack(
-                fit: StackFit.expand,
+                alignment: Alignment.center,
                 children: [
                   Image.asset(mancha),
                   Image.asset(briefFeli),
@@ -265,8 +269,6 @@ class ButtonAnimated extends StatefulWidget {
 }
 
 class _ButtonAnimatedState extends State<ButtonAnimated> {
-  late AnimationController zoomControl;
-
   @override
   void dispose() {
     super.dispose();
@@ -275,19 +277,22 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
   @override
   Widget build(BuildContext context) {
     return ZoomIn(
-      controller: (controller) => zoomControl = controller,
       child: TextButton.icon(
         style: const ButtonStyle(
           splashFactory: NoSplash.splashFactory,
         ),
         label: const Text(""),
-        onPressed: () async {
-          zoomControl.reset();
-          await zoomControl.forward();
+        onPressed: () {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const RegistroUsuario(),
+              builder: (context) {
+                if (usuario == null) {
+                  return const LoginUser();
+                } else {
+                  return const HomeUsuario();
+                }
+              },
             ),
           );
         },
