@@ -1,6 +1,7 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';

@@ -2,10 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:vitium_app/Componentes/calendario.dart';
-import 'package:vitium_app/constantes/navigation.dart';
 import 'package:vitium_app/constantes/tema.dart';
-import 'package:vitium_app/pantallas/splash/splahs.dart';
+import 'package:vitium_app/pantallas/usuario/perfil/user_profile.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
