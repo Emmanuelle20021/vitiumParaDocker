@@ -4,17 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
-import 'package:vitium_app/pantallas/usuario/perfil/edit_profile.dart';
 
-class UserProfile extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   static String id = "user_registry";
-  const UserProfile({
+  const EditProfile({
     super.key,
   });
 
   @override
-  State<UserProfile> createState() => _UserProfileState();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
 handleSubmit() async {
@@ -25,9 +23,18 @@ handleSubmit() async {
 Postulante usuario = Postulante();
 final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
+final TextEditingController _birthController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 
-class _UserProfileState extends State<UserProfile> {
+class _EditProfileState extends State<EditProfile> {
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _birthController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,87 +45,49 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
-    final tam = largo * .20;
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            SizedBox(
-              width: ancho,
-              height: largo * .3,
-              child: Stack(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: ancho,
+                height: 90,
+                child: Stack(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: tertiary,
+                        borderRadius: const BorderRadiusDirectional.vertical(
+                          bottom: Radius.elliptical(100, 20),
+                        ),
+                      ),
+                      height: largo * .20,
+                    ),
+                  ],
+                ),
+              ),
+              Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                      color: tertiary,
-                      borderRadius: const BorderRadiusDirectional.vertical(
-                        bottom: Radius.elliptical(100, 20),
-                      ),
-                    ),
-                    height: largo * .20,
-                  ),
-                  Positioned(
-                    left: ancho * 0.30,
-                    top: largo * 0.10,
-                    child: Container(
-                      height: tam,
-                      width: tam,
-                      decoration: BoxDecoration(
-                        color: background,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: accent,
-                        ),
-                      ),
-                      child: Icon(
-                        color: primary,
-                        Icons.person,
-                        size: tam,
-                      ),
+                    //color: Colors.purple,
+                    height: largo * .19,
+                    padding: const EdgeInsets.only(left: 10),
+                    alignment: Alignment.bottomLeft,
+                    child: AutoSizeText(
+                      "Información de usuario",
+                      maxFontSize: maxFontSizeSubTitle,
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.comfortaa().fontFamily,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: accent),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 200, left: 10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-                  AutoSizeText(
-                    "Información de usuario",
-                    maxFontSize: maxFontSizeSubTitle,
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.comfortaa().fontFamily,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w900,
-                        color: accent),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EditProfile(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.edit),
-                    color: primary,
-                  )
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: largo * 0.36,
-                ),
-                Stack(
-                  children: [
-                    Form(
-                      child: SingleChildScrollView(
+                  Stack(
+                    children: [
+                      Form(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -139,18 +108,18 @@ class _UserProfileState extends State<UserProfile> {
                               child: _disabilityField(),
                             ),
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: _buttonLogOut(),
+                              padding: const EdgeInsets.all(50.0),
+                              child: _buttonSave(),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     ));
@@ -160,16 +129,25 @@ class _UserProfileState extends State<UserProfile> {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.08,
+          height: MediaQuery.of(context).size.height * 0.10,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
           child: TextFormField(
-            readOnly: true,
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             controller: _nameController,
+            onChanged: (value) {
+              value;
+              usuario.nombre;
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Ingrese su nombre";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.name,
             decoration: const InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -191,14 +169,23 @@ class _UserProfileState extends State<UserProfile> {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.08,
+          height: MediaQuery.of(context).size.height * 0.10,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
           child: TextFormField(
-            readOnly: true,
             controller: _phoneController,
+            onChanged: (value) {
+              value;
+              usuario.nombre;
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Ingrese su número telefónico";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.phone,
             decoration: const InputDecoration(
-              floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -221,14 +208,32 @@ Widget _disabilityField() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.08,
+        height: MediaQuery.of(context).size.height * 0.10,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
-        child: TextFormField(
-          readOnly: true,
-          controller: _phoneController,
+        child: DropdownButtonFormField(
+          items: <String>["Auditiva", "Física", "Habla", "Motriz", "Múltiple"]
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(
+                value,
+              ),
+            );
+          }).toList(),
+          //controller: _nameController,
+          onChanged: (value) {
+            value;
+            usuario.discapacidad;
+          },
+          validator: (value) {
+            if (value == null) {
+              return "Seleccione una discapacidad";
+            }
+            return null;
+          },
+          //keyboardType: TextInputType.name,
           decoration: const InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
             hintText: "Motriz",
@@ -249,7 +254,7 @@ Widget _birthdayField() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.08,
+        height: MediaQuery.of(context).size.height * 0.10,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         child: TextFormField(
@@ -271,36 +276,27 @@ Widget _birthdayField() {
   );
 }
 
-Widget _buttonLogOut() {
+Widget _buttonSave() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return SizedBox(
         width: MediaQuery.of(context).size.width * .85,
         height: MediaQuery.of(context).size.height * .06,
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: TextButton(
-            style: TextButton.styleFrom(
-              textStyle: TextStyle(
-                fontFamily: GoogleFonts.comfortaa().fontFamily,
-                decoration: TextDecoration.underline,
+        child: FloatingActionButton.extended(
+          heroTag: 'boton',
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const EditProfile(),
               ),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginUser(),
-                ),
-              );
-            },
-            child: const Text(
-              'Cerrar Sesión',
-              style: TextStyle(
-                color: Color.fromARGB(255, 219, 35, 22),
-              ),
-            ),
+            );
+          },
+          label: Text(
+            "Guardar",
+            style: buttonTextStyle,
           ),
+          elevation: 10,
         ),
       );
     },
