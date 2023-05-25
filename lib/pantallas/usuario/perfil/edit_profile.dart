@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/perfil/user_profile.dart';
 
 class EditProfile extends StatefulWidget {
   static String id = "user_registry";
@@ -23,18 +24,9 @@ handleSubmit() async {
 Postulante usuario = Postulante();
 final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
-final TextEditingController _birthController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 
 class _EditProfileState extends State<EditProfile> {
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _birthController.dispose();
-    _phoneController.dispose();
-    super.dispose();
-  }
-
   @override
   void initState() {
     super.initState();
@@ -288,7 +280,7 @@ Widget _buttonSave() {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => const EditProfile(),
+                builder: (context) => const UserProfile(),
               ),
             );
           },
