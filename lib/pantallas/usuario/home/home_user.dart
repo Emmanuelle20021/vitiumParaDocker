@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_screen.dart';
-import 'package:vitium_app/pantallas/usuario/home/perfil_screen.dart';
 import 'package:vitium_app/pantallas/usuario/home/postulaciones_screen.dart';
+import 'package:vitium_app/pantallas/usuario/perfil/user_profile.dart';
 
 class HomeUsuario extends StatefulWidget {
   const HomeUsuario({super.key});
@@ -14,13 +14,14 @@ class HomeUsuario extends StatefulWidget {
 }
 
 final User? user = FirebaseAuth.instance.currentUser;
+bool hayCambio = false;
 
 class _HomeUsuarioState extends State<HomeUsuario> {
   var _index = 0;
   var screens = [
     const HomeScreen(),
     const Postulaciones(),
-    const PerfilScreen(),
+    const UserProfile(),
   ];
   @override
   Widget build(BuildContext context) {
