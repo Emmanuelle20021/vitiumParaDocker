@@ -1,12 +1,18 @@
-import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: file_names
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:vitium_app/Funcionalidades/postulante.dart';
+import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
+FirebaseFirestore db = FirebaseFirestore.instance;
 
 class EditEntProfile extends StatefulWidget {
+  static String id = "user_registry";
   const EditEntProfile({
     super.key,
   });
@@ -20,7 +26,7 @@ handleSubmit() async {
   await usuario.iniciarSesion();
 }
 
-Postulante usuario = Postulante();
+Empresa usuario = Empresa();
 final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _puestoController = TextEditingController();
@@ -39,109 +45,85 @@ class _EditEntProfileState extends State<EditEntProfile> {
   Widget build(BuildContext context) {
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
-    final tam = largo * .20;
     return SafeArea(
         child: Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            SizedBox(
-              width: ancho,
-              height: largo * .3,
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: tertiary,
-                      borderRadius: const BorderRadiusDirectional.vertical(
-                        bottom: Radius.elliptical(100, 20),
-                      ),
-                    ),
-                    height: largo * .20,
-                  ),
-                  Positioned(
-                    left: ancho * 0.30,
-                    top: largo * 0.10,
-                    child: Container(
-                      height: tam,
-                      width: tam,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Stack(
+            children: [
+              SizedBox(
+                width: ancho,
+                height: 90,
+                child: Stack(
+                  children: [
+                    Container(
                       decoration: BoxDecoration(
-                        color: background,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: accent,
+                        color: tertiary,
+                        borderRadius: const BorderRadiusDirectional.vertical(
+                          bottom: Radius.elliptical(100, 20),
                         ),
                       ),
-                      child: Icon(
-                        color: primary,
-                        Icons.person,
-                        size: tam,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 200, left: 10),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-                  AutoSizeText(
-                    "Perfil de empresa",
-                    maxFontSize: maxFontSizeSubTitle,
-                    style: TextStyle(
-                        fontFamily: GoogleFonts.comfortaa().fontFamily,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w900,
-                        color: accent),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                SizedBox(
-                  height: largo * 0.36,
-                ),
-                Stack(
-                  children: [
-                    Form(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _nameTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _emailTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _enterpriseTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _puestoTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _phoneTextField(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: _buttonLogOut(),
-                          ),
-                        ],
-                      ),
+                      height: largo * .20,
                     ),
                   ],
                 ),
-              ],
-            ),
-          ],
+              ),
+              Column(
+                children: [
+                  Container(
+                    //color: Colors.purple,
+                    height: largo * .19,
+                    padding: const EdgeInsets.only(left: 10),
+                    alignment: Alignment.bottomLeft,
+                    child: AutoSizeText(
+                      "Información de usuario",
+                      maxFontSize: maxFontSizeSubTitle,
+                      style: TextStyle(
+                          fontFamily: GoogleFonts.comfortaa().fontFamily,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: accent),
+                    ),
+                  ),
+                  Stack(
+                    children: [
+                      Form(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _nameTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _emailTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _enterpriseTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _puestoTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _phoneTextField(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: _buttonSave(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     ));
@@ -151,19 +133,29 @@ class _EditEntProfileState extends State<EditEntProfile> {
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.08,
+          height: MediaQuery.of(context).size.height * 0.10,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           alignment: Alignment.center,
           child: TextFormField(
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             controller: _nameController,
+            onChanged: (value) {
+              usuario.nombreEmpleado = value;
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Ingrese su nombre";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.name,
             decoration: const InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
                   EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "Bief Case",
+              hintText: "Brief Case",
               labelText: "Nombre completo",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -243,12 +235,23 @@ Widget _puestoTextField() {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         child: TextFormField(
+          scrollPadding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: _puestoController,
+          onChanged: (value) {
+            usuario.puesto = value;
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Ingrese el puesto";
+            }
+            return null;
+          },
+          keyboardType: TextInputType.name,
           decoration: const InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Gerente de ventas",
+            hintText: "Gerente de RR.HH",
             labelText: "Puesto",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(
@@ -266,16 +269,26 @@ Widget _phoneTextField() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.08,
+        height: MediaQuery.of(context).size.height * 0.10,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         alignment: Alignment.center,
         child: TextFormField(
           controller: _phoneController,
+          onChanged: (value) {
+            usuario.numeroDeTelefono = value;
+          },
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Ingrese su número telefónico";
+            }
+            return null;
+          },
+          keyboardType: TextInputType.phone,
           decoration: const InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
             contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "9212027573",
+            hintText: "9212972943",
             labelText: "Teléfono empresarial",
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(
@@ -289,38 +302,44 @@ Widget _phoneTextField() {
   );
 }
 
-Widget _buttonLogOut() {
+Widget _buttonSave() {
   return StreamBuilder(
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       return SizedBox(
         width: MediaQuery.of(context).size.width * .85,
         height: MediaQuery.of(context).size.height * .06,
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: TextButton(
-            style: TextButton.styleFrom(
-              textStyle: TextStyle(
-                fontFamily: GoogleFonts.comfortaa().fontFamily,
-                decoration: TextDecoration.underline,
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginUser(),
-                ),
-              );
-            },
-            child: const Text(
-              'Cerrar Sesión',
-              style: TextStyle(
-                color: Color.fromARGB(255, 219, 35, 22),
-              ),
-            ),
+        child: FloatingActionButton.extended(
+          heroTag: 'boton',
+          onPressed: () {
+            hayCambio = true;
+            editar(
+              usuario.nombreEmpleado,
+              usuario.puesto,
+              usuario.numeroDeTelefono,
+            );
+            Navigator.pop(context);
+          },
+          label: Text(
+            "Guardar",
+            style: buttonTextStyle,
           ),
+          elevation: 10,
         ),
       );
     },
   );
+}
+
+void editar(nombre, puesto, telefono) {
+  final reclutador = <String, String>{
+    "Nombre": nombre,
+    "Telefono": telefono,
+    "Puesto": puesto,
+  };
+
+  db
+      .collection("Reclutador")
+      .doc(user?.uid)
+      .set(reclutador)
+      .onError((error, stackTrace) => {});
 }
