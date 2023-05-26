@@ -1,11 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/perfil/user_profile.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+
+FirebaseFirestore db = FirebaseFirestore.instance;
 
 class EditProfile extends StatefulWidget {
   static String id = "user_registry";

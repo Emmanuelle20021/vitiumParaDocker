@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/tema.dart';
-import 'package:vitium_app/pantallas/splash/splahs.dart';
+import 'package:vitium_app/pantallas/empresa/perfil/editEnt_profile.dart';
 import 'package:vitium_app/pantallas/empresa/perfil/ent_profile.dart';
 
 Future<void> main() async {
@@ -31,7 +31,7 @@ class VitiumApp extends StatelessWidget {
         Locale('es', 'ES'),
       ],
       debugShowCheckedModeBanner: false,
-      home: const UserProfile(),
+      home: const EnterpriseProfile(),
     );
   }
 }
