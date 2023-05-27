@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/vacante.dart';
 import 'package:vitium_app/pantallas/empresa/home/home_empresa.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/next_vacancy.dart';
 
 import '../../../constantes/constantes.dart';
 
@@ -148,7 +149,7 @@ class _NewVacancyState extends State<NewVacancy> {
             },
             keyboardType: TextInputType.multiline,
             decoration: const InputDecoration(
-              icon: Icon(Icons.work),
+              icon: Icon(Icons.work_outline_outlined),
               hintText: "Ejecutivo (a) de ventas",
               labelText: "Nombre de empleo",
             ),
@@ -303,7 +304,14 @@ class _NewVacancyState extends State<NewVacancy> {
           height: MediaQuery.of(context).size.height * .06,
           child: FloatingActionButton.extended(
             heroTag: 'boton',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NextVacancy(),
+                ),
+              );
+            },
             label: Text(
               "Siguiente",
               style: buttonTextStyle,
