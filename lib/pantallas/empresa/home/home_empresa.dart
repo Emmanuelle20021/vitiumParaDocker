@@ -3,6 +3,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/empresa/vacante/new_vacancy.dart';
 
+import '../perfil/ent_profile.dart';
+
 class HomeEnterprise extends StatefulWidget {
   const HomeEnterprise({super.key});
 
@@ -33,7 +35,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    padding: const EdgeInsets.only(left: 30.0, top: 30.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -54,7 +56,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                               fontSize: tam.width * 0.07, color: primary),
                         ),
                         Container(
-                          height: 10,
+                          height: 40,
                         ),
                         Text(
                           "Escoge una de las opciones a continuación",
@@ -77,7 +79,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                   onPressed: () {},
                   child: SizedBox(
                     width: tam.width * 0.9,
-                    height: tam.height * 0.15,
+                    height: tam.height * 0.13,
                     child: Stack(
                       children: [
                         Container(
@@ -85,7 +87,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                             color: background,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          height: tam.height * 0.15,
+                          height: tam.height * 0.13,
                           width: tam.width * 0.85,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -132,10 +134,17 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                     backgroundColor: Colors.transparent,
                     elevation: 100,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EnterpriseProfile(),
+                      ),
+                    );
+                  },
                   child: SizedBox(
                     width: tam.width * 0.9,
-                    height: tam.height * 0.15,
+                    height: tam.height * 0.13,
                     child: Stack(
                       children: [
                         Container(
@@ -143,7 +152,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                             color: background,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          height: tam.height * 0.15,
+                          height: tam.height * 0.13,
                           width: tam.width * 0.85,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -193,7 +202,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                   onPressed: () {},
                   child: SizedBox(
                     width: tam.width * 0.9,
-                    height: tam.height * 0.15,
+                    height: tam.height * 0.13,
                     child: Stack(
                       children: [
                         Container(
@@ -201,7 +210,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                             color: background,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          height: tam.height * 0.15,
+                          height: tam.height * 0.13,
                           width: tam.width * 0.85,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -258,7 +267,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                   },
                   child: SizedBox(
                     width: tam.width * 0.9,
-                    height: tam.height * 0.15,
+                    height: tam.height * 0.13,
                     child: Stack(
                       children: [
                         Container(
@@ -266,7 +275,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                             color: background,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          height: tam.height * 0.15,
+                          height: tam.height * 0.13,
                           width: tam.width * 0.85,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
