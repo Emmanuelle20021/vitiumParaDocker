@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/perfil/ent_profile.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -66,6 +67,21 @@ class _EditEntProfileState extends State<EditEntProfile> {
                       height: largo * .20,
                     ),
                   ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EnterpriseProfile(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.arrow_back_sharp),
+                  color: background,
                 ),
               ),
               Column(
