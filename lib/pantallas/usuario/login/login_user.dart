@@ -24,14 +24,83 @@ class _LoginUserState extends State<LoginUser> {
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await _usuario.iniciarSesion().then(
-          (value) => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const HomeUsuario(),
+    try {
+      await _usuario.iniciarSesion().then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomeUsuario(),
+              ),
+            ).then(
+              (value) => Navigator.pop(context),
+            ),
+          );
+    } catch (e) {
+      showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          actionsAlignment: MainAxisAlignment.center,
+          titlePadding: const EdgeInsets.only(top: 20),
+          title: Text(
+            textAlign: TextAlign.center,
+            "¡Ups!",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.height * .04,
+              color: accent,
             ),
           ),
-        );
+          alignment: Alignment.center,
+          content: SizedBox(
+            height: 300,
+            width: MediaQuery.of(context).size.width * .9,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const AutoSizeText(
+                  "El usuario o la contraseña esta incorrecto",
+                  textAlign: TextAlign.center,
+                ),
+                Center(
+                  child: Image.asset(briefTriste),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            Column(
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                    fixedSize: Size(
+                      MediaQuery.of(context).size.width * .5,
+                      MediaQuery.of(context).size.height * .05,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Aceptar",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width * .05,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   @override
