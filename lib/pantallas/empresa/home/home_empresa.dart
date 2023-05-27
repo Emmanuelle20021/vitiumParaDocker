@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/new_vacancy.dart';
 
 class HomeEnterprise extends StatefulWidget {
   const HomeEnterprise({super.key});
@@ -51,6 +52,13 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                           "oportunidades",
                           style: TextStyle(
                               fontSize: tam.width * 0.07, color: primary),
+                        ),
+                        Container(
+                          height: 10,
+                        ),
+                        Text(
+                          "Escoge una de las opciones a continuación",
+                          style: TextStyle(fontSize: tam.width * 0.04),
                         ),
                       ],
                     ),
@@ -240,7 +248,14 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                     backgroundColor: Colors.transparent,
                     elevation: 100,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NewVacancy(),
+                      ),
+                    );
+                  },
                   child: SizedBox(
                     width: tam.width * 0.9,
                     height: tam.height * 0.15,

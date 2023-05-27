@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/tema.dart';
-import 'package:vitium_app/pantallas/empresa/perfil/editEnt_profile.dart';
-import 'package:vitium_app/pantallas/empresa/perfil/ent_profile.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/new_vacancy.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,7 @@ class VitiumApp extends StatelessWidget {
         Locale('es', 'ES'),
       ],
       debugShowCheckedModeBanner: false,
-      home: const EnterpriseProfile(),
+      home: const NewVacancy(),
     );
   }
 }
