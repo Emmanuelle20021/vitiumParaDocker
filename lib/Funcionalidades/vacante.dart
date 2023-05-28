@@ -3,7 +3,9 @@ class Vacante {
   String nombreVacante = '';
   String descripcion = '';
   String salario = '';
+  String horario = '';
   String tipoDeEmpleo = '';
+  String escolaridad = '';
   String ubicacion = '';
   String responsabilidades = '';
   bool estado = true;

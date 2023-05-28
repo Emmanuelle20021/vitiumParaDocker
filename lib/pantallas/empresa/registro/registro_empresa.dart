@@ -76,7 +76,7 @@ class _RegistroEmpresaState extends State<RegistroEmpresa> {
                       padding: const EdgeInsets.only(bottom: 10, left: 10),
                       alignment: Alignment.centerLeft,
                       child: AutoSizeText(
-                        "¡Unete a nosotros!",
+                        "¡Únete a nosotros!",
                         maxFontSize: maxFontSizeSubTitle,
                         style: subtituloStyle,
                       ),
