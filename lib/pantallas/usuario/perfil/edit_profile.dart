@@ -249,14 +249,93 @@ Widget _buttonSave(fecha) {
         child: FloatingActionButton.extended(
           heroTag: 'boton',
           onPressed: () {
-            hayCambio = true;
-            editar(
-              usuario.nombre,
-              usuario.discapacidad,
-              usuario.numeroDeTelefono,
-              fecha,
+            showDialog<String>(
+              context: context,
+              builder: (context) => AlertDialog(
+                actionsAlignment: MainAxisAlignment.center,
+                titlePadding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .15, top: 20),
+                title: Text(
+                  "¿Guardar cambios?",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * .03),
+                ),
+                alignment: Alignment.bottomCenter,
+                elevation: 0,
+                insetPadding: const EdgeInsets.all(0),
+                content: SizedBox(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(briefConfundido),
+                ),
+                actions: [
+                  Column(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width * .9,
+                            MediaQuery.of(context).size.height * .05,
+                          ),
+                        ),
+                        onPressed: () {
+                          hayCambio = true;
+                          editar(
+                            usuario.nombre,
+                            usuario.discapacidad,
+                            usuario.numeroDeTelefono,
+                            fecha,
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Aceptar",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * .05,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width * .9,
+                            MediaQuery.of(context).size.height * .05,
+                          ),
+                          backgroundColor: tertiary,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Cancelar",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * .05,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ).then(
+              (value) => Navigator.pop(context),
             );
-            Navigator.pop(context);
           },
           label: Text(
             "Guardar",
