@@ -90,7 +90,7 @@ class PaginaSplash3 extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: AutoSizeText(
-                "Vuelvete nuestro socio y complementate en tu empresa ideal.",
+                "Vuélvete nuestro socio y compleméntate en tu empresa ideal.",
                 textAlign: TextAlign.justify,
                 maxFontSize: 15,
                 maxLines: 2,
@@ -161,7 +161,7 @@ class PaginaSplash2 extends StatelessWidget {
                     style: orangeSplash,
                   ),
                   TextSpan(
-                    text: "aqui",
+                    text: "aquí",
                     style: splashTitle,
                   ),
                 ],
@@ -171,7 +171,7 @@ class PaginaSplash2 extends StatelessWidget {
               heightFactor: 2,
               alignment: Alignment.topCenter,
               child: AutoSizeText(
-                "Somos fieles creyentes del potencial de los individuos, unete con nosotros.",
+                "Somos fieles creyentes del potencial de los individuos, únete con nosotros.",
                 textAlign: TextAlign.justify,
                 maxFontSize: 15,
                 maxLines: 2,
@@ -248,7 +248,7 @@ class PaginaSplash1 extends StatelessWidget {
               heightFactor: 2,
               alignment: Alignment.topCenter,
               child: AutoSizeText(
-                "Explora las multiples opciones que tenemos para ti",
+                "Explora las múltiples opciones que tenemos para ti",
                 textAlign: TextAlign.justify,
                 maxFontSize: 15,
                 maxLines: 2,
@@ -288,7 +288,7 @@ class _ButtonAnimatedState extends State<ButtonAnimated> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                if (usuario == null) { 
+                if (usuario == null) {
                   return const LoginUser();
                 } else {
                   if (user?.photoURL == "Postulante") {

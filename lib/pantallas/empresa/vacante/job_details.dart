@@ -5,6 +5,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:vitium_app/Funcionalidades/vacante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/empresa/postulantes/ver_postulantes.dart';
 import 'package:vitium_app/pantallas/splash/splahs.dart';
@@ -78,7 +79,7 @@ class _JobDetailsState extends State<JobDetails> {
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(7.0),
                           child: SizedBox(
                             height: alto * .07,
                             child: Image.asset(logoVitium, fit: BoxFit.contain),

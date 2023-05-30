@@ -118,7 +118,7 @@ class _SubirCvState extends State<SubirCv> {
                     );
                   },
                   child: Text(
-                    "Postularce",
+                    "Postularse",
                     style: TextStyle(
                         fontSize: MediaQuery.of(context).size.height * 0.025),
                   ),

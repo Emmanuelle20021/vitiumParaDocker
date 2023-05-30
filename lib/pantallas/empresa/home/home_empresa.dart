@@ -103,7 +103,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                               Icon(Icons.work_outline,
                                   color: tertiary, size: tam.height * 0.07),
                               Text(
-                                "Puestos publicados",
+                                "Vacantes publicadas",
                                 style: TextStyle(
                                     color: primary,
                                     fontSize: tam.height * 0.025),

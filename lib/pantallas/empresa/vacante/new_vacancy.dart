@@ -30,101 +30,103 @@ class _NewVacancyState extends State<NewVacancy> {
   @override
   Widget build(BuildContext context) {
     Size tam = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: Stack(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const HomeEnterprise(),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Builder(
+            builder: (context) => Stack(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomeEnterprise(),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(Icons.arrow_back_sharp),
+                              color: primary,
+                            ),
+                            Image.asset(logoVitium, width: tam.width * 0.15),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(
+                            "Publicar",
+                            style: TextStyle(fontSize: tam.width * 0.08),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15),
+                          child: Text(
+                            "nuevo empleo",
+                            style: TextStyle(
+                                fontSize: tam.width * 0.07, color: primary),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            "¡Rellena los siguientes campos y publica un nuevo empleo!",
+                            style: TextStyle(fontSize: tam.width * 0.04),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _empleoTextField(),
                                 ),
-                              );
-                            },
-                            icon: const Icon(Icons.arrow_back_sharp),
-                            color: primary,
-                          ),
-                          Image.asset(logoVitium, width: tam.width * 0.15),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          "Publicar",
-                          style: TextStyle(fontSize: tam.width * 0.08),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          "nuevo empleo",
-                          style: TextStyle(
-                              fontSize: tam.width * 0.07, color: primary),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          "¡Rellena los siguientes campos y publica un nuevo empleo!",
-                          style: TextStyle(fontSize: tam.width * 0.04),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _empleoTextField(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _salarioTextField(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _horarioField(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _ubicacionTextField(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: _escolaridadField(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20.0),
-                                child: _buttonSSiguiente(),
-                              ),
-                            ],
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _salarioTextField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _horarioField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _ubicacionTextField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _escolaridadField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: _buttonSSiguiente(),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -308,8 +310,10 @@ class _NewVacancyState extends State<NewVacancy> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NextVacancy(),
+                  builder: (context) => NextVacancy(vacante),
                 ),
+              ).whenComplete(
+                () => Navigator.pop(context),
               );
             },
             label: Text(

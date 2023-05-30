@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/postulantes/accepted.dart';
 
 // ignore: must_be_immutable
 class DetallePostulado extends StatefulWidget {
@@ -231,7 +231,8 @@ class _VacantePostuladoState extends State<DetallePostulado> {
                                 ],
                               ),
                             ),
-                            Container(
+                            widget.postulacion.get("Estado") == "Pendiente"
+                                ? Container(
                               margin: EdgeInsets.symmetric(
                                   horizontal: ancho * .1, vertical: alto * .03),
                               width: ancho,
@@ -243,7 +244,20 @@ class _VacantePostuladoState extends State<DetallePostulado> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: tertiary,
                                     ),
-                                    onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Accepted(
+                                                  postulacion:
+                                                      widget.postulacion,
+                                                  postulante: widget.postulante,
+                                                ),
+                                              ),
+                                            ).whenComplete(
+                                              () => Navigator.pop(context),
+                                            );
+                                          },
                                     child: Text(
                                       "Aceptar",
                                       style: TextStyle(fontSize: alto * .02),
@@ -253,7 +267,10 @@ class _VacantePostuladoState extends State<DetallePostulado> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: secondary,
                                     ),
-                                    onPressed: () {},
+                                          onPressed: () {
+                                            rechazar(widget.postulacion);
+                                            Navigator.pop(context);
+                                          },
                                     child: Text(
                                       "Rechazar",
                                       style: TextStyle(fontSize: alto * .02),
@@ -261,7 +278,8 @@ class _VacantePostuladoState extends State<DetallePostulado> {
                                   )
                                 ],
                               ),
-                            )
+                                  )
+                                : const Text(""),
                           ],
                         ),
                       ),
@@ -274,6 +292,23 @@ class _VacantePostuladoState extends State<DetallePostulado> {
         ),
       ),
     );
+  }
+
+  void rechazar(QueryDocumentSnapshot postulacion) {
+    final postulante = <String, String>{
+      "Curriculum": postulacion.get("Curriculum"),
+      "Estado": "Rechazado",
+      "Mensaje":
+          "Debido a que su perfil no cumple\ncon nuestros requisitos, su solicitud ha sido rechazada.\nTenga buen día.",
+      "Postulante": postulacion.get("Postulante"),
+      "Vacante": postulacion.get("Vacante")
+    };
+
+    db
+        .collection("Postulaciones")
+        .doc(postulacion.id)
+        .set(postulante)
+        .onError((error, stackTrace) => {});
   }
 
   void showDownloadProgress(received, total) {

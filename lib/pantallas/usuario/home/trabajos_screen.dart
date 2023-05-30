@@ -206,16 +206,16 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
           ),
           SizedBox(
             height: alto * .65,
-            child: listaTrabajos(alto, ancho),
+            child: listaTrabajos(alto, ancho, vacante?.length),
           ),
         ],
       ),
     );
   }
 
-  Widget listaTrabajos(alto, ancho) => vacante != null
+  Widget listaTrabajos(alto, ancho, tam) => vacante != null
       ? ListView.builder(
-          itemCount: vacante?.length,
+          itemCount: tam,
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           itemBuilder: (context, index) {
@@ -224,12 +224,10 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) {
-                      return DetalleVacante(
-                        vacante![index].id,
-                        isPostulado(vacante![index].id),
-                      );
-                    },
+                    builder: (context) => DetalleVacante(
+                      vacante![index].id,
+                      isPostulado(vacante![index].id),
+                    ),
                   ),
                 );
               },

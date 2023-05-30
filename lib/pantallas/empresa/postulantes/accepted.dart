@@ -3,13 +3,20 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/Funcionalidades/reunion.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
+// ignore: must_be_immutable
 class Accepted extends StatefulWidget {
+  QueryDocumentSnapshot postulacion;
+  QueryDocumentSnapshot postulante;
   static String id = "user_registry";
-  const Accepted({
+  Accepted({
+    required this.postulacion,
+    required this.postulante,
     super.key,
   });
 
@@ -21,6 +28,7 @@ Reunion reunion = Reunion();
 
 final TextEditingController _horaController = TextEditingController();
 final TextEditingController _fechaController = TextEditingController();
+final TextEditingController _mensajeController = TextEditingController();
 
 class _AcceptedState extends State<Accepted> {
   QueryDocumentSnapshot<Object>? vacante;
@@ -94,11 +102,11 @@ class _AcceptedState extends State<Accepted> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AutoSizeText(
-                            "${vacante?.get("Nombre")}",
+                            "${widget.postulante.get("Nombre")}",
                             style: TextStyle(fontSize: ancho * .05),
                           ),
                           AutoSizeText(
-                            "${vacante?.get("Puesto")}",
+                            "${widget.postulante.get("Discapacidad")}",
                             style: TextStyle(fontSize: ancho * .04),
                           )
                         ],
@@ -122,10 +130,18 @@ class _AcceptedState extends State<Accepted> {
                           Form(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Padding(
+                              children: [
+                                const Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: DateField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: _mensajeTextField(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: _buttonSend(widget.postulacion),
                                 ),
                               ],
                             ),
@@ -144,6 +160,72 @@ class _AcceptedState extends State<Accepted> {
   }
 }
 
+Widget _mensajeTextField() {
+  return StreamBuilder(
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: TextFormField(
+            controller: _mensajeController,
+            onChanged: (value) {
+              reunion.mensaje = value;
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Ingrese un mensaje";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            decoration: const InputDecoration(
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              alignLabelWithHint: false,
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              hintText:
+                  "Es de nuestro agrado informarle que \nha sido seleccionado para una\nentrevista. \nLugar: Vitium sucursal centro",
+              labelText: "Mensaje",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget _buttonSend(postulacion) {
+  return StreamBuilder(
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width * .80,
+        height: MediaQuery.of(context).size.height * .06,
+        child: FloatingActionButton.extended(
+          heroTag: 'boton',
+          onPressed: () {
+            aceptar(
+              "${reunion.fecha} ${reunion.horario}\n${reunion.mensaje}",
+              postulacion,
+            );
+            Navigator.pop(context);
+          },
+          label: Text(
+            "Enviar",
+            style: buttonTextStyle,
+          ),
+          elevation: 10,
+        ),
+      );
+    },
+  );
+}
+
 class DateField extends StatefulWidget {
   const DateField({super.key});
 
@@ -155,6 +237,8 @@ class _DateFieldState extends State<DateField> {
   TimeOfDay time = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
     return StreamBuilder(
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
@@ -213,7 +297,7 @@ class _DateFieldState extends State<DateField> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(11.5),
+                    padding: const EdgeInsets.all(11),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.height * 0.19,
                       child: TextFormField(
@@ -228,13 +312,13 @@ class _DateFieldState extends State<DateField> {
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.more_time),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.more_time),
                           alignLabelWithHint: true,
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
-                          hintText: '10:30',
-                          border: OutlineInputBorder(
+                          hintText: '$hour:$minute',
+                          border: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
@@ -243,17 +327,13 @@ class _DateFieldState extends State<DateField> {
                         onTap: () async {
                           TimeOfDay? pickedTime = await showTimePicker(
                             context: context,
-                            initialTime: TimeOfDay.now(),
+                            initialTime: time,
                           );
+
                           if (pickedTime != null) {
-                            TimeOfDayFormat format =
-                                TimeOfDayFormat.h_colon_mm_space_a;
-                            setState(
-                              () {
-                                time = pickedTime;
-                                _horaController.text = format.toString();
-                              },
-                            );
+                            setState(() {
+                              time = pickedTime;
+                            });
                           }
                         },
                       ),
@@ -267,4 +347,28 @@ class _DateFieldState extends State<DateField> {
       },
     );
   }
+}
+
+void aceptar(mensaje, QueryDocumentSnapshot postulacion) {
+  mensaje ??= "";
+  if (mensaje == "") {
+    MaterialPageRoute(
+      builder: (context) => pushBrief(context, "Rellena los campos faltantes"),
+    );
+    return;
+  }
+
+  final postulante = <String, String>{
+    "Curriculum": postulacion.get("Curriculum"),
+    "Estado": "Aceptado",
+    "Mensaje": mensaje,
+    "Postulante": postulacion.get("Postulante"),
+    "Vacante": postulacion.get("Vacante")
+  };
+
+  db
+      .collection("Postulaciones")
+      .doc(postulacion.id)
+      .set(postulante)
+      .onError((error, stackTrace) => {});
 }

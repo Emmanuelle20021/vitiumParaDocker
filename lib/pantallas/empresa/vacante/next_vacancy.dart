@@ -1,20 +1,26 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/vacante.dart';
 import 'package:vitium_app/pantallas/empresa/home/home_empresa.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/new_vacancy.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 import '../../../constantes/constantes.dart';
 
+// ignore: must_be_immutable
 class NextVacancy extends StatefulWidget {
-  const NextVacancy({super.key});
+  Vacante vacante;
+  NextVacancy(this.vacante, {super.key});
 
   @override
   State<NextVacancy> createState() => _NextVacancyState();
 }
 
-int? _value = 1;
-Vacante vacante = Vacante();
+FirebaseFirestore db = FirebaseFirestore.instance;
 
+int? _value = 1;
+// ignore: prefer_typing_uninitialized_variables
+var busqueda;
 List<String> discapacidades = <String>[
   "física",
   "motriz",
@@ -23,10 +29,29 @@ List<String> discapacidades = <String>[
 ];
 
 class _NextVacancyState extends State<NextVacancy> {
+  buscarVacante() async {
+    var busquedaAux = "";
+    String id = user!.uid;
+    await db.collectionGroup("Reclutador").get().then(
+          (value) => {
+            value.docs.toList().forEach(
+              (element) async {
+                if (element.id == id) {
+                  busquedaAux = element.get('Empresa afiliada');
+                }
+              },
+            ),
+          },
+        );
+    setState(() {
+      busqueda = busquedaAux;
+    });
+  }
+
   @override
   void initState() {
+    buscarVacante();
     super.initState();
-    FlutterNativeSplash.remove();
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -34,6 +59,7 @@ class _NextVacancyState extends State<NextVacancy> {
 
   @override
   Widget build(BuildContext context) {
+    busqueda ??= buscarVacante();
     Size tam = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -137,7 +163,7 @@ class _NextVacancyState extends State<NextVacancy> {
           child: TextFormField(
             controller: _descripcionController,
             onChanged: (value) {
-              vacante.descripcion = value;
+              widget.vacante.descripcion = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -174,7 +200,10 @@ class _NextVacancyState extends State<NextVacancy> {
           height: MediaQuery.of(context).size.height * .06,
           child: FloatingActionButton.extended(
             heroTag: 'boton',
-            onPressed: () {},
+            onPressed: () {
+              aceptar(vacante);
+              Navigator.pop(context);
+            },
             label: Text(
               "Publicar",
               style: buttonTextStyle,
@@ -206,6 +235,9 @@ class _NextVacancyState extends State<NextVacancy> {
                     selected: _value == index,
                     onSelected: (bool selected) {
                       setState(() {
+                        vacante.discapacidadesPermitidas.add(
+                          discapacidades[index],
+                        );
                         _value = (selected ? index : null);
                       });
                     },
@@ -218,6 +250,27 @@ class _NextVacancyState extends State<NextVacancy> {
         );
       },
     );
+  }
+
+  void aceptar(Vacante vacante) {
+    busqueda ??= buscarVacante();
+
+    final vacancy = <String, String>{
+      "Descripcion": vacante.descripcion,
+      "Discapacidad": vacante.discapacidadesPermitidas[0],
+      "Empresa": busqueda!.toString(),
+      "Escolaridad": vacante.escolaridad,
+      "Horario": vacante.horario,
+      "Puesto": vacante.nombreVacante,
+      "Salario": vacante.salario,
+      "Ubicacion": vacante.ubicacion,
+    };
+
+    db
+        .collection("Vacantes")
+        .doc()
+        .set(vacancy)
+        .onError((error, stackTrace) => {});
   }
 
   Widget _titleChip() {

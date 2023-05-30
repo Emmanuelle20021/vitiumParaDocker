@@ -161,8 +161,12 @@ class _PostulacionState extends State<Postulacion> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => DetallePostulado(
-                      postulantes![index], postulaciones![index]),
+                    postulantes![index],
+                    postulaciones![index],
+                  ),
                 ),
+              ).whenComplete(
+                () => buscarPostulacion(),
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
