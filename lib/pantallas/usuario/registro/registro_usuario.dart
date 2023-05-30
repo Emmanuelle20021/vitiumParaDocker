@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/funcionalidades/postulante.dart';
 import 'package:vitium_app/pantallas/empresa/login/login_empresa.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/user_registry.dart';
 
 class RegistroUsuario extends StatefulWidget {
   const RegistroUsuario({super.key});
@@ -26,9 +26,26 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
 
   handleSubmit() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Si se envio")));
-      await usuario.registrar();
+      try {
+        if (_passwordController.text == _confirmPasswordController.text) {
+          await usuario.registrar().whenComplete(
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserRegistry(),
+                  ),
+                ),
+              );
+        } else {
+          pushBrief(context, "Las contraseñas no coinciden");
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Fallo"),
+          ),
+        );
+      }
     }
   }
 
@@ -318,4 +335,71 @@ class _RegistroUsuarioState extends State<RegistroUsuario> {
       ),
     );
   }
+}
+
+pushBrief(context, mensaje) {
+  return showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
+      titlePadding: const EdgeInsets.only(top: 20),
+      title: Text(
+        textAlign: TextAlign.center,
+        "¡Ups!",
+        style: TextStyle(
+          fontSize: MediaQuery.of(context).size.height * .04,
+          color: accent,
+        ),
+      ),
+      alignment: Alignment.center,
+      content: SizedBox(
+        height: 300,
+        width: MediaQuery.of(context).size.width * .9,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            AutoSizeText(
+              mensaje,
+              textAlign: TextAlign.center,
+            ),
+            Center(
+              child: Image.asset(briefTriste),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Column(
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                fixedSize: Size(
+                  MediaQuery.of(context).size.width * .5,
+                  MediaQuery.of(context).size.height * .05,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Aceptar",
+                style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width * .05,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
 }

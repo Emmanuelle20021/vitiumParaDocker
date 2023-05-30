@@ -133,7 +133,7 @@ class _VacantePostuladoState extends State<VacantePostulado> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
-                                height: alto * .07,
+                                height: alto * .06,
                                 child: Image.asset(logoVitium,
                                     fit: BoxFit.contain),
                               ),

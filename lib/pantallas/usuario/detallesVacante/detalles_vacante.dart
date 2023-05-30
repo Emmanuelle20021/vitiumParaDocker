@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 // ignore: must_be_immutable
 class DetalleVacante extends StatefulWidget {
@@ -70,7 +71,7 @@ class _DetalleVacanteState extends State<DetalleVacante> {
                         AutoSizeText(
                           "Detalles del trabajo",
                           style: TextStyle(
-                              fontSize: ancho * .07,
+                              fontSize: ancho * .06,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
@@ -233,18 +234,22 @@ class _DetalleVacanteState extends State<DetalleVacante> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        fixedSize: MaterialStatePropertyAll(
-                          Size(ancho * .8, alto * .06),
-                        ),
-                      ),
-                      child: Text(
-                        "Postularse",
-                        style: TextStyle(fontSize: ancho * .05),
-                      ),
-                    ),
+                    child: widget.isPostulado
+                        ? const Text("")
+                        : ElevatedButton(
+                            onPressed: () {
+                              postular();
+                            },
+                            style: ButtonStyle(
+                              fixedSize: MaterialStatePropertyAll(
+                                Size(ancho * .8, alto * .06),
+                              ),
+                            ),
+                            child: Text(
+                              "Postularse",
+                              style: TextStyle(fontSize: ancho * .05),
+                            ),
+                          ),
                   )
                 ],
               ),
@@ -253,5 +258,20 @@ class _DetalleVacanteState extends State<DetalleVacante> {
         ),
       ),
     );
+  }
+
+  void postular() {
+    final postulacion = <String, String>{
+      "Estado": "Pendiente",
+      "Mensaje": "Solicitud en proceso de revisión",
+      "Postulante": user!.uid,
+      "Vacante": widget.idVacante
+    };
+
+    db
+        .collection("Postulaciones")
+        .doc()
+        .set(postulacion)
+        .onError((error, stackTrace) => {});
   }
 }

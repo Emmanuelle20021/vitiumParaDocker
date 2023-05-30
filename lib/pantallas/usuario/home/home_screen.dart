@@ -8,6 +8,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/home/postulaciones_screen.dart';
 import 'package:vitium_app/pantallas/usuario/home/trabajos_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +39,50 @@ class _HomeScreenState extends State<HomeScreen> {
     icono = iconos[Random().nextInt(6 - 0)];
   }
 
+  List<QueryDocumentSnapshot<Object>>? vacantes;
+  List<QueryDocumentSnapshot<Object>>? postulaciones;
   QueryDocumentSnapshot<Object>? vacante;
+
+  buscarPostulacion() async {
+    postulaciones = null;
+    vacantes = null;
+    List<QueryDocumentSnapshot<Object>>? postulacion =
+        List.empty(growable: true);
+    List<QueryDocumentSnapshot<Object>>? vacante = List.empty(growable: true);
+    await db.collectionGroup("Postulaciones").get().then(
+          (value) => {
+            value.docs.toList().forEach(
+              (element) {
+                String comp = element.get('Postulante');
+                String aux = user!.uid;
+                if (aux == comp) {
+                  postulacion.add(element);
+                }
+              },
+            ),
+          },
+        );
+    await db.collection("Vacantes").get().then(
+          (value) => {
+            if (postulacion.isNotEmpty)
+              value.docs.toList().forEach(
+                (element) {
+                  String comp = element.reference.id;
+                  for (var post in postulacion) {
+                    String aux = post.get("Vacante");
+                    if (aux == comp) {
+                      vacante.add(element);
+                    }
+                  }
+                },
+              ),
+          },
+        );
+    setState(() {
+      postulaciones ??= postulacion;
+      vacantes = vacante;
+    });
+  }
 
   buscarVacante() async {
     icono = iconos[Random().nextInt(6 - 0)];
@@ -95,139 +139,141 @@ class _HomeScreenState extends State<HomeScreen> {
     double ancho = MediaQuery.of(context).size.width;
     double alto = MediaQuery.of(context).size.height;
     setGlobal(ancho);
-    return SingleChildScrollView(
-      child: RefreshIndicator(
-        key: refreshKey,
-        onRefresh: () => rellenarEmpresas(busqueda),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: alto * 0.03,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                  fit: FlexFit.loose,
-                  flex: 2,
-                  child: AutoSizeText.rich(
-                    textAlign: TextAlign.justify,
-                    maxFontSize: 33,
-                    minFontSize: 30,
-                    maxLines: 2,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: "Descubre tu \n",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        TextSpan(
-                          text: "Trabajo favorito",
-                          style: TextStyle(color: accent),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage(logoVitium),
-                  backgroundColor: Colors.transparent,
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: RefreshIndicator(
+          key: refreshKey,
+          onRefresh: () => rellenarEmpresas(busqueda),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: alto * 0.03,
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Flexible(
                     fit: FlexFit.loose,
                     flex: 2,
-                    child: TextField(
-                      onSubmitted: (value) {
-                        busqueda = value;
-                        rellenarEmpresas(busqueda);
-                      },
-                      inputFormatters: [
-                        FilteringTextInputFormatter.singleLineFormatter
-                      ],
-                      textCapitalization: TextCapitalization.words,
-                      textAlignVertical: TextAlignVertical.center,
-                      decoration: const InputDecoration(
-                        constraints: BoxConstraints.tightFor(height: 47),
-                        prefixIcon: Icon(Icons.search),
-                        hintText: "Buscar",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
+                    child: AutoSizeText.rich(
+                      textAlign: TextAlign.justify,
+                      maxFontSize: 33,
+                      minFontSize: 30,
+                      maxLines: 2,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      TextSpan(
+                        children: [
+                          const TextSpan(
+                            text: "Descubre tu \n",
+                            style: TextStyle(color: Colors.black),
                           ),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
+                          TextSpan(
+                            text: "Trabajo favorito",
+                            style: TextStyle(color: accent),
+                          ),
+                        ],
                       ),
-                      controller: busquedaController,
                     ),
+                  ),
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: AssetImage(logoVitium),
+                    backgroundColor: Colors.transparent,
                   ),
                 ],
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, bottom: 10),
-              alignment: Alignment.centerLeft,
-              child: const AutoSizeText(
-                "Nuestras Empresas",
-                minFontSize: 15,
-                maxFontSize: 25,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                      fit: FlexFit.loose,
+                      flex: 2,
+                      child: TextField(
+                        onSubmitted: (value) {
+                          busqueda = value;
+                          rellenarEmpresas(busqueda);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter
+                        ],
+                        textCapitalization: TextCapitalization.words,
+                        textAlignVertical: TextAlignVertical.center,
+                        decoration: const InputDecoration(
+                          constraints: BoxConstraints.tightFor(height: 47),
+                          prefixIcon: Icon(Icons.search),
+                          hintText: "Buscar",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        controller: busquedaController,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            SizedBox(
-              height: alto * 0.44,
-              child: Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: compruebaEmpresas(empresas, alto, ancho),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const AutoSizeText(
-                    "Más recientes",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+              Container(
+                padding: const EdgeInsets.only(left: 20, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const AutoSizeText(
+                  "Nuestras Empresas",
+                  minFontSize: 15,
+                  maxFontSize: 25,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
                   ),
-                  TextButton(
-                    style: const ButtonStyle(
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TrabajosScreen(""),
-                        ),
-                      );
-                    },
-                    child: const AutoSizeText("Ver todos"),
-                  ),
-                ],
+                ),
               ),
-            ),
-            vacanteFicha(),
-          ],
+              SizedBox(
+                height: alto * 0.44,
+                child: Flexible(
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: compruebaEmpresas(empresas, alto, ancho),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const AutoSizeText(
+                      "Más recientes",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    TextButton(
+                      style: const ButtonStyle(
+                        splashFactory: NoSplash.splashFactory,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TrabajosScreen(""),
+                          ),
+                        );
+                      },
+                      child: const AutoSizeText("Ver todos"),
+                    ),
+                  ],
+                ),
+              ),
+              vacanteFicha(),
+            ],
+          ),
         ),
       ),
     );
@@ -324,7 +370,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return DetalleVacante(vacante!.id, false);
+                  return DetalleVacante(vacante!.id, isPostulado(vacante!.id));
                 },
               ),
             );
@@ -380,4 +426,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         )
       : const Center(child: Text("No hay vacantes"));
+}
+
+bool isPostulado(String id) {
+  bool isTrue = false;
+  for (var element in vacantes!) {
+    isTrue = element.id == id ? true : false;
+    if (isTrue) break;
+  }
+  return isTrue;
 }

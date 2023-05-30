@@ -23,28 +23,78 @@ class EnterpriseProfile extends StatefulWidget {
   State<EnterpriseProfile> createState() => _EnterpriseProfileState();
 }
 
-handleSubmit() async {
-  if (!_formKey.currentState!.validate()) return;
-  await usuario.iniciarSesion();
-}
-
+List<FichaEmpresa> empresas = List.empty(growable: true);
 Empresa usuario = Empresa();
-final _formKey = GlobalKey<FormState>();
+String busqueda = "";
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _puestoController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 final TextEditingController _enterpriseController = TextEditingController();
 
+QueryDocumentSnapshot<Object>? usuarioBD;
+var id = user?.uid;
+
 class _EnterpriseProfileState extends State<EnterpriseProfile> {
+  buscarUsuario(idUsuario) async {
+    hayCambio = false;
+    usuarioBD = null;
+    QueryDocumentSnapshot<Object>? usuarios;
+    await db.collectionGroup("Reclutador").get().then(
+          (value) => {
+            value.docs.toList().forEach((element) {
+              if (element.id == idUsuario) {
+                usuarios = element;
+              }
+            })
+          },
+        );
+    setState(
+      () {
+        usuarioBD ??= usuarios;
+        busqueda = usuarioBD?.get("Empresa afiliada");
+      },
+    );
+  }
+
+  Future<Type> rellenarEmpresas(busqueda) async {
+    busqueda = await usuarioBD?.get("Empresa afiliada");
+    List<FichaEmpresa> empresa = List.empty(growable: true);
+    await db.collectionGroup("Empresa").get().then(
+          (QuerySnapshot querySnapshot) => {
+            querySnapshot.docs.toList().forEach(
+              (element) {
+                String nombre = element.get("Nombre");
+                if (nombre.contains(busqueda)) {
+                  FichaEmpresa fichaEmpresa = FichaEmpresa(
+                    element.get("Imagen"),
+                    element.get("Nombre"),
+                  );
+                  fichaEmpresa.set(element.get("Correo"));
+                  empresa.add(fichaEmpresa);
+                }
+              },
+            ),
+          },
+        );
+    setState(() {
+      empresas = List.empty(growable: true);
+      empresas = empresa;
+    });
+    return Null;
+  }
+
   @override
   void initState() {
+    rellenarEmpresas(busqueda);
     super.initState();
+    buscarUsuario(id);
     FlutterNativeSplash.remove();
   }
 
   @override
   Widget build(BuildContext context) {
+    hayCambio ? buscarUsuario(id) : () {};
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
     final tam = largo * .20;
@@ -124,9 +174,12 @@ class _EnterpriseProfileState extends State<EnterpriseProfile> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const EditEntProfile(),
+                          builder: (context) => EditEntProfile(
+                            correo: empresas.isEmpty ? "" : empresas[0].correo,
+                            empresa: empresas.isEmpty ? "" : empresas[0].nombre,
+                          ),
                         ),
-                      );
+                      ).whenComplete(() => buscarUsuario(id));
                     },
                     icon: const Icon(Icons.edit),
                     color: primary,
@@ -192,14 +245,14 @@ class _EnterpriseProfileState extends State<EnterpriseProfile> {
           child: TextFormField(
             readOnly: true,
             controller: _nameController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "Brief Case",
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText: "${usuarioBD?.get('Nombre')}",
               labelText: "Nombre completo",
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -222,13 +275,14 @@ Widget _emailTextField() {
         child: TextFormField(
           readOnly: true,
           controller: _emailController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "email@empresa.com.mx",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${empresas.isNotEmpty ? empresas[0].correo : ""}",
             labelText: "Correo Electrónico",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -250,13 +304,14 @@ Widget _enterpriseTextField() {
         child: TextFormField(
           readOnly: true,
           controller: _enterpriseController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Vitium",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${empresas.isNotEmpty ? empresas[0].nombre : ""}",
             labelText: "Empresa afiliada",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -278,13 +333,14 @@ Widget _puestoTextField() {
         child: TextFormField(
           readOnly: true,
           controller: _puestoController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Gerente de ventas",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${usuarioBD?.get("Puesto")}",
             labelText: "Puesto",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -306,13 +362,14 @@ Widget _phoneTextField() {
         child: TextFormField(
           readOnly: true,
           controller: _phoneController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "9212972943",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${usuarioBD?.get("Telefono")}",
             labelText: "Teléfono empresarial",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -359,18 +416,4 @@ Widget _buttonLogOut() {
       );
     },
   );
-}
-
-void editar(nombre, puesto, telefono) {
-  final reclutador = <String, String>{
-    "Nombre": nombre,
-    "Telefono": telefono,
-    "Puesto": puesto,
-  };
-
-  db
-      .collection("Reclutador")
-      .doc(user?.uid)
-      .set(reclutador)
-      .onError((error, stackTrace) => {});
 }

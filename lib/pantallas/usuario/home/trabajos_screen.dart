@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
 
+import 'home_user.dart';
+
 // ignore: must_be_immutable
 class TrabajosScreen extends StatefulWidget {
   String busquedaini;
@@ -21,6 +23,49 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
   late IconData icono;
   List<QueryDocumentSnapshot<Object>>? vacante;
   FirebaseFirestore db = FirebaseFirestore.instance;
+  List<QueryDocumentSnapshot<Object>>? vacantesP;
+  List<QueryDocumentSnapshot<Object>>? postulaciones;
+
+  buscarPostulacion() async {
+    postulaciones = null;
+    vacantesP = null;
+    List<QueryDocumentSnapshot<Object>>? postulacion =
+        List.empty(growable: true);
+    List<QueryDocumentSnapshot<Object>>? vacante = List.empty(growable: true);
+    await db.collectionGroup("Postulaciones").get().then(
+          (value) => {
+            value.docs.toList().forEach(
+              (element) {
+                String comp = element.get('Postulante');
+                String aux = user!.uid;
+                if (aux == comp) {
+                  postulacion.add(element);
+                }
+              },
+            ),
+          },
+        );
+    await db.collection("Vacantes").get().then(
+          (value) => {
+            if (postulacion.isNotEmpty)
+              value.docs.toList().forEach(
+                (element) {
+                  String comp = element.reference.id;
+                  for (var post in postulacion) {
+                    String aux = post.get("Vacante");
+                    if (aux == comp) {
+                      vacante.add(element);
+                    }
+                  }
+                },
+              ),
+          },
+        );
+    setState(() {
+      postulaciones ??= postulacion;
+      vacantesP = vacante;
+    });
+  }
 
   buscarVacante(busqueda) async {
     icono = iconos[Random().nextInt(6 - 0)];
@@ -180,7 +225,10 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return DetalleVacante(vacante![index].id, false);
+                      return DetalleVacante(
+                        vacante![index].id,
+                        isPostulado(vacante![index].id),
+                      );
                     },
                   ),
                 );
@@ -237,4 +285,13 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
           },
         )
       : const Text("No hay vacantes");
+
+  bool isPostulado(String id) {
+    bool isTrue = false;
+    for (var element in vacante!) {
+      isTrue = element.id == id ? true : false;
+      if (isTrue) break;
+    }
+    return isTrue;
+  }
 }

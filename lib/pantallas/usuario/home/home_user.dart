@@ -34,7 +34,7 @@ class _HomeUsuarioState extends State<HomeUsuario> {
               _index = value;
             });
           },
-            padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           activeColor: accent,
           tabs: const [
             GButton(
@@ -62,13 +62,19 @@ class _HomeUsuarioState extends State<HomeUsuario> {
 class FichaEmpresa {
   String _img = '';
   String _nombre = '';
+  String _correo = '';
 
   FichaEmpresa(img, nombre) {
     _img = img;
     _nombre = nombre;
+    _correo = "";
   }
 
+//setters
+  set(correo) => _correo = correo;
+
   // getters
+  get correo => _correo;
   get img => _img;
   get nombre => _nombre;
 }

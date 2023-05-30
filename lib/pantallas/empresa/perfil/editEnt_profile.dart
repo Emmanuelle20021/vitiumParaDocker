@@ -12,9 +12,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
+// ignore: must_be_immutable
 class EditEntProfile extends StatefulWidget {
   static String id = "user_registry";
-  const EditEntProfile({
+  String empresa;
+  String correo;
+  EditEntProfile({
+    required this.correo,
+    required this.empresa,
     super.key,
   });
 
@@ -22,28 +27,46 @@ class EditEntProfile extends StatefulWidget {
   State<EditEntProfile> createState() => _EditEntProfileState();
 }
 
-handleSubmit() async {
-  if (!_formKey.currentState!.validate()) return;
-  await usuario.iniciarSesion();
-}
-
 Empresa usuario = Empresa();
-final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _puestoController = TextEditingController();
 final TextEditingController _emailController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 final TextEditingController _enterpriseController = TextEditingController();
+var id = user?.uid;
+QueryDocumentSnapshot<Object>? usuarioBD;
 
 class _EditEntProfileState extends State<EditEntProfile> {
   @override
   void initState() {
     super.initState();
+    buscarUsuario(id);
     FlutterNativeSplash.remove();
+  }
+
+  buscarUsuario(idUsuario) async {
+    hayCambio = false;
+    usuarioBD = null;
+    QueryDocumentSnapshot<Object>? usuarios;
+    await db.collectionGroup("Reclutador").get().then(
+          (value) => {
+            value.docs.toList().forEach((element) {
+              if (element.id == idUsuario) {
+                usuarios = element;
+              }
+            })
+          },
+        );
+    setState(
+      () {
+        usuarioBD ??= usuarios;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    usuario.empresaAfiliada = widget.empresa;
     final ancho = MediaQuery.of(context).size.width;
     final largo = MediaQuery.of(context).size.height;
     return SafeArea(
@@ -166,14 +189,14 @@ class _EditEntProfileState extends State<EditEntProfile> {
               return null;
             },
             keyboardType: TextInputType.name,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "Brief Case",
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText: "${usuarioBD!.get("Nombre")}",
               labelText: "Nombre completo",
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -195,14 +218,14 @@ class _EditEntProfileState extends State<EditEntProfile> {
           child: TextFormField(
             readOnly: true,
             controller: _emailController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
               alignLabelWithHint: true,
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              hintText: "email@empresa.com.mx",
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              hintText: widget.correo,
               labelText: "Correo Electrónico",
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -225,13 +248,14 @@ Widget _enterpriseTextField() {
         child: TextFormField(
           readOnly: true,
           controller: _enterpriseController,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Vitium",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${usuarioBD!.get("Empresa afiliada")}",
             labelText: "Empresa afiliada",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -264,12 +288,13 @@ Widget _puestoTextField() {
             return null;
           },
           keyboardType: TextInputType.name,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "Gerente de RR.HH",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${usuarioBD!.get("Puesto")}",
             labelText: "Puesto",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -300,13 +325,14 @@ Widget _phoneTextField() {
             return null;
           },
           keyboardType: TextInputType.phone,
-          decoration: const InputDecoration(
+          decoration: InputDecoration(
             floatingLabelBehavior: FloatingLabelBehavior.always,
             alignLabelWithHint: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            hintText: "9212972943",
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            hintText: "${usuarioBD!.get("Telefono")}",
             labelText: "Teléfono empresarial",
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
@@ -327,13 +353,93 @@ Widget _buttonSave() {
         child: FloatingActionButton.extended(
           heroTag: 'boton',
           onPressed: () {
-            hayCambio = true;
-            editar(
-              usuario.nombreEmpleado,
-              usuario.puesto,
-              usuario.numeroDeTelefono,
+            showDialog<String>(
+              context: context,
+              builder: (context) => AlertDialog(
+                actionsAlignment: MainAxisAlignment.center,
+                titlePadding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * .15, top: 20),
+                title: Text(
+                  "¿Guardar cambios?",
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.height * .03),
+                ),
+                alignment: Alignment.bottomCenter,
+                elevation: 0,
+                insetPadding: const EdgeInsets.all(0),
+                content: SizedBox(
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  child: Image.asset(briefConfundido),
+                ),
+                actions: [
+                  Column(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width * .9,
+                            MediaQuery.of(context).size.height * .05,
+                          ),
+                        ),
+                        onPressed: () {
+                          hayCambio = true;
+                          editar(
+                            usuario.nombreEmpleado,
+                            usuario.puesto,
+                            usuario.numeroDeTelefono,
+                            usuario.empresaAfiliada,
+                          );
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Aceptar",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * .05,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          fixedSize: Size(
+                            MediaQuery.of(context).size.width * .9,
+                            MediaQuery.of(context).size.height * .05,
+                          ),
+                          backgroundColor: tertiary,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "Cancelar",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width * .05,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ).then(
+              (value) => Navigator.pop(context),
             );
-            Navigator.pop(context);
           },
           label: Text(
             "Guardar",
@@ -346,9 +452,15 @@ Widget _buttonSave() {
   );
 }
 
-void editar(nombre, puesto, telefono) {
+void editar(nombre, puesto, telefono, empresa) {
+  nombre ??= usuario.nombreEmpleado;
+  puesto ??= usuario.puesto;
+  telefono ??= usuario.numeroDeTelefono;
+  empresa ??= usuario.empresaAfiliada;
+
   final reclutador = <String, String>{
     "Nombre": nombre,
+    "Empresa afiliada": empresa,
     "Telefono": telefono,
     "Puesto": puesto,
   };

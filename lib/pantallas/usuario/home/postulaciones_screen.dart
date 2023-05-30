@@ -114,7 +114,7 @@ class _PostulacionState extends State<Postulacion> {
   }
 
   @override
-  Widget build(BuildContext context) => vacantes == null
+  Widget build(BuildContext context) => (vacantes == null || vacantes!.isEmpty)
       ? const Text("Aún no te has postulado")
       : ListView.builder(
           itemCount: vacantes?.length,

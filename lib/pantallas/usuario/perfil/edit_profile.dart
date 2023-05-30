@@ -6,6 +6,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 
@@ -21,13 +22,8 @@ class EditProfile extends StatefulWidget {
   State<EditProfile> createState() => _EditProfileState();
 }
 
-handleSubmit() async {
-  if (!_formKey.currentState!.validate()) return;
-  await usuario.iniciarSesion();
-}
 
 Postulante usuario = Postulante();
-final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
 
@@ -64,6 +60,11 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ],
                 ),
+              ),
+              IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back,
+                    color: background, size: largo * .05),
               ),
               Column(
                 children: [
@@ -349,6 +350,18 @@ Widget _buttonSave(fecha) {
 }
 
 void editar(nombre, discapacidad, telefono, fecha) {
+  nombre ??= usuario.nombre;
+  discapacidad ??= usuario.discapacidad;
+  telefono ??= usuario.numeroDeTelefono;
+  fecha ??= usuario.fechaNacimiento;
+
+  if (nombre == "" || discapacidad == "" || telefono == "" || fecha == "") {
+    MaterialPageRoute(
+      builder: (context) => pushBrief(context, "Rellena los campos faltantes"),
+    );
+    return;
+  }
+
   final postulante = <String, String>{
     "Nombre": nombre,
     "Telefono": telefono,

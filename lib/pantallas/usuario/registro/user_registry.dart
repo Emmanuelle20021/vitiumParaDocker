@@ -6,6 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/postulante.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/registro/registro_usuario.dart';
 
 class UserRegistry extends StatefulWidget {
   static String id = "user_registry";
@@ -17,13 +19,7 @@ class UserRegistry extends StatefulWidget {
   State<UserRegistry> createState() => _UserRegistryState();
 }
 
-handleSubmit() async {
-  if (!_formKey.currentState!.validate()) return;
-  await usuario.iniciarSesion();
-}
-
 Postulante usuario = Postulante();
-final _formKey = GlobalKey<FormState>();
 final TextEditingController _nameController = TextEditingController();
 final TextEditingController _birthController = TextEditingController();
 final TextEditingController _phoneController = TextEditingController();
@@ -160,8 +156,7 @@ class _UserRegistryState extends State<UserRegistry> {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             controller: _nameController,
             onChanged: (value) {
-              value;
-              usuario.nombre;
+              usuario.nombre = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -198,8 +193,7 @@ class _UserRegistryState extends State<UserRegistry> {
           child: TextFormField(
             controller: _phoneController,
             onChanged: (value) {
-              value;
-              usuario.nombre;
+              usuario.numeroDeTelefono = value;
             },
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -246,8 +240,7 @@ Widget _disabilityField() {
           }).toList(),
           //controller: _nameController,
           onChanged: (value) {
-            value;
-            usuario.discapacidad;
+            usuario.discapacidad = value ?? "";
           },
           validator: (value) {
             if (value == null) {
@@ -282,7 +275,18 @@ Widget _buttonSend() {
         child: FloatingActionButton.extended(
           heroTag: 'boton',
           onPressed: () {
-            handleSubmit();
+            try {
+              agregar(usuario.nombre, usuario.discapacidad,
+                  usuario.numeroDeTelefono, usuario.fechaNacimiento);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeUsuario(),
+                ),
+              );
+            } catch (e) {
+              pushBrief(context, "Hubo un errror al agregar tu información");
+            }
           },
           label: Text(
             "Registrame",
@@ -355,6 +359,7 @@ class _BirthdayFieldState extends State<BirthdayField> {
                         setState(
                           () {
                             _birthController.text = format.toString();
+                            usuario.fechaNacimiento = format.toString();
                           },
                         );
                       }
@@ -368,4 +373,34 @@ class _BirthdayFieldState extends State<BirthdayField> {
       },
     );
   }
+}
+
+void agregar(nombre, discapacidad, telefono, fecha) {
+  nombre ??= usuario.nombre;
+  discapacidad ??= usuario.discapacidad;
+  telefono ??= usuario.numeroDeTelefono;
+  fecha ??= usuario.fechaNacimiento;
+
+  if (nombre == "" || discapacidad == "" || telefono == "" || fecha == "") {
+    MaterialPageRoute(
+      builder: (context) => pushBrief(context, "Rellena los campos faltantes"),
+    );
+    return;
+  }
+
+  final postulante = <String, String>{
+    "Nombre": nombre,
+    "Telefono": telefono,
+    "Discapacidad": discapacidad,
+    "FechaNacimiento": fecha
+  };
+
+  db.collection("Perfil").doc(user?.uid).set(postulante).onError(
+        (error, stackTrace) => {
+          MaterialPageRoute(
+            builder: (context) =>
+                pushBrief(context, "Ocurrio un error inesperado"),
+          )
+        },
+      );
 }
