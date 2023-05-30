@@ -430,8 +430,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 bool isPostulado(String id) {
   bool isTrue = false;
-  for (var element in vacantes!) {
-    isTrue = element.id == id ? true : false;
+  for (var element in postulaciones!) {
+    isTrue = element.get("Vacante") == id ? true : false;
     if (isTrue) break;
   }
   return isTrue;

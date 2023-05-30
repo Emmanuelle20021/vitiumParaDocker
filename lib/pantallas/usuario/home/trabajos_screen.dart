@@ -288,8 +288,12 @@ class _TrabajosScreenState extends State<TrabajosScreen> {
 
   bool isPostulado(String id) {
     bool isTrue = false;
-    for (var element in vacante!) {
-      isTrue = element.id == id ? true : false;
+    if (postulaciones == null) {
+      isTrue = false;
+      return isTrue;
+    }
+    for (var element in postulaciones!) {
+      isTrue = element.get("Vacante") == id ? true : false;
       if (isTrue) break;
     }
     return isTrue;

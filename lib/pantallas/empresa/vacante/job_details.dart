@@ -6,11 +6,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/postulantes/ver_postulantes.dart';
 import 'package:vitium_app/pantallas/splash/splahs.dart';
 
 // ignore: must_be_immutable
 class JobDetails extends StatefulWidget {
-  const JobDetails({super.key});
+  String vacanteId;
+  JobDetails({required this.vacanteId, super.key});
 
   @override
   State<JobDetails> createState() => _JobDetailsState();
@@ -21,9 +23,27 @@ class _JobDetailsState extends State<JobDetails> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   late IconData icono;
 
+  buscarVacante(idVacante) async {
+    icono = iconos[Random().nextInt(6 - 0)];
+    vacante = null;
+    QueryDocumentSnapshot<Object>? vacantes;
+    await db.collectionGroup("Vacantes").get().then(
+          (value) => {
+            value.docs.toList().forEach((element) {
+              if (element.id == idVacante) {
+                vacantes = element;
+              }
+            })
+          },
+        );
+    setState(() {
+      vacante ??= vacantes;
+    });
+  }
+
   @override
   initState() {
-    FlutterNativeSplash.remove();
+    buscarVacante(widget.vacanteId);
     super.initState();
   }
 
@@ -218,14 +238,24 @@ class _JobDetailsState extends State<JobDetails> {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Postulantes(
+                              idVacante: vacante!.id,
+                              nombreVacante: vacante!.get("Puesto"),
+                            ),
+                          ),
+                        );
+                      },
                       style: ButtonStyle(
                         fixedSize: MaterialStatePropertyAll(
                           Size(ancho * .8, alto * .06),
                         ),
                       ),
                       child: Text(
-                        "Postulantes",
+                        "Ver Postulantes",
                         style: TextStyle(fontSize: ancho * .05),
                       ),
                     ),

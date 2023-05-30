@@ -130,6 +130,13 @@ var buttonStyle = ButtonStyle(
   backgroundColor: MaterialStateProperty.all<Color>(accent),
 );
 
+const iconosPerfiles = [
+  Icons.person,
+  Icons.person_2,
+  Icons.person_3,
+  Icons.person_4,
+];
+
 const iconos = [
   Icons.insights,
   Icons.work_history,

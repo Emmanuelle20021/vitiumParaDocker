@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/job_details.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 // ignore: must_be_immutable
@@ -139,7 +139,9 @@ class _JobsState extends State<Jobs> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return DetalleVacante(vacante![index].id, false);
+                      return JobDetails(
+                        vacanteId: vacante![index].id,
+                      );
                     },
                   ),
                 );

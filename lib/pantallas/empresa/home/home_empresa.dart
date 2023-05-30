@@ -207,64 +207,6 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                     backgroundColor: Colors.transparent,
                     elevation: 100,
                   ),
-                  onPressed: () {},
-                  child: SizedBox(
-                    width: tam.width * 0.9,
-                    height: tam.height * 0.13,
-                    child: Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: background,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: tam.height * 0.13,
-                          width: tam.width * 0.85,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Icon(Icons.supervisor_account_sharp,
-                                  color: tertiary, size: tam.height * 0.07),
-                              Text(
-                                "Ver postulantes",
-                                style: TextStyle(
-                                    color: primary,
-                                    fontSize: tam.height * 0.025),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: tam.width * .83,
-                            ),
-                            Center(
-                              child: Container(
-                                height: tam.height * 0.035,
-                                width: tam.width * 0.07,
-                                decoration: BoxDecoration(
-                                  color: tertiary,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Icon(Icons.arrow_forward_ios,
-                                    color: background),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    elevation: 100,
-                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -323,7 +265,7 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                   ),
                 ),
                 SizedBox(
-                  height: tam.height * .1,
+                  height: tam.height * .2,
                 ),
               ],
             ),
