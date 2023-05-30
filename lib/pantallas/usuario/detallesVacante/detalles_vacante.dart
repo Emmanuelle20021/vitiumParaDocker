@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
+import 'package:vitium_app/pantallas/usuario/subirCurriculum/subir_curriculum.dart';
 
 // ignore: must_be_immutable
 class DetalleVacante extends StatefulWidget {
@@ -238,7 +239,13 @@ class _DetalleVacanteState extends State<DetalleVacante> {
                         ? const Text("")
                         : ElevatedButton(
                             onPressed: () {
-                              postular();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SubirCv(
+                                      id: user!.uid, vacante: widget.idVacante),
+                                ),
+                              );
                             },
                             style: ButtonStyle(
                               fixedSize: MaterialStatePropertyAll(
@@ -260,18 +267,4 @@ class _DetalleVacanteState extends State<DetalleVacante> {
     );
   }
 
-  void postular() {
-    final postulacion = <String, String>{
-      "Estado": "Pendiente",
-      "Mensaje": "Solicitud en proceso de revisión",
-      "Postulante": user!.uid,
-      "Vacante": widget.idVacante
-    };
-
-    db
-        .collection("Postulaciones")
-        .doc()
-        .set(postulacion)
-        .onError((error, stackTrace) => {});
-  }
 }
