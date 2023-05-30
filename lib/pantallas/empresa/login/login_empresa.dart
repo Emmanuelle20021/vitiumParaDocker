@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/Funcionalidades/empresa.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/home/home_empresa.dart';
 import 'package:vitium_app/pantallas/empresa/registro/registro_empresa.dart';
 import 'package:vitium_app/pantallas/usuario/login/login_user.dart';
 
@@ -23,7 +24,14 @@ class _LoginEmpresaState extends State<LoginEmpresa> {
 
   handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
-    await usuario.iniciarSesion();
+    await usuario.iniciarSesion().whenComplete(
+          () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeEnterprise(),
+            ),
+          ),
+        );
   }
 
   @override

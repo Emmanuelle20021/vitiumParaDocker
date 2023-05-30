@@ -12,8 +12,15 @@ class NextVacancy extends StatefulWidget {
   State<NextVacancy> createState() => _NextVacancyState();
 }
 
-var _filters = [];
+int? _value = 1;
 Vacante vacante = Vacante();
+
+List<String> discapacidades = <String>[
+  "física",
+  "motriz",
+  "auditiva",
+  "del habla"
+];
 
 class _NextVacancyState extends State<NextVacancy> {
   @override
@@ -100,7 +107,7 @@ class _NextVacancyState extends State<NextVacancy> {
                                 child: _titleChip(),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 80.0),
+                                padding: const EdgeInsets.only(right: 90.0),
                                 child: _discapacidadAdmitida(),
                               ),
                               Padding(
@@ -184,33 +191,30 @@ class _NextVacancyState extends State<NextVacancy> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            "Discapacidad física",
-            "Discapacidad motriz",
-            "Discapacidad múltiple",
-            "Discapacidad auditiva",
-            "Discapacidad de habla"
-          ].map(
-            (filterType) {
-              return FilterChip(
-                label: Text(filterType),
-                selected: _filters.contains(filterType),
-                checkmarkColor: primary,
-                onSelected: (bool value) {
-                  setState(() {
-                    if (value) {
-                      _filters.add(filterType);
-                    } else {
-                      _filters.removeWhere((name) {
-                        return name == filterType;
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Wrap(
+              spacing: 5.0,
+              children: List<Widget>.generate(
+                4,
+                (int index) {
+                  return ChoiceChip(
+                    label: Text('Discapacidad ${discapacidades[index]}'),
+                    labelStyle: TextStyle(color: background),
+                    backgroundColor: const Color.fromARGB(255, 132, 129, 129),
+                    // ignore: unrelated_type_equality_checks
+                    selected: _value == index,
+                    onSelected: (bool selected) {
+                      setState(() {
+                        _value = (selected ? index : null);
                       });
-                    }
-                  });
+                    },
+                    selectedColor: primary,
+                  );
                 },
-              );
-            },
-          ).toList(),
+              ).toList(),
+            ),
+          ],
         );
       },
     );

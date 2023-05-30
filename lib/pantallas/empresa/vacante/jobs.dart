@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/detallesVacante/detalles_vacante.dart';
+import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
 // ignore: must_be_immutable
 class Jobs extends StatefulWidget {
@@ -20,8 +23,41 @@ class _JobsState extends State<Jobs> {
   List<QueryDocumentSnapshot<Object>>? vacante;
   FirebaseFirestore db = FirebaseFirestore.instance;
 
+  buscarVacante(busqueda) async {
+    icono = iconos[Random().nextInt(6 - 0)];
+    vacante = null;
+    String id = user!.uid;
+    await db.collectionGroup("Reclutador").get().then(
+          (value) => {
+            value.docs.toList().forEach(
+              (element) {
+                if (element.id == id) {
+                  busqueda = element.get('Empresa afiliada');
+                }
+              },
+            ),
+          },
+        );
+    List<QueryDocumentSnapshot<Object>>? vacantes = List.empty(growable: true);
+    await db.collectionGroup("Vacantes").get().then(
+          (value) => {
+            value.docs.toList().forEach((element) {
+              String comp = element.get('Empresa');
+              if (comp.contains(busqueda)) {
+                vacantes.add(element);
+              }
+            })
+          },
+        );
+    setState(() {
+      vacante ??= vacantes;
+    });
+  }
+
   @override
   void initState() {
+    FlutterNativeSplash.remove();
+    buscarVacante(busqueda);
     super.initState();
   }
 
@@ -43,7 +79,7 @@ class _JobsState extends State<Jobs> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: alto * 0.05,
+            height: alto * 0.08,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,7 +88,7 @@ class _JobsState extends State<Jobs> {
                 fit: FlexFit.loose,
                 flex: 2,
                 child: AutoSizeText(
-                  'Resultados',
+                  'Trabajos publicados',
                   maxFontSize: 33,
                   minFontSize: 30,
                   maxLines: 2,
@@ -66,66 +102,19 @@ class _JobsState extends State<Jobs> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Flexible(
-                  fit: FlexFit.loose,
-                  flex: 2,
-                  child: TextField(
-                    onSubmitted: (value) {
-                      busqueda = value;
-                    },
-                    inputFormatters: [
-                      FilteringTextInputFormatter.singleLineFormatter
-                    ],
-                    textCapitalization: TextCapitalization.words,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: const InputDecoration(
-                      constraints: BoxConstraints.tightFor(height: 47),
-                      prefixIcon: Icon(Icons.search),
-                      hintText: "Buscar",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                    controller: busquedaController,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
-                      ),
-                      color: accent,
-                    ),
-                    child: IconButton(
-                      color: background,
-                      splashRadius: 20,
-                      onPressed: () {},
-                      icon: const Icon(Icons.format_list_bulleted_sharp),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                vacante != null
-                    ? "${vacante?.length} Trabajos encontrados"
-                    : '0 Trabajos encontrados',
-                style: TextStyle(fontSize: ancho * .04),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, top: 8, bottom: 8),
+                child: Text(
+                  vacante != null
+                      ? "${vacante?.length} Trabajos publicados"
+                      : '0 Trabajos publicados',
+                  style: TextStyle(fontSize: ancho * .04),
+                  textAlign: TextAlign.left,
+                ),
               )
             ],
           ),
@@ -206,5 +195,5 @@ class _JobsState extends State<Jobs> {
             );
           },
         )
-      : const Text("No hay vacantes");
+      : const Text("No hay trabajos publicados");
 }

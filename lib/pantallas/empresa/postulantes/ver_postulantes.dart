@@ -6,8 +6,8 @@ import 'package:vitium_app/constantes/constantes.dart';
 import 'package:vitium_app/pantallas/usuario/detallesVacante/vacante_postulado.dart';
 import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
 
-class Postulaciones extends StatelessWidget {
-  const Postulaciones({super.key});
+class Postulantes extends StatelessWidget {
+  const Postulantes({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class Postulaciones extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: "Trabajos\n",
+                        text: "Postulantes",
                         style: TextStyle(fontSize: alto * .05),
                       ),
                       TextSpan(
-                        text: "Postulados",
-                        style: TextStyle(color: accent, fontSize: alto * .05),
+                        text: "Vacante",
+                        style: TextStyle(color: accent, fontSize: alto * .02),
                       ),
                     ],
                   ),
@@ -75,7 +75,7 @@ class _PostulacionState extends State<Postulacion> {
     List<QueryDocumentSnapshot<Object>>? postulacion =
         List.empty(growable: true);
     List<QueryDocumentSnapshot<Object>>? vacante = List.empty(growable: true);
-    await db.collectionGroup("Postulaciones").get().then(
+    await db.collectionGroup("Postulantes").get().then(
           (value) => {
             value.docs.toList().forEach(
               (element) {
@@ -118,7 +118,7 @@ class _PostulacionState extends State<Postulacion> {
 
   @override
   Widget build(BuildContext context) => vacantes == null
-      ? const Text("Aún no te has postulado")
+      ? const Text("Aún no hay postulantes")
       : ListView.builder(
           itemCount: vacantes?.length,
           shrinkWrap: true,
