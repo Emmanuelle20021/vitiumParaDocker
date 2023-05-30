@@ -20,7 +20,6 @@ class Accepted extends StatefulWidget {
 Reunion reunion = Reunion();
 
 final TextEditingController _horaController = TextEditingController();
-final TextEditingController _mensajeController = TextEditingController();
 final TextEditingController _fechaController = TextEditingController();
 
 class _AcceptedState extends State<Accepted> {
