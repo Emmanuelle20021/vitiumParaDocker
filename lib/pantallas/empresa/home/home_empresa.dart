@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
+import 'package:vitium_app/pantallas/empresa/vacante/jobs.dart';
 import 'package:vitium_app/pantallas/empresa/vacante/new_vacancy.dart';
 
 import '../perfil/ent_profile.dart';
@@ -76,7 +77,14 @@ class _HomeEnterpriseState extends State<HomeEnterprise> {
                     backgroundColor: Colors.transparent,
                     elevation: 100,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Jobs(),
+                      ),
+                    );
+                  },
                   child: SizedBox(
                     width: tam.width * 0.9,
                     height: tam.height * 0.13,

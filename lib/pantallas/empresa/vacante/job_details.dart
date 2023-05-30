@@ -1,48 +1,30 @@
+// ignore_for_file: unused_import
+
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:vitium_app/constantes/constantes.dart';
-import 'package:vitium_app/pantallas/usuario/home/home_user.dart';
-import 'package:vitium_app/pantallas/usuario/subirCurriculum/subir_curriculum.dart';
+import 'package:vitium_app/pantallas/splash/splahs.dart';
 
 // ignore: must_be_immutable
-class DetalleVacante extends StatefulWidget {
-  String idVacante;
-  bool isPostulado;
-  DetalleVacante(this.idVacante, this.isPostulado, {super.key});
+class JobDetails extends StatefulWidget {
+  const JobDetails({super.key});
 
   @override
-  State<DetalleVacante> createState() => _DetalleVacanteState();
+  State<JobDetails> createState() => _JobDetailsState();
 }
 
-class _DetalleVacanteState extends State<DetalleVacante> {
+class _JobDetailsState extends State<JobDetails> {
   QueryDocumentSnapshot<Object>? vacante;
   FirebaseFirestore db = FirebaseFirestore.instance;
   late IconData icono;
 
-  buscarVacante(idVacante) async {
-    icono = iconos[Random().nextInt(6 - 0)];
-    vacante = null;
-    QueryDocumentSnapshot<Object>? vacantes;
-    await db.collectionGroup("Vacantes").get().then(
-          (value) => {
-            value.docs.toList().forEach((element) {
-              if (element.id == idVacante) {
-                vacantes = element;
-              }
-            })
-          },
-        );
-    setState(() {
-      vacante ??= vacantes;
-    });
-  }
-
   @override
   initState() {
+    FlutterNativeSplash.remove();
     super.initState();
-    buscarVacante(widget.idVacante);
   }
 
   @override
@@ -72,13 +54,13 @@ class _DetalleVacanteState extends State<DetalleVacante> {
                         AutoSizeText(
                           "Detalles del trabajo",
                           style: TextStyle(
-                              fontSize: ancho * .06,
+                              fontSize: ancho * .07,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
-                            height: alto * .05,
+                            height: alto * .07,
                             child: Image.asset(logoVitium, fit: BoxFit.contain),
                           ),
                         ),
@@ -235,28 +217,18 @@ class _DetalleVacanteState extends State<DetalleVacante> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(20),
-                    child: widget.isPostulado
-                        ? const Text("")
-                        : ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SubirCv(
-                                      id: user!.uid, vacante: widget.idVacante),
-                                ),
-                              );
-                            },
-                            style: ButtonStyle(
-                              fixedSize: MaterialStatePropertyAll(
-                                Size(ancho * .8, alto * .06),
-                              ),
-                            ),
-                            child: Text(
-                              "Postularse",
-                              style: TextStyle(fontSize: ancho * .05),
-                            ),
-                          ),
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        fixedSize: MaterialStatePropertyAll(
+                          Size(ancho * .8, alto * .06),
+                        ),
+                      ),
+                      child: Text(
+                        "Postulantes",
+                        style: TextStyle(fontSize: ancho * .05),
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -266,5 +238,4 @@ class _DetalleVacanteState extends State<DetalleVacante> {
       ),
     );
   }
-
 }
