@@ -35,3 +35,11 @@ WORKDIR /app
 
 # Copiar los archivos de la aplicación al contenedor
 COPY . /app
+
+# Etiqueta de versión de la aplicación
+ARG APP_VERSION=1.0.0
+LABEL version=${APP_VERSION}
+
+# Nombre del repositorio remoto
+ENV REMOTE_REPOSITORY=Emmanuelle20021/vitiumParaDocker
+LABEL org.opencontainers.image.source=https://github.com/${REMOTE_REPOSITORY}
