@@ -36,9 +36,12 @@ WORKDIR /app
 # Copiar los archivos de la aplicación al contenedor
 COPY . /app
 
+# Cambiar los permisos del archivo pubspec.lock
+USER root
 RUN chmod a+r pubspec.lock
 
 # Obtener las dependencias del proyecto Flutter
+USER flutter
 RUN flutter pub get
 
 # Construir la aplicación Flutter
