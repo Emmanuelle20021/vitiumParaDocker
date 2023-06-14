@@ -36,8 +36,7 @@ WORKDIR /app
 # Copiar los archivos de la aplicación al contenedor
 COPY . /app
 
-# Realizar la modificación del archivo pubspec.yaml
-RUN sed -i 's/intl: \^0.17.0/intl: \^0.18.1/' /app/pubspec.yaml
+RUN chmod a+r pubspec.lock
 
 # Obtener las dependencias del proyecto Flutter
 RUN flutter pub get
